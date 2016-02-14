@@ -126,6 +126,51 @@ public class Entity {
     }
     
     /**
+     * Adds a component to the list of components used by the entity.
+     * 
+     * @param component: The component to add.
+     * @return Entity: An instance of the entity for convenience.
+     */
+    public Entity addComponent (EntityComponent component) {
+        
+        this.components.add(component);
+        return this;
+    }
+    
+    /**
+     * Removes a component from the list of components. For the component to be removed, an
+     * existing component must pass the equals check.
+     * 
+     * @param toRemove: The component to remove from the entity.
+     * @return Entity: An instance of the entity for convenience.
+     */
+    public Entity removeComponent (EntityComponent toRemove) {
+        
+        for (EntityComponent component : this.components) {
+            
+            if (component.equals(toRemove)) {
+                
+                this.components.remove(toRemove);
+                break;
+            }
+        }
+        
+        return this;
+    }
+    
+    /**
+     * Removes a component from the entity by using its index within the component list.
+     * 
+     * @param index: The index of the component to remove.
+     * @return Entity: An instance of the entity for convenience.
+     */
+    public Entity removeComponent (int index) {
+        
+        this.components.remove(index);
+        return this;
+    }
+    
+    /**
      * Checks if the entity should be removed from the world.
      * 
      * @return boolean: Whether or not the entity should be removed.
