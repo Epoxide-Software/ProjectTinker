@@ -43,7 +43,7 @@ public class Entity {
     public void onJoinWorld () {
         
         for (EntityComponent component : this.components)
-            component.onJoinWorld();
+            component.onJoinWorld(this);
     }
     
     /**
@@ -52,7 +52,7 @@ public class Entity {
     public void onKilled () {
         
         for (EntityComponent component : this.components)
-            component.onKilled();
+            component.onKilled(this);
     }
     
     /**
@@ -61,7 +61,7 @@ public class Entity {
     public void onUpdate () {
         
         for (EntityComponent component : this.components)
-            component.onUpdate();
+            component.onUpdate(this);
     }
     
     /**
@@ -70,7 +70,7 @@ public class Entity {
     public void readData () {
         
         for (EntityComponent component : this.components)
-            component.readData();
+            component.readData(this);
     }
     
     /**
@@ -80,7 +80,7 @@ public class Entity {
     public void writeData () {
         
         for (EntityComponent component : this.components)
-            component.writeData();
+            component.writeData(this);
     }
     
     /**
