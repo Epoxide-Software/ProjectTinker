@@ -23,6 +23,11 @@ public class Entity {
      */
     private List<EntityComponent> components;
     
+    /**
+     * A flag to determine whether or not the entity should be removed from the world.
+     */
+    private boolean shouldRemove;
+    
     // TODO Constructor Params
     public Entity(String name) {
         
@@ -118,5 +123,26 @@ public class Entity {
     public List<EntityComponent> getComponents () {
         
         return this.components;
+    }
+    
+    /**
+     * Checks if the entity should be removed from the world.
+     * 
+     * @return boolean: Whether or not the entity should be removed.
+     */
+    public boolean shouldRemove () {
+        
+        return this.shouldRemove;
+    }
+    
+    /**
+     * Updates the status of the shouldRemove flag. If set to true, the mob will be removed
+     * from the world in the next update tick, and will be garbage collected.
+     * 
+     * @param isRemovable: Whether or not the entity should be removed.
+     */
+    public void setRemoveStatus (boolean isRemovable) {
+        
+        this.shouldRemove = isRemovable;
     }
 }
