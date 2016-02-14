@@ -1,6 +1,6 @@
 package net.epoxide.tinker.entity.component;
 
-public class ComponentPosition {
+public class ComponentPosition extends EntityComponent {
     
     /**
      * The position of the entity on the X axis.
