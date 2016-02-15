@@ -111,13 +111,13 @@ public class Entity {
     }
     
     /**
-     * Gets the List of components attached to the entity.
-     *
-     * @return List<EntityComponent>: A List of all attached components.
+     * Retrieves an array of components that are attached to the entity.
+     * 
+     * @return EntityComponent[]: An array of components attached to the entiy.
      */
-    public List<EntityComponent> getComponents () {
+    public EntityComponent[] getComponents () {
         
-        return this.components;
+        return this.components.toArray(new EntityComponent[this.components.size()]);
     }
     
     /**
