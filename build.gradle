@@ -13,7 +13,7 @@ apply plugin: 'idea-utils'
 apply plugin: 'maven'
 
 group 'game'
-version = "0" //getVersionFromJava(file("src/main/java/net/epoxide/lib/Constants.java"))
+version = getVersionFromJava(file("src/main/java/net/epoxide/tinker/TinkerGame.java"))
 
 repositories {
     mavenCentral()
