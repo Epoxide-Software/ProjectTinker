@@ -7,9 +7,13 @@ import com.shc.silenceengine.core.SilenceException;
 import com.shc.silenceengine.graphics.Batcher;
 
 public class TinkerGame extends Game {
-
+    
+    /**
+     * The current version of the game. Version system follows a fairly standard version system
+     * of major.minor.patch.build.
+     */
     public static final String version = "0.0.0.0";
-
+    
     // TODO As we add new launch arguments, they should be documented here as a doc.
     public static void main (String[] args) {
         
