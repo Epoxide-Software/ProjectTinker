@@ -62,8 +62,8 @@ public class ComponentHealth extends EntityComponent {
      * @param maxHealth: The new maximum health for the entity.
      */
     public void setMaxHealth (int maxHealth) {
-        
-        Math.max(this.maxHealth = maxHealth, 1);
+
+        this.maxHealth = Math.max(maxHealth, 1);
     }
     
     /**
