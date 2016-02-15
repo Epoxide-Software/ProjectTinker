@@ -1,0 +1,91 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.rodionmoiseev.gradle.plugins:idea-utils:0.2'
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea-utils'
+apply plugin: 'maven'
+
+group 'game'
+version = "0" //getVersionFromJava(file("src/main/java/net/epoxide/lib/Constants.java"))
+
+repositories {
+    mavenCentral()
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "org.apache.commons:commons-lang3:3.4"
+    compile "commons-configuration:commons-configuration:1.10"
+    compile "junit:junit:4.12"
+}
+
+String getVersionFromJava(File file) {
+
+
+    String release = "0";
+    String update = "0";
+    String patch = "0";
+
+    String build = System.getenv("BUILD_NUMBER") ?: "0";
+    def outfile = "";
+    def ln = System.getProperty("line.separator")
+
+    String prefix = "public static final String version = \"";
+    file.eachLine { String s ->
+
+        String v = s.trim();
+        if (v.startsWith(prefix)) {
+            v = v.substring(prefix.length(), v.length() - 2);
+            String[] pts = v.split("\\.");
+
+            release = pts[0];
+            update = pts[1];
+            patch = pts[2];
+            s = s.replaceAll(".0\";", ".${build}\";");
+        }
+        outfile += (s + ln);
+    }
+
+    file.write(outfile);
+
+    return "$release.$update.$patch.$build";
+}
+
+idea {
+    project {
+        jdkName = '1.8'
+        languageLevel = '1.8'
+        vcs = 'Git'
+        runConfigurations {
+            runClient {
+                type = 'Application'
+                name = 'Run Game'
+                mainClass = 'net.epoxide.tinker.TinkerGame'
+                vmOptions = ''
+                programArguments = ''
+                module = project(':')
+            }
+        }
+    }
+}
+
+eclipse {
+
+}
+jar {
+    manifest {
+        attributes "Main-Class": "net.epoxide.tinker.TinkerGame", 'Implementation-Version': version
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
