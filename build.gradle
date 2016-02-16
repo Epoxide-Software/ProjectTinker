@@ -15,6 +15,8 @@ apply plugin: 'maven'
 group 'game'
 version = getVersionFromJava(file("src/main/java/net/epoxide/tinker/TinkerGame.java"))
 
+project.ext.lwjglVersion = "3.0.0-SNAPSHOT"
+
 repositories {
     mavenCentral()
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
@@ -25,6 +27,10 @@ dependencies {
     compile "org.apache.commons:commons-lang3:3.4"
     compile "commons-configuration:commons-configuration:1.10"
     compile "junit:junit:4.12"
+    compile "org.lwjgl:lwjgl:${lwjglVersion}"
+    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows"
+    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-linux"
+    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
 }
 
 String getVersionFromJava(File file) {
