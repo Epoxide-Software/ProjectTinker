@@ -87,7 +87,7 @@ public class Entity {
     /**
      * Gets the name associated with the entity.
      *
-     * @return String: The name associated with the entity.
+     * @return String The name associated with the entity.
      */
     public String getEntityName () {
         
@@ -97,7 +97,7 @@ public class Entity {
     /**
      * Sets the name associated with the entity. The name can not be null or empty.
      *
-     * @param name: The new name for the entity.
+     * @param name The new name for the entity.
      */
     public void setEntityName (String name) {
         
@@ -109,7 +109,7 @@ public class Entity {
      * Gets the unique identifier for the entity. No two entities should ever have the same
      * identifier.
      *
-     * @return UUID: The unique identifier for this entity.
+     * @return UUID The unique identifier for this entity.
      */
     public UUID getUniqueId () {
         
@@ -119,7 +119,7 @@ public class Entity {
     /**
      * Retrieves an array of components that are attached to the entity.
      * 
-     * @return EntityComponent[]: An array of components attached to the entiy.
+     * @return EntityComponent[] An array of components attached to the entiy.
      */
     public EntityComponent[] getComponents () {
         
@@ -129,8 +129,8 @@ public class Entity {
     /**
      * Adds a component to the list of components used by the entity.
      *
-     * @param component: The component to add.
-     * @return Entity: An instance of the entity for convenience.
+     * @param component The component to add.
+     * @return Entity An instance of the entity for convenience.
      */
     public Entity addComponent (EntityComponent component) {
         
@@ -142,8 +142,8 @@ public class Entity {
      * Removes a component from the list of components. For the component to be removed, an
      * existing component must pass the equals check.
      *
-     * @param toRemove: The component to remove from the entity.
-     * @return Entity: An instance of the entity for convenience.
+     * @param toRemove The component to remove from the entity.
+     * @return Entity An instance of the entity for convenience.
      */
     public Entity removeComponent (EntityComponent toRemove) {
         
@@ -155,8 +155,8 @@ public class Entity {
     /**
      * Removes a component from the entity by using its index within the component list.
      *
-     * @param index: The index of the component to remove.
-     * @return Entity: An instance of the entity for convenience.
+     * @param index The index of the component to remove.
+     * @return Entity An instance of the entity for convenience.
      */
     public Entity removeComponent (int index) {
         
@@ -167,7 +167,7 @@ public class Entity {
     /**
      * Gets the CompoundTag holding all the persistent data for this entity.
      * 
-     * @return CompoundTag: A CompoundTag which holds persistent data.
+     * @return CompoundTag A CompoundTag which holds persistent data.
      */
     public CompoundTag getEntityData () {
         
@@ -177,7 +177,7 @@ public class Entity {
     /**
      * Checks if the entity should be removed from the world.
      *
-     * @return boolean: Whether or not the entity should be removed.
+     * @return boolean Whether or not the entity should be removed.
      */
     public boolean shouldRemove () {
         
@@ -188,7 +188,7 @@ public class Entity {
      * Updates the status of the shouldRemove flag. If set to true, the mob will be removed
      * from the world in the next update tick, and will be garbage collected.
      *
-     * @param isRemovable: Whether or not the entity should be removed.
+     * @param isRemovable Whether or not the entity should be removed.
      */
     public void setRemoveStatus (boolean isRemovable) {
         

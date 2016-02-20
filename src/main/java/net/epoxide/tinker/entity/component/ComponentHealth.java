@@ -24,7 +24,7 @@ public class ComponentHealth extends EntityComponent {
      * Provides the entity with health properties. This will allow the entity to be hurt, and
      * killed through damage. This constructor sets the mob to full health.
      * 
-     * @param maxHealth: The maximum amount of health that the entity should have.
+     * @param maxHealth The maximum amount of health that the entity should have.
      */
     public ComponentHealth(int maxHealth) {
         
@@ -35,8 +35,8 @@ public class ComponentHealth extends EntityComponent {
      * Provides the entity with health properties. This will allow the entity to be hurt, and
      * killed through damage.
      * 
-     * @param maxHealth: The maximum amount of health that the entity should have.
-     * @param startingHealth: The amount of health to start the entity with.
+     * @param maxHealth The maximum amount of health that the entity should have.
+     * @param startingHealth The amount of health to start the entity with.
      */
     public ComponentHealth(int maxHealth, int startingHealth) {
         
@@ -49,7 +49,7 @@ public class ComponentHealth extends EntityComponent {
      * Gets the maximum amount of health that the entity should have under normal
      * circumstances.
      * 
-     * @return int: The maximum amount of health the entity should have.
+     * @return int The maximum amount of health the entity should have.
      */
     public int getMaxHealth () {
         
@@ -59,7 +59,7 @@ public class ComponentHealth extends EntityComponent {
     /**
      * Sets the maximum health of the entity. The max health must be at least one.
      * 
-     * @param maxHealth: The new maximum health for the entity.
+     * @param maxHealth The new maximum health for the entity.
      */
     public void setMaxHealth (int maxHealth) {
         
@@ -69,7 +69,7 @@ public class ComponentHealth extends EntityComponent {
     /**
      * Gets the current health of the entity.
      * 
-     * @return int: The current health of the entity.
+     * @return int The current health of the entity.
      */
     public int getCurrentHealth () {
         
@@ -79,7 +79,7 @@ public class ComponentHealth extends EntityComponent {
     /**
      * Heals the entity by the specified amount. Will never heal more than the max health.
      * 
-     * @param amount: The amount to heal the entity by.
+     * @param amount The amount to heal the entity by.
      */
     public void heal (int amount) {
         
@@ -90,7 +90,7 @@ public class ComponentHealth extends EntityComponent {
      * Harms the entity by the specified amount. Will never harm the entity below 0. If the
      * entity is invulnerable they will receive no damage.
      * 
-     * @param amount: The amount to damage the entity by.
+     * @param amount The amount to damage the entity by.
      */
     public void harm (int amount) {
         
@@ -101,7 +101,7 @@ public class ComponentHealth extends EntityComponent {
     /**
      * Calculates the percentage of remaining health that the mob has.
      * 
-     * @return double: The percentage as a double.
+     * @return double The percentage as a double.
      */
     // TODO Round this down to show up to 1 decimal place, if that decimal is not 0.
     public double getHealthPercentage () {
@@ -112,7 +112,7 @@ public class ComponentHealth extends EntityComponent {
     /**
      * Checks if an entity should be immune to damage.
      * 
-     * @return boolean: Whether or not the entity can not take damage.
+     * @return boolean Whether or not the entity can not take damage.
      */
     public boolean isInvulnerable () {
         
@@ -122,7 +122,7 @@ public class ComponentHealth extends EntityComponent {
     /**
      * Updates the vulnerability of the entity.
      * 
-     * @param vulnerability: If true, the entity will be invulnerable.
+     * @param vulnerability If true, the entity will be invulnerable.
      */
     public void setVulnerability (boolean vulnerability) {
         

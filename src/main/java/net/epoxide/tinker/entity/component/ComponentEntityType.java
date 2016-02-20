@@ -29,7 +29,7 @@ public class ComponentEntityType extends EntityComponent {
      * When declared, types should always be static and final. Good people also make their
      * types public.
      * 
-     * @param types: The types to set on the entity.
+     * @param types The types to set on the entity.
      */
     public ComponentEntityType(String... types) {
         
@@ -49,7 +49,7 @@ public class ComponentEntityType extends EntityComponent {
     /**
      * Adds a new type to the entity. Types can not be set twice.
      * 
-     * @param type: The type to add to the entity.
+     * @param type The type to add to the entity.
      */
     public void addType (String type) {
         
@@ -60,7 +60,7 @@ public class ComponentEntityType extends EntityComponent {
     /**
      * Attempts to remove a type from the entity.
      * 
-     * @param type: The type to remove.
+     * @param type The type to remove.
      */
     public void removeType (String type) {
         
@@ -70,8 +70,8 @@ public class ComponentEntityType extends EntityComponent {
     /**
      * Checks if the entity has a specific type.
      * 
-     * @param type: The type being searched for.
-     * @return boolean: Whether or not the entity has the specified type.
+     * @param type The type being searched for.
+     * @return boolean Whether or not the entity has the specified type.
      */
     public boolean hasType (String type) {
         

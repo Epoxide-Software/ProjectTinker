@@ -24,8 +24,8 @@ public class ComponentPosition extends EntityComponent {
     /**
      * Provides the entity with position data.
      * 
-     * @param posX: The X position for the entity.
-     * @param posY: The Y position for the entity.
+     * @param posX The X position for the entity.
+     * @param posY The Y position for the entity.
      */
     public ComponentPosition(int posX, int posY) {
         
@@ -36,7 +36,7 @@ public class ComponentPosition extends EntityComponent {
     /**
      * Gets the X position of the entity.
      * 
-     * @return int: The X position.
+     * @return int The X position.
      */
     public int getXPos () {
         
@@ -46,7 +46,7 @@ public class ComponentPosition extends EntityComponent {
     /**
      * Sets the X Position.
      * 
-     * @param xPos: The new X position.
+     * @param xPos The new X position.
      */
     public void setXPos (int xPos) {
         
@@ -56,7 +56,7 @@ public class ComponentPosition extends EntityComponent {
     /**
      * Gets the Y position of the entity.
      * 
-     * @return int: The Y position.
+     * @return int The Y position.
      */
     public int getYPos () {
         
@@ -66,7 +66,7 @@ public class ComponentPosition extends EntityComponent {
     /**
      * Sets the Y position.
      * 
-     * @param yPos: The new Y position.
+     * @param yPos The new Y position.
      */
     public void setYPos (int yPos) {
         

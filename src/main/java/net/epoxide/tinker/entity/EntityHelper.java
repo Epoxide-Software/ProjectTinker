@@ -12,9 +12,9 @@ public class EntityHelper {
      * Creates a standard green slime. The slime will have 20 health, and will have the color
      * green stored in its data.
      * 
-     * @param x: The X position to put the slime at.
-     * @param y: The Y position to put the slime at.
-     * @return Entity: The newly created green slime.
+     * @param x The X position to put the slime at.
+     * @param y The Y position to put the slime at.
+     * @return Entity The newly created green slime.
      */
     public static Entity createGreenSlime (int x, int y) {
         
