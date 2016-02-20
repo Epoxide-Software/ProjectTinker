@@ -25,7 +25,7 @@ public class TinkerGame extends Game {
         catch (Exception exception) {
             
             if (exception instanceof SilenceException && exception.getMessage().startsWith("java.nio.file.AccessDeniedException:") && exception.getMessage().contains("glfw.dll"))
-                JOptionPane.showMessageDialog(null, "Another instance of this game is already running. Please close that instance and try again.", "Epoxide Game: LD34", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Another instance of this game is already running. Please close that instance and try again.", "Project Tinker", JOptionPane.WARNING_MESSAGE);
                 
             else
                 exception.printStackTrace();
