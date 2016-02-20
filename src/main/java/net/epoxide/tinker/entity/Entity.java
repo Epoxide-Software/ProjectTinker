@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import net.darkhax.opennbt.tags.CompoundTag;
 import net.epoxide.tinker.entity.component.EntityComponent;
 
 public class Entity {
@@ -22,6 +23,11 @@ public class Entity {
      * A List containing all components for this entity.
      */
     private List<EntityComponent> components;
+    
+    /**
+     * A CompoundTag which holds all of the data for this entity.
+     */
+    private CompoundTag entityData;
     
     /**
      * A flag to determine whether or not the entity should be removed from the world.
@@ -156,6 +162,16 @@ public class Entity {
         
         this.components.remove(index);
         return this;
+    }
+    
+    /**
+     * Gets the CompoundTag holding all the persistent data for this entity.
+     * 
+     * @return CompoundTag: A CompoundTag which holds persistent data.
+     */
+    public CompoundTag getEntityData () {
+        
+        return this.entityData;
     }
     
     /**
