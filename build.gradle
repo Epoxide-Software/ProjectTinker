@@ -20,6 +20,7 @@ project.ext.lwjglVersion = "3.0.0-SNAPSHOT"
 repositories {
     mavenCentral()
     maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+    maven { url 'http://maven.rubbix.net' }
 }
 
 dependencies {
@@ -31,6 +32,7 @@ dependencies {
     compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows"
     compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-linux"
     compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
+    compile "net.darkhax.opennbt:OpenNBT:2.1.10"
 }
 
 String getVersionFromJava(File file) {
