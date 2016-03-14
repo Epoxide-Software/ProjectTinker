@@ -24,7 +24,6 @@ repositories {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
     compile "org.apache.commons:commons-lang3:3.4"
     compile "commons-configuration:commons-configuration:1.10"
     compile "junit:junit:4.12"
@@ -34,6 +33,7 @@ dependencies {
     compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
     compile "net.darkhax.opennbt:OpenNBT:2.4.20"
     compile "com.google.guava:guava:19.0"
+    compile "com.shc.silenceengine:SilenceEngine:6"
 }
 
 String getVersionFromJava(File file) {
