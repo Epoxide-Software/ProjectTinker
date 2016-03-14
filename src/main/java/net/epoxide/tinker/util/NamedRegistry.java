@@ -1,10 +1,13 @@
 package net.epoxide.tinker.util;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.Validate;
 
@@ -35,7 +38,20 @@ public class NamedRegistry<V> implements Iterable<V> {
         return this.registry.get(name);
     }
     
-    // TODO Add domain support along with code to filter by domains.
+    /**
+     * Registers a new value with the registry with a domain specified. This will also reset
+     * the value cache. If the name or value passed are null, the application will crash.
+     * Registering a value using a name that already exists is discouraged.
+     * 
+     * @param domain The domain for the entry. This is like a category to register the value
+     *            under.
+     * @param name The name to register the value with.
+     * @param value The value to register.
+     */
+    public void registerValue (String domain, String name, V value) {
+        
+        registerValue(domain + ":" + name, value);
+    }
     
     /**
      * Registers a new value with the registry. This will also reset the value cache. If the
@@ -58,6 +74,17 @@ public class NamedRegistry<V> implements Iterable<V> {
     }
     
     /**
+     * Retrieves a List of all registered names that use the passed domain.
+     * 
+     * @param domain The domain to get the names for.
+     * @return List<String> A List of all registered names using the passed domain.
+     */
+    public List<String> getNames (String domain) {
+        
+        return getNames().stream().filter(name -> name.startsWith(domain + ":")).collect(Collectors.toList());
+    }
+    
+    /**
      * Retrieves a Set of the names that are currently in use.
      * 
      * @return Set<String> The Set of names.
@@ -65,6 +92,19 @@ public class NamedRegistry<V> implements Iterable<V> {
     public Set<String> getNames () {
         
         return Collections.<String> unmodifiableSet(this.registry.keySet());
+    }
+    
+    /**
+     * Retrieves the values that have been registered under the specified domain.
+     * 
+     * @param domain The domain to get values for.
+     * @return List<V> A List of all values registered with the specified domain.
+     */
+    public List<V> getValues (String domain) {
+        
+        List<V> values = new ArrayList<V>();
+        registry.entrySet().stream().filter(pair -> pair.getKey().startsWith(domain + ":")).forEach(pair -> values.add(pair.getValue()));
+        return values;
     }
     
     /**
@@ -83,6 +123,17 @@ public class NamedRegistry<V> implements Iterable<V> {
     }
     
     /**
+     * Checks whether or not a domain has been used to register something.
+     * 
+     * @param domain The domain to check for.
+     * @return boolean True if the domain has been used.
+     */
+    public boolean hasDomain (String domain) {
+        
+        return this.registry.keySet().stream().filter(name -> name.startsWith(domain + ":")).findFirst() != null;
+    }
+    
+    /**
      * Checks whether or not a name has already been used in the registry.
      * 
      * @param name The name to check for.
@@ -94,6 +145,20 @@ public class NamedRegistry<V> implements Iterable<V> {
     }
     
     /**
+     * Retrieves a value randomly from the registered values that are registered using the
+     * provided domain.
+     * 
+     * @param random The Random instance to use for retrieving values.
+     * @param domain The domain to limit outcomes to.
+     * @return V A random value from the value cache. null if the cache is empty.
+     */
+    public V getRandomValue (Random random, String domain) {
+        
+        List<V> values = getValues(domain);
+        return (values.isEmpty()) ? null : values.get(random.nextInt(values.size()));
+    }
+    
+    /**
      * Retrieves a value randomly from the cache of values. If the cache of values is empty,
      * then null will be returned.
      * 
@@ -102,7 +167,8 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public V getRandomValue (Random random) {
         
-        return (V) this.getValues()[random.nextInt(this.valueCache.length)];
+        V[] values = getValues();
+        return (values.length == 0) ? null : (V) values[random.nextInt(values.length)];
     }
     
     @Override
