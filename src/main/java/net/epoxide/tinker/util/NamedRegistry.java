@@ -14,7 +14,7 @@ import com.shc.silenceengine.utils.Logger;
 public class NamedRegistry<V> implements Iterable<V> {
     
     /**
-     * A Map which contains all of the keys and values that have been registered.
+     * A Map which contains all of the names and values that have been registered.
      */
     protected final Map<String, V> registry = Maps.<String, V> newHashMap();
     
@@ -88,9 +88,9 @@ public class NamedRegistry<V> implements Iterable<V> {
      * @param name The name to check for.
      * @return boolean True if the name is in use, false if it is not.
      */
-    public boolean hasName (String key) {
+    public boolean hasName (String name) {
         
-        return this.registry.containsKey(key);
+        return this.registry.containsKey(name);
     }
     
     /**
