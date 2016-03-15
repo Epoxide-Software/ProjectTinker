@@ -33,13 +33,16 @@ public class Entity {
      * A flag to determine whether or not the entity should be removed from the world.
      */
     private boolean shouldRemove;
-    
+
+    public List<String> renderers = new ArrayList<String>();
+
     // TODO Constructor Params
     public Entity(String name) {
         
         this.displayName = name;
         this.uniqueId = UUID.randomUUID();
         this.components = new ArrayList<EntityComponent>();
+        this.entityData = new CompoundTag("data");
     }
     
     /**
@@ -193,5 +196,10 @@ public class Entity {
     public void setRemoveStatus (boolean isRemovable) {
         
         this.shouldRemove = isRemovable;
+    }
+
+    public boolean containsComponent(Class<?> componentClass){
+
+        return this.components.stream().anyMatch(c->c.getClass().equals(componentClass));
     }
 }
