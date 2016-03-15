@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@Deprecated
 public class ComponentEntityType extends EntityComponent {
     
     // TODO these types should get JavaDocs explaining how vanilla code interacts with them.

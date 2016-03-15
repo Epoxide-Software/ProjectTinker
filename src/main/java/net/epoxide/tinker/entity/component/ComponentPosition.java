@@ -1,5 +1,6 @@
 package net.epoxide.tinker.entity.component;
 
+@Deprecated
 public class ComponentPosition extends EntityComponent {
     
     /**

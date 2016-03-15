@@ -1,5 +1,6 @@
 package net.epoxide.tinker.entity.component;
 
+@Deprecated
 public class ComponentColors extends EntityComponent {
     
     /**

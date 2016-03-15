@@ -2,6 +2,7 @@ package net.epoxide.tinker.entity.component;
 
 import net.epoxide.tinker.entity.Entity;
 
+@Deprecated
 public class ComponentHealth extends EntityComponent {
     
     /**
