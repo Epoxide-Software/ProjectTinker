@@ -33,7 +33,7 @@ dependencies {
     compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
     compile "net.darkhax.opennbt:OpenNBT:2.4.20"
     compile "com.google.guava:guava:19.0"
-    compile "com.shc.silenceengine:SilenceEngine:6"
+    compile "com.shc.silenceengine:SilenceEngine:10"
 }
 
 String getVersionFromJava(File file) {
