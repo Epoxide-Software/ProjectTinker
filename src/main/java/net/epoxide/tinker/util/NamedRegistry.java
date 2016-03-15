@@ -48,9 +48,10 @@ public class NamedRegistry<V> implements Iterable<V> {
      * @param name The name to register the value with.
      * @param value The value to register.
      */
-    public void registerValue (String domain, String name, V value) {
+    public V registerValue (String domain, String name, V value) {
         
         registerValue(domain + ":" + name, value);
+        return value;
     }
     
     /**
@@ -61,7 +62,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      * @param name The name to register the value with.
      * @param value The value to register.
      */
-    public void registerValue (String name, V value) {
+    public V registerValue (String name, V value) {
         
         Validate.notNull(name);
         Validate.notNull(value);
@@ -71,6 +72,7 @@ public class NamedRegistry<V> implements Iterable<V> {
             
         this.valueCache = null;
         this.registry.put(name, value);
+        return value;
     }
     
     /**
