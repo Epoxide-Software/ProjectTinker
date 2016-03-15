@@ -5,12 +5,13 @@ import javax.swing.JOptionPane;
 import com.shc.silenceengine.core.Game;
 import com.shc.silenceengine.core.SilenceException;
 import com.shc.silenceengine.graphics.Batcher;
+
 import net.epoxide.tinker.client.render.RenderSystem;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.component.ComponentPosition;
 
 public class TinkerGame extends Game {
-
+    
     private Entity entityPlayer = new Entity("player");
     private RenderSystem renderSystem = new RenderSystem();
     /**
@@ -18,7 +19,7 @@ public class TinkerGame extends Game {
      * of major.minor.patch.build.
      */
     public static final String version = "0.0.0.0";
-
+    
     // TODO As we add new launch arguments, they should be documented here as a doc.
     public static void main (String[] args) {
         
@@ -44,8 +45,8 @@ public class TinkerGame extends Game {
     
     @Override
     public void init () {
-
-        entityPlayer.addComponent(new ComponentPosition(0,0));
+        
+        entityPlayer.addComponent(new ComponentPosition(0, 0));
         renderSystem.entityList.add(entityPlayer);
     }
     
@@ -61,7 +62,7 @@ public class TinkerGame extends Game {
     
     @Override
     public void render (float delta, Batcher batcher) {
-
+        
         renderSystem.renderEntities(batcher);
     }
 }

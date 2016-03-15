@@ -33,9 +33,9 @@ public class Entity {
      * A flag to determine whether or not the entity should be removed from the world.
      */
     private boolean shouldRemove;
-
+    
     public List<String> renderers = new ArrayList<String>();
-
+    
     // TODO Constructor Params
     public Entity(String name) {
         
@@ -197,9 +197,9 @@ public class Entity {
         
         this.shouldRemove = isRemovable;
     }
-
-    public boolean containsComponent(Class<?> componentClass){
-
-        return this.components.stream().anyMatch(c->c.getClass().equals(componentClass));
+    
+    public boolean containsComponent (Class<?> componentClass) {
+        
+        return this.components.stream().anyMatch(c -> c.getClass().equals(componentClass));
     }
 }
