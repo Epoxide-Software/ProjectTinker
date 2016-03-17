@@ -5,7 +5,9 @@ import javax.swing.JOptionPane;
 import com.shc.silenceengine.core.Game;
 import com.shc.silenceengine.core.SilenceException;
 import com.shc.silenceengine.graphics.Batcher;
+import com.shc.silenceengine.utils.Logger;
 
+import net.darkhax.opennbt.NBTHelper;
 import net.epoxide.tinker.client.render.RenderSystem;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.component.ComponentPosition;
@@ -40,7 +42,8 @@ public class TinkerGame extends Game {
     
     @Override
     public void preInit () {
-    
+        
+        Logger.info("[OpenNBT] Version " + NBTHelper.VERSION + " detected.");
     }
     
     @Override
