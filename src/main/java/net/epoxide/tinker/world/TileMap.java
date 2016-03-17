@@ -379,4 +379,32 @@ public class TileMap {
         
         return posX >= 0 && posX < this.width && posY >= 0 && posY < this.height;
     }
+    
+    /**
+     * Handles saving of the map to a file on the storage drive.
+     * 
+     * @param tag The CompoundTag to write this map data on.
+     */
+    public void writeMap (CompoundTag tag) {
+        
+        tag.setString("MapName", this.name);
+        tag.setInt("MapWidth", this.width);
+        tag.setInt("MapHeight", this.height);
+        
+        // TODO write tileMap and tileData to the tag.
+    }
+    
+    /**
+     * Handles reading of the map from a file on the storage drive.
+     * 
+     * @param tag The CompoundTag to read the map from.
+     */
+    public void readMap (CompoundTag tag) {
+        
+        this.name = tag.getString("MapName");
+        this.width = tag.getInt("MapWidth");
+        this.height = tag.getInt("MapHeight");
+        
+        // TODO read tileMap and tileData from the tag.
+    }
 }
