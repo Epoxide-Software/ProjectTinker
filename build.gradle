@@ -27,10 +27,12 @@ dependencies {
     compile "org.apache.commons:commons-lang3:3.4"
     compile "commons-configuration:commons-configuration:1.10"
     compile "junit:junit:4.12"
-    compile "org.lwjgl:lwjgl:${lwjglVersion}"
-    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows"
-    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-linux"
-    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
+    compile fileTree(dir: "libs", includes: ["*.jar"])
+    runtime fileTree(dir: "libs", includes: ["*.jar"])
+//    compile "org.lwjgl:lwjgl:${lwjglVersion}"
+//    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows"
+//    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-linux"
+//    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
     compile "net.darkhax.opennbt:OpenNBT:2.5.22"
     compile "com.google.guava:guava:19.0"
     compile "com.shc.silenceengine:SilenceEngine:10"
