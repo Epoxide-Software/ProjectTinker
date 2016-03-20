@@ -1,48 +1,38 @@
 package net.epoxide.tinker.client.render;
 
-import java.util.ArrayList;
-
+import com.shc.silenceengine.core.Display;
 import com.shc.silenceengine.graphics.Batcher;
-
-import net.epoxide.tinker.client.render.entity.RenderEntity;
-import net.epoxide.tinker.entity.Entity;
-import net.epoxide.tinker.util.NamedRegistry;
+import com.shc.silenceengine.graphics.cameras.OrthoCam;
 
 public class RenderSystem {
-    
-    private static NamedRegistry<RenderEntity> REGISTRY = new NamedRegistry<>();
-    
-    private RenderEntity DEFAULT_RENDER = new RenderEntity();
-    
-    public ArrayList<Entity> entityList = new ArrayList<>();
-    
-    public void renderEntities (Batcher batcher) {
-        
-        batcher.begin();
-        for (Entity entity : entityList) {
-            if (entity.renderers.size() == 0)
-                DEFAULT_RENDER.render(batcher, entity);
-                
-            for (String modelID : entity.renderers) {
-                if (modelID != null) {
-                    RenderEntity renderEntity = REGISTRY.getValue(modelID);
-                    if (renderEntity == null)
-                        DEFAULT_RENDER.render(batcher, entity);
-                    else
-                        renderEntity.render(batcher, entity);
-                }
-            }
-        }
-        batcher.end();
+
+    private OrthoCam ortho;
+    private RenderWorldSystem worldSystem;
+    private RenderEntitySystem entitySystem;
+
+    public static final int TILE_WINDOW_WIDTH = 16;
+    public static float tileSize;
+
+    public RenderSystem () {
+
+        this.worldSystem = new RenderWorldSystem();
+        this.entitySystem = new RenderEntitySystem();
+        resize();
     }
-    
-    public void registerRenderer (String modelID, RenderEntity entityRenderer) {
-        
-        if (REGISTRY.hasName(modelID)) {
-            System.out.println("Conflict");
-            return;
-        }
-        
-        REGISTRY.registerValue(modelID, entityRenderer);
+
+    public void render (float delta, Batcher batcher) {
+
+        ortho.apply();
+        worldSystem.renderWorld(delta, batcher);
+        entitySystem.renderEntities(batcher);
+    }
+
+    public void resize () {
+
+        this.ortho = new OrthoCam();
+
+        float wA = Display.getWidth() / TILE_WINDOW_WIDTH;
+        float hA = Display.getHeight() / TILE_WINDOW_WIDTH;
+        tileSize = Math.max(wA, hA);
     }
 }

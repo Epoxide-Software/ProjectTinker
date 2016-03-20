@@ -2,6 +2,7 @@ package net.epoxide.tinker.tile;
 
 import java.awt.Color;
 
+import com.shc.silenceengine.backend.lwjgl3.opengl.Texture;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.util.ItemObject;
 import net.epoxide.tinker.util.NamedRegistry;
