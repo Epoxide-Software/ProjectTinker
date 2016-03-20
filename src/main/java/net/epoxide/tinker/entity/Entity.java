@@ -28,6 +28,16 @@ public class Entity {
     private boolean shouldRemove;
     
     /**
+     * The position of the entity on the X axis.
+     */
+    private float xPos;
+    
+    /**
+     * The position of the entity on the Y axis.
+     */
+    private float yPos;
+    
+    /**
      * Constructs a new entity that is on a TileMap.
      * 
      * @param map The TileMap to spawn the entity on.
@@ -36,6 +46,7 @@ public class Entity {
         
         this.uniqueId = UUID.randomUUID();
         this.entityData = new CompoundTag("data");
+        this.setPos(0, 0);
     }
     
     /**
@@ -115,11 +126,56 @@ public class Entity {
     }
     
     /**
-     * Called whenever the entity enters a world. This is typically limited to when the mob
-     * initially spawns.
+     * Gets the X position of the entity.
      * 
-     * @param map The TileMap that the entity spawned on.
+     * @return int The X position.
      */
+    public float getXPos () {
+        
+        return xPos;
+    }
+    
+    /**
+     * Sets the X Position.
+     * 
+     * @param xPos The new X position.
+     */
+    public void setXPos (float xPos) {
+        
+        this.xPos = xPos;
+    }
+    
+    /**
+     * Gets the Y position of the entity.
+     * 
+     * @return int The Y position.
+     */
+    public float getYPos () {
+        
+        return yPos;
+    }
+    
+    /**
+     * Sets the Y position.
+     * 
+     * @param yPos The new Y position.
+     */
+    public void setYPos (float yPos) {
+        
+        this.yPos = yPos;
+    }
+    
+    /**
+     * Sets the X and Y position of the entity at the same time.
+     * 
+     * @param xPos The new X position.
+     * @param yPos The new Y position.
+     */
+    public void setPos (float xPos, float yPos) {
+        
+        this.xPos = xPos;
+        this.yPos = yPos;
+    }
     
     /**
      * Called whenever the entity is added to a TileMap. This is not limited to the initial
@@ -161,6 +217,7 @@ public class Entity {
         
         this.displayName = tag.getString("EntityName");
         this.uniqueId = UUID.fromString(tag.getString("EntityUUID"));
+        this.setPos(tag.getFloat("XPos"), tag.getFloat("YPos"));
     }
     
     /**
@@ -171,5 +228,7 @@ public class Entity {
         
         tag.setString("EntityName", this.displayName);
         tag.setString("EntityUUID", this.uniqueId.toString());
+        tag.setFloat("XPos", this.xPos);
+        tag.setFloat("YPos", this.yPos);
     }
 }
