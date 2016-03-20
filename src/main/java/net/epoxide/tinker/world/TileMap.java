@@ -46,7 +46,7 @@ public class TileMap {
      * A List of all entities on the TileMap.
      */
     private List<Entity> entityList;
-    
+
     /**
      * Constructs a new TileMap using basic data. The Tile array will have the correct size,
      * however it will be empty, same with the data array. The List of entities will be
@@ -140,7 +140,7 @@ public class TileMap {
     /**
      * Gets a tile from the TileMap. This will check that the location specified is valid. If
      * you know that the location is valid, and you are getting lots of tiles,
-     * {@link #getTileUnsafely(Tile, int, int)} will be more efficient.
+     * {@link #getTileUnsafely(int, int)} will be more efficient.
      * 
      * @param posX The X position to get the tile from.
      * @param posY The Y position to get the tile from.
@@ -393,7 +393,7 @@ public class TileMap {
         
         // TODO write tileMap and tileData to the tag.
     }
-    
+
     /**
      * Handles reading of the map from a file on the storage drive.
      * 
