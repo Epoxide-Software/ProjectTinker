@@ -1,11 +1,9 @@
 package net.epoxide.tinker.entity;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import net.darkhax.opennbt.tags.CompoundTag;
-import net.epoxide.tinker.entity.component.EntityComponent;
+import net.epoxide.tinker.world.TileMap;
 
 public class Entity {
     
@@ -20,11 +18,6 @@ public class Entity {
     private UUID uniqueId;
     
     /**
-     * A List containing all components for this entity.
-     */
-    private List<EntityComponent> components;
-    
-    /**
      * A CompoundTag which holds all of the data for this entity.
      */
     private CompoundTag entityData;
@@ -34,57 +27,28 @@ public class Entity {
      */
     private boolean shouldRemove;
     
-    public List<String> renderers = new ArrayList<String>();
-    
-    // TODO Constructor Params
-    public Entity(String name) {
+    /**
+     * Constructs a new entity that is on a TileMap.
+     * 
+     * @param map The TileMap to spawn the entity on.
+     */
+    public Entity(TileMap map) {
         
-        this.displayName = name;
         this.uniqueId = UUID.randomUUID();
-        this.components = new ArrayList<EntityComponent>();
         this.entityData = new CompoundTag("data");
     }
     
     /**
-     * Called whenever the entity enters a world. This is typically limited to when the mob
-     * initially spawns.
+     * Constructs a new entity from a CompoundTag. Intended for loading entities onto a TileMap
+     * from the TileMap data.
+     * 
+     * @param map The TileMap to spawn the entity on.
+     * @param tag The CompoundTag to load data from.
      */
-    public void onJoinWorld () {
+    public Entity(TileMap map, CompoundTag tag) {
         
-        this.components.forEach(c -> c.onJoinWorld(this));
-    }
-    
-    /**
-     * Called when the entity is killed or removed from the world.
-     */
-    public void onKilled () {
-        
-        this.components.forEach(c -> c.onKilled(this));
-    }
-    
-    /**
-     * Called on every update tick.
-     */
-    public void onUpdate () {
-        
-        this.components.forEach(c -> c.onUpdate(this));
-    }
-    
-    /**
-     * Called when the entity is being loaded from disk.
-     */
-    public void readData () {
-        
-        this.components.forEach(c -> c.readData(this));
-    }
-    
-    /**
-     * Called when the entity is being written to data. Things saved here can be loaded during
-     * readData.
-     */
-    public void writeData () {
-        
-        this.components.forEach(c -> c.writeData(this));
+        this.readData(tag);
+        this.entityData = tag;
     }
     
     /**
@@ -92,7 +56,7 @@ public class Entity {
      *
      * @return String The name associated with the entity.
      */
-    public String getEntityName () {
+    public String getDisplayName () {
         
         return this.displayName;
     }
@@ -102,7 +66,7 @@ public class Entity {
      *
      * @param name The new name for the entity.
      */
-    public void setEntityName (String name) {
+    public void setDisplayName (String name) {
         
         if (name != null && !name.isEmpty())
             this.displayName = name;
@@ -117,54 +81,6 @@ public class Entity {
     public UUID getUniqueId () {
         
         return this.uniqueId;
-    }
-    
-    /**
-     * Retrieves an array of components that are attached to the entity.
-     * 
-     * @return EntityComponent[] An array of components attached to the entiy.
-     */
-    public EntityComponent[] getComponents () {
-        
-        return this.components.toArray(new EntityComponent[this.components.size()]);
-    }
-    
-    /**
-     * Adds a component to the list of components used by the entity.
-     *
-     * @param component The component to add.
-     * @return Entity An instance of the entity for convenience.
-     */
-    public Entity addComponent (EntityComponent component) {
-        
-        this.components.add(component);
-        return this;
-    }
-    
-    /**
-     * Removes a component from the list of components. For the component to be removed, an
-     * existing component must pass the equals check.
-     *
-     * @param toRemove The component to remove from the entity.
-     * @return Entity An instance of the entity for convenience.
-     */
-    public Entity removeComponent (EntityComponent toRemove) {
-        
-        this.components.remove(toRemove);
-        
-        return this;
-    }
-    
-    /**
-     * Removes a component from the entity by using its index within the component list.
-     *
-     * @param index The index of the component to remove.
-     * @return Entity An instance of the entity for convenience.
-     */
-    public Entity removeComponent (int index) {
-        
-        this.components.remove(index);
-        return this;
     }
     
     /**
@@ -193,13 +109,67 @@ public class Entity {
      *
      * @param isRemovable Whether or not the entity should be removed.
      */
-    public void setRemoveStatus (boolean isRemovable) {
+    public void markForRemoval (boolean isRemovable) {
         
         this.shouldRemove = isRemovable;
     }
     
-    public boolean containsComponent (Class<?> componentClass) {
+    /**
+     * Called whenever the entity enters a world. This is typically limited to when the mob
+     * initially spawns.
+     * 
+     * @param map The TileMap that the entity spawned on.
+     */
+    
+    /**
+     * Called whenever the entity is added to a TileMap. This is not limited to the initial
+     * spawn of the mob, and happens on loading.
+     */
+    public void onJoinWorld (TileMap map) {
+    
+    }
+    
+    /**
+     * Called when the entity initially spawns on a TileMap.
+     * 
+     * @param map The TileMap that the entity spawned on.
+     */
+    public void onSpawn (TileMap map) {
+    
+    }
+    
+    /**
+     * Called when the entity is removed from the world.
+     */
+    public void onRemoval () {
         
-        return this.components.stream().anyMatch(c -> c.getClass().equals(componentClass));
+        // TODO populate arguments
+    }
+    
+    /**
+     * Called on every update tick.
+     */
+    public void onUpdate () {
+        
+        // TODO populate arguments
+    }
+    
+    /**
+     * Called when the entity is being loaded from disk.
+     */
+    public void readData (CompoundTag tag) {
+        
+        this.displayName = tag.getString("EntityName");
+        this.uniqueId = UUID.fromString(tag.getString("EntityUUID"));
+    }
+    
+    /**
+     * Called when the entity is being written to data. Things saved here can be loaded during
+     * readData.
+     */
+    public void writeData (CompoundTag tag) {
+        
+        tag.setString("EntityName", this.displayName);
+        tag.setString("EntityUUID", this.uniqueId.toString());
     }
 }
