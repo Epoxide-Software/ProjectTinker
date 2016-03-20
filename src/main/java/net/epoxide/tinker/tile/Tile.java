@@ -11,7 +11,7 @@ public class Tile {
     public static final NamedRegistry<Tile> REGISTRY = new NamedRegistry<Tile>();
     
     public static Tile VOID = REGISTRY.registerValue("tinker:void", new Tile());
-    
+
     /**
      * Called when the tile is being placed on a TileMap. Can be used to initialize data,
      * trigger events, or to prevent the tile from being placed.
@@ -88,7 +88,7 @@ public class Tile {
     }
     
     /**
-     * Checks if the tile has a color multiplier. if it does, {@link Tile#getColorMultiplier()}
+     * Checks if the tile has a color multiplier. if it does, {@link Tile#getColorMultiplier(int, int)}}
      * will be used when rendering the tile.
      * 
      * @return boolean Whether or not the tile requires a color multiplier.
@@ -102,14 +102,14 @@ public class Tile {
      * Provides a color multiplier to use when rendering the tile. The color multiplier is only
      * used when {@link Tile#hasColorMultiplier()} returns true. The color multiplier returned
      * is an RGB integer.
-     * 
+     *
      * @param posX The X coordinate of the tile on the tile map.
      * @param posY The Y coordinate of the tile on the tile map.
      * @return int An RGB integer which represents the color multiplier to use for the tile.
      */
     // TODO add TileMap param
     public int getColorMultiplier (int posX, int posY) {
-        
+
         return Color.white.getRGB();
     }
 }
