@@ -35,12 +35,23 @@ public class TinkerGame extends Game {
      */
     public static final String version = "0.0.0.0";
 
-    // TODO As we add new launch arguments, they should be documented here as a doc.
+    /**
+     * The initial call for the application. The args are handle and dealt with before the game starts
+     *
+     * @param args The arguments for the game, the list of support arguments are:
+     * - debug: Will enable the debugging of the application, and will return more information, to help solve problems.
+     */
     public static void main (String[] args) {
         
         try {
-            
-            new TinkerGame().start();
+            DEVELOPMENT = false;
+
+            TinkerGame game = new TinkerGame();
+            for (String arg : args) {
+                if (arg.equalsIgnoreCase("debug"))
+                    DEVELOPMENT = true;
+            }
+            game.start();
         }
         
         catch (Exception exception) {
@@ -85,7 +96,8 @@ public class TinkerGame extends Game {
     @Override
     public void update (float delta) {
 
-        Display.setTitle("FPS: " + Game.getFPS() + " | UPS: " + Game.getUPS() + " | RC: " + SilenceEngine.graphics.renderCallsPerFrame);
+        if (Game.DEVELOPMENT)
+            Display.setTitle("FPS: " + Game.getFPS() + " | UPS: " + Game.getUPS() + " | RC: " + SilenceEngine.graphics.renderCallsPerFrame);
     }
     
     @Override
