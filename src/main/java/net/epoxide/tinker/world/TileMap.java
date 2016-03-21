@@ -3,7 +3,10 @@ package net.epoxide.tinker.world;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.darkhax.opennbt.NBTHelper;
 import net.darkhax.opennbt.tags.CompoundTag;
+import net.darkhax.opennbt.tags.ListTag;
+import net.darkhax.opennbt.tags.StringTag;
 import net.darkhax.opennbt.tags.Tag;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.tile.Tile;
@@ -165,7 +168,8 @@ public class TileMap {
      */
     public Tile getTileUnsafely (int posX, int posY) {
         
-        return this.tileMap[posX][posY];
+        final Tile tile = this.tileMap[posX][posY];
+        return (tile == null) ? Tile.VOID : tile;
     }
     
     /**
@@ -293,9 +297,10 @@ public class TileMap {
      * @return Tag A Tag that was stored at the specified location. This can be null if no data
      *         was found.
      */
-    public Tag getTileDataUnsafely (int posX, int posY) {
+    public CompoundTag getTileDataUnsafely (int posX, int posY) {
         
-        return this.tileData[posX][posY];
+        final CompoundTag tag = this.tileData[posX][posY];
+        return (tag == null) ? new CompoundTag("TileData") : tag;
     }
     
     /**
@@ -413,7 +418,22 @@ public class TileMap {
         tag.setInt("MapWidth", this.width);
         tag.setInt("MapHeight", this.height);
         
-        // TOOD write tileMap and tileData and Entities
+        List<String> tileIDs = new ArrayList<String>();
+        List<Tag> tileData = new ArrayList<Tag>();
+        
+        for (int x = 0; x < this.width; x++) {
+            
+            for (int y = 0; y < this.height; y++) {
+                
+                tileIDs.add(getTileUnsafely(x, y).ID);
+                tileData.add(getTileDataUnsafely(x, y));
+            }
+        }
+        
+        tag.setStringArray("TileIDs", tileIDs.toArray(new String[this.width * this.height]));
+        tag.setTagList("TileData", tileData);
+        
+        //TODO Add entity read/write
     }
     
     /**
@@ -427,6 +447,15 @@ public class TileMap {
         this.width = tag.getInt("MapWidth");
         this.height = tag.getInt("MapHeight");
         
-        // TODO read tileMap and tileData from the tag.
+        String[] tileIDs = tag.getStringArray("TileIDs");
+        List<Tag> tileData = tag.getTagList(name);
+        
+        for (int x = 0; x < this.width; x++) {
+            
+            for (int y = 0; y < this.height; y++) {
+                
+                
+            }
+        }
     }
 }
