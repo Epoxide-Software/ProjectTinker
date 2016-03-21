@@ -362,9 +362,31 @@ public class TileMap {
         return entityList;
     }
     
-    // TODO Entity needs more stuff before this can be done
+    /**
+     * Spawns an entity into the TileMap. This will add the entity to the entity list and call
+     * {@link Entity#onSpawn(TileMap)} and {@link Entity#setCurrentMap(TileMap)} which will
+     * call {@link Entity#onJoinWorld(TileMap)}.
+     * 
+     * @param entity The entity to spawn.
+     */
     public void spawnEntity (Entity entity) {
+        
+        this.entityList.add(entity);
+        entity.onSpawn(this);
+        entity.setCurrentMap(this);
+    }
     
+    /**
+     * Adds an entity to the TileMap without actually spawning it. Calls
+     * {@link Entity#setCurrentMap(TileMap)} which will call
+     * {@link Entity#onJoinWorld(TileMap)}.
+     * 
+     * @param entity The entity to add to the map.
+     */
+    public void addEntity (Entity entity) {
+        
+        this.entityList.add(entity);
+        entity.setCurrentMap(this);
     }
     
     /**
