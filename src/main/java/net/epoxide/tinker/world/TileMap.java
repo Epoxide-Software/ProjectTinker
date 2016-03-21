@@ -3,10 +3,7 @@ package net.epoxide.tinker.world;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.darkhax.opennbt.NBTHelper;
 import net.darkhax.opennbt.tags.CompoundTag;
-import net.darkhax.opennbt.tags.ListTag;
-import net.darkhax.opennbt.tags.StringTag;
 import net.darkhax.opennbt.tags.Tag;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.tile.Tile;
@@ -433,7 +430,7 @@ public class TileMap {
         tag.setStringArray("TileIDs", tileIDs.toArray(new String[this.width * this.height]));
         tag.setTagList("TileData", tileData);
         
-        //TODO Add entity read/write
+        // TODO Add entity read/write
     }
     
     /**
@@ -453,8 +450,7 @@ public class TileMap {
         for (int x = 0; x < this.width; x++) {
             
             for (int y = 0; y < this.height; y++) {
-                
-                
+            
             }
         }
     }
