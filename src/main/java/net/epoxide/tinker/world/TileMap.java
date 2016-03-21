@@ -180,7 +180,7 @@ public class TileMap {
      */
     public void setTile (Tile tile, int posX, int posY) {
         
-        if (this.isValidLocation(posX, posY) && tile.placeTile(posX, posY))
+        if (this.isValidLocation(posX, posY) && tile.placeTile(this, posX, posY))
             this.tileMap[posX][posY] = tile;
     }
     
@@ -196,7 +196,7 @@ public class TileMap {
      */
     public void setTileUnsafely (Tile tile, int posX, int posY) {
         
-        if (tile.placeTile(posX, posY))
+        if (tile.placeTile(this, posX, posY))
             this.tileMap[posX][posY] = tile;
     }
     
@@ -216,7 +216,7 @@ public class TileMap {
             
             Tile tile = this.tileMap[posX][posY];
             
-            if (tile != null && tile.removeTile(posX, posY)) {
+            if (tile != null && tile.removeTile(this, posX, posY)) {
                 
                 this.tileMap[posX][posY] = null;
                 removeTileDataUnsafely(posX, posY);
@@ -237,7 +237,7 @@ public class TileMap {
         
         Tile tile = this.tileMap[posX][posY];
         
-        if (tile != null && tile.removeTile(posX, posY)) {
+        if (tile != null && tile.removeTile(this, posX, posY)) {
             
             this.tileMap[posX][posY] = null;
             removeTileDataUnsafely(posX, posY);
