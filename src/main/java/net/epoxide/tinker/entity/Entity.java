@@ -38,6 +38,14 @@ public class Entity {
     private float yPos;
     
     /**
+     * Constructs the entity with no internal logic. Allows for all of the logic to be handled
+     * by the entity.
+     */
+    public Entity() {
+    
+    }
+    
+    /**
      * Constructs a new entity that is on a TileMap.
      * 
      * @param map The TileMap to spawn the entity on.
