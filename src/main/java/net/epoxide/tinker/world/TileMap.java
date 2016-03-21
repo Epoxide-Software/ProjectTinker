@@ -38,9 +38,9 @@ public class TileMap {
     private Tile[][] tileMap;
     
     /**
-     * A 2D array of NBT tags. This is used to store tile data in a persistent way.
+     * A 2D array of CompoundTag. This is used to store tile data in a persistent way.
      */
-    private Tag[][] tileData;
+    private CompoundTag[][] tileData;
     
     /**
      * A List of all entities on the TileMap.
@@ -62,7 +62,7 @@ public class TileMap {
         this.height = height;
         this.name = name;
         this.tileMap = new Tile[width][height];
-        this.tileData = new Tag[width][height];
+        this.tileData = new CompoundTag[width][height];
         this.entityList = new ArrayList<Entity>();
     }
     
@@ -261,7 +261,7 @@ public class TileMap {
      * 
      * @param tileData The new 2D tag array.
      */
-    public void setTileData (Tag[][] tileData) {
+    public void setTileData (CompoundTag[][] tileData) {
         
         this.tileData = tileData;
     }
@@ -307,7 +307,7 @@ public class TileMap {
      * @param posX The X position of the tile to set data for.
      * @param posY The Y position of the tile to set data for.
      */
-    public void setTileData (Tag tag, int posX, int posY) {
+    public void setTileData (CompoundTag tag, int posX, int posY) {
         
         if (isValidLocation(posX, posY))
             this.tileData[posX][posY] = tag;
@@ -321,7 +321,7 @@ public class TileMap {
      * @param posX The X position of the tile to set data for.
      * @param posY The Y position of the tile to set data for.
      */
-    public void setTileDataUnsafely (Tag tag, int posX, int posY) {
+    public void setTileDataUnsafely (CompoundTag tag, int posX, int posY) {
         
         this.tileData[posX][posY] = tag;
     }
@@ -413,7 +413,7 @@ public class TileMap {
         tag.setInt("MapWidth", this.width);
         tag.setInt("MapHeight", this.height);
         
-        // TODO write tileMap and tileData to the tag.
+        // TOOD write tileMap and tileData and Entities
     }
     
     /**
