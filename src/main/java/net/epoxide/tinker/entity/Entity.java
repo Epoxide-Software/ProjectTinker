@@ -28,6 +28,11 @@ public class Entity {
     private boolean shouldRemove;
     
     /**
+     * The current TileMap that the entity is currently on.
+     */
+    private TileMap tileMap;
+    
+    /**
      * The position of the entity on the X axis.
      */
     private float xPos;
@@ -55,6 +60,7 @@ public class Entity {
         this.uniqueId = UUID.randomUUID();
         this.entityData = new CompoundTag("data");
         this.setPos(0, 0);
+        this.setCurrentMap(map);
     }
     
     /**
@@ -68,6 +74,7 @@ public class Entity {
         
         this.readData(tag);
         this.entityData = tag;
+        this.setCurrentMap(map);
     }
     
     /**
@@ -183,6 +190,28 @@ public class Entity {
         
         this.xPos = xPos;
         this.yPos = yPos;
+    }
+    
+    /**
+     * Gets the current TileMap that the entity is on.
+     * 
+     * @return TileMap The current TileMap that the entity is on. Might be null.
+     */
+    public TileMap getCurrentMap () {
+        
+        return this.tileMap;
+    }
+    
+    /**
+     * Sets the TileMap that the entity is currently on. This will also trigger
+     * {@link #onJoinWorld(TileMap)}
+     * 
+     * @param map The TileMap for the entity to be put on.
+     */
+    public void setCurrentMap (TileMap map) {
+        
+        this.tileMap = map;
+        this.onJoinWorld(map);
     }
     
     /**
