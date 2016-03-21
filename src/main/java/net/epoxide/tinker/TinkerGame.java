@@ -78,7 +78,7 @@ public class TinkerGame extends Game {
     public void init () {
         
         // entityPlayer.renderers.add("entityPlayer");
-        world.getEntityList().add(entityPlayer);
+        world.spawnEntity(entityPlayer);
         
         for (int x = 0; x < 512; x++) {
             for (int y = 0; y < 512; y++) {
