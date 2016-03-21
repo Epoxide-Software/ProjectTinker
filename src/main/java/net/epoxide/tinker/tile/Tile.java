@@ -17,6 +17,7 @@ public class Tile {
     public static final NamedRegistry<Tile> REGISTRY = new NamedRegistry<Tile>();
     
     public static Tile VOID = registerTile(new Tile("tinker:void"));
+    public static Tile STONE = registerTile(new Tile("tinker:stone"));
     
     /**
      * The ID that the tile is registered under.
