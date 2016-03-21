@@ -14,7 +14,6 @@ import net.epoxide.tinker.client.render.RenderEntitySystem;
 import net.epoxide.tinker.client.render.RenderSystem;
 import net.epoxide.tinker.client.render.entity.RenderEntityPlayer;
 import net.epoxide.tinker.entity.Entity;
-import net.epoxide.tinker.entity.component.ComponentPosition;
 import net.epoxide.tinker.tile.Tile;
 import net.epoxide.tinker.world.TileMap;
 
@@ -23,7 +22,7 @@ public class TinkerGame extends Game {
     /**
      * TODO Temp
      */
-    public Entity entityPlayer = new Entity("player");
+    public Entity entityPlayer = new Entity();
     private RenderSystem renderSystem = new RenderSystem();
     /**
      * TODO Temp
@@ -41,7 +40,7 @@ public class TinkerGame extends Game {
      * constructed but before the game is started.
      * 
      * The following is a list of valid program arguments and what they do.
-     * <li>debug Allows GLExceptions to display in the log. Disables the Logger.
+     * <li>debug - Allows GLExceptions to display in the log. Disables the Logger.
      * 
      * @param args An array of the different program arguments being used.
      */
@@ -78,8 +77,7 @@ public class TinkerGame extends Game {
     @Override
     public void init () {
         
-        entityPlayer.addComponent(new ComponentPosition(15, 15));
-        entityPlayer.renderers.add("entityPlayer");
+        // entityPlayer.renderers.add("entityPlayer");
         world.getEntityList().add(entityPlayer);
         
         for (int x = 0; x < 512; x++) {
