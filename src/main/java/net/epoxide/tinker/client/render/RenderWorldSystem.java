@@ -3,20 +3,21 @@ package net.epoxide.tinker.client.render;
 import com.shc.silenceengine.core.Display;
 import com.shc.silenceengine.graphics.Batcher;
 import com.shc.silenceengine.graphics.Color;
-
 import net.epoxide.tinker.TinkerGame;
+import net.epoxide.tinker.entity.living.EntityPlayer;
 import net.epoxide.tinker.tile.Tile;
+import net.epoxide.tinker.world.TileMap;
 
 public class RenderWorldSystem {
     
-    public void renderWorld (float delta, Batcher batcher) {
-        
+    public void renderWorld (float delta, Batcher batcher, TileMap tileMap) {
+
+        EntityPlayer entityPlayer = ((TinkerGame) TinkerGame.getInstance()).entityPlayer;
         int dW = Display.getWidth();
         int dH = Display.getHeight();
-        
-        // TODO Switch to player x,y
-        float x = 0;
-        float y = 0;
+
+        float x = entityPlayer.getXPos();
+        float y = entityPlayer.getYPos();
         
         float tWidthAmount = dW / RenderSystem.tileSize;
         float tHeightAmount = dH / RenderSystem.tileSize;
@@ -29,7 +30,7 @@ public class RenderWorldSystem {
                 float yRender = (float) ((yy + (y - Math.floor(y))) * RenderSystem.tileSize) - RenderSystem.tileSize / 2;
                 int tempX = (int) ((int) (xx - tWidthAmount / 2) + x);
                 int tempY = (int) ((int) (yy - tHeightAmount / 2) + y);
-                Tile tile = TinkerGame.world.getTile(tempX, tempY);
+                Tile tile = tileMap.getTile(tempX, tempY);
                 
                 if (tile != null) {
                     batcher.color(Color.GRAY);

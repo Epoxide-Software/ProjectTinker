@@ -13,7 +13,7 @@ import net.darkhax.opennbt.NBTHelper;
 import net.epoxide.tinker.client.render.RenderEntitySystem;
 import net.epoxide.tinker.client.render.RenderSystem;
 import net.epoxide.tinker.client.render.entity.RenderEntityPlayer;
-import net.epoxide.tinker.entity.Entity;
+import net.epoxide.tinker.entity.living.EntityPlayer;
 import net.epoxide.tinker.tile.Tile;
 import net.epoxide.tinker.world.TileMap;
 
@@ -22,12 +22,12 @@ public class TinkerGame extends Game {
     /**
      * TODO Temp
      */
-    public Entity entityPlayer = new Entity();
+    public EntityPlayer entityPlayer = new EntityPlayer();
     private RenderSystem renderSystem = new RenderSystem();
     /**
      * TODO Temp
      */
-    public static TileMap world = new TileMap(512, 512, "world");
+    public static TileMap tileMap = new TileMap(512, 512, "world");
     
     /**
      * The current version of the game. Version system follows a fairly standard version system
@@ -38,10 +38,10 @@ public class TinkerGame extends Game {
     /**
      * The initial call for the application. Handles program arguments after the game is
      * constructed but before the game is started.
-     * 
+     *
      * The following is a list of valid program arguments and what they do.
      * <li>debug - Allows GLExceptions to display in the log. Disables the Logger.
-     * 
+     *
      * @param args An array of the different program arguments being used.
      */
     public static void main (String[] args) {
@@ -61,7 +61,7 @@ public class TinkerGame extends Game {
             
             if (exception instanceof SilenceException && exception.getMessage().startsWith("java.nio.file.AccessDeniedException:") && exception.getMessage().contains("glfw.dll"))
                 JOptionPane.showMessageDialog(null, "Another instance of this game is already running. Please close that instance and try again.", "Project Tinker", JOptionPane.WARNING_MESSAGE);
-                
+
             else
                 exception.printStackTrace();
         }
@@ -73,16 +73,16 @@ public class TinkerGame extends Game {
         Logger.info("[OpenNBT] Version " + NBTHelper.VERSION + " detected.");
         Display.setVSync(false);
     }
-    
+
     @Override
     public void init () {
-        
+
         // entityPlayer.renderers.add("entityPlayer");
-        world.spawnEntity(entityPlayer);
+        tileMap.spawnEntity(entityPlayer);
         
         for (int x = 0; x < 512; x++) {
             for (int y = 0; y < 512; y++) {
-                world.setTile(Tile.VOID, x, y);
+                tileMap.setTile(Tile.VOID, x, y);
             }
         }
         
@@ -105,6 +105,6 @@ public class TinkerGame extends Game {
     @Override
     public void render (float delta, Batcher batcher) {
         
-        renderSystem.render(delta, batcher);
+        renderSystem.render(delta, batcher, tileMap);
     }
 }

@@ -3,6 +3,8 @@ package net.epoxide.tinker.client.render;
 import com.shc.silenceengine.core.Display;
 import com.shc.silenceengine.graphics.Batcher;
 import com.shc.silenceengine.graphics.cameras.OrthoCam;
+import net.epoxide.tinker.TinkerGame;
+import net.epoxide.tinker.world.TileMap;
 
 public class RenderSystem {
     
@@ -20,11 +22,11 @@ public class RenderSystem {
         resize();
     }
     
-    public void render (float delta, Batcher batcher) {
+    public void render (float delta, Batcher batcher, TileMap tileMap) {
         
         ortho.apply();
-        worldSystem.renderWorld(delta, batcher);
-        entitySystem.renderEntities(batcher);
+        worldSystem.renderWorld(delta, batcher, tileMap);
+        entitySystem.renderEntities(delta, batcher, tileMap);
     }
     
     public void resize () {

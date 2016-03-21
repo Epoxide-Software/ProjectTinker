@@ -11,23 +11,25 @@ public class RenderEntityPlayer extends RenderEntity {
     
     public void render (Batcher batcher, Entity e) {
         
-        float xPos = Display.getWidth() / 2 - RenderSystem.tileSize * 0.5f;
-        float yPos = Display.getHeight() / 2 - RenderSystem.tileSize * 0.5f;
+        float xPos = Display.getWidth() / 2;
+        float yPos = Display.getHeight() / 2;
+        
+        float tileHalfSize = RenderSystem.tileSize / 2;
+
+        batcher.color(Color.WHITE);
+        batcher.color(Color.WHITE);
+        batcher.color(Color.WHITE);
         
         batcher.color(Color.WHITE);
         batcher.color(Color.WHITE);
         batcher.color(Color.WHITE);
+
+        batcher.vertex(xPos - tileHalfSize, yPos + tileHalfSize);
+        batcher.vertex(xPos + tileHalfSize, yPos + tileHalfSize);
+        batcher.vertex(xPos - tileHalfSize, yPos - tileHalfSize);
         
-        batcher.color(Color.WHITE);
-        batcher.color(Color.WHITE);
-        batcher.color(Color.WHITE);
-        
-        batcher.vertex(xPos, yPos + RenderSystem.tileSize);
-        batcher.vertex(xPos + RenderSystem.tileSize, yPos + RenderSystem.tileSize);
-        batcher.vertex(xPos, yPos);
-        
-        batcher.vertex(xPos + RenderSystem.tileSize, yPos + RenderSystem.tileSize);
-        batcher.vertex(xPos, yPos);
-        batcher.vertex(xPos + RenderSystem.tileSize, yPos);
+        batcher.vertex(xPos + tileHalfSize, yPos + tileHalfSize);
+        batcher.vertex(xPos - tileHalfSize, yPos - tileHalfSize);
+        batcher.vertex(xPos + tileHalfSize, yPos - tileHalfSize);
     }
 }
