@@ -9,9 +9,55 @@ import net.epoxide.tinker.world.TileMap;
 
 public class Tile {
     
+    /**
+     * A named registry which holds all registered tiles. Due to the way Tile IDs are handled,
+     * registration using this registry should only be done through {@link #registerTile(Tile)}
+     * which uses the Tile's static ID value.
+     */
     public static final NamedRegistry<Tile> REGISTRY = new NamedRegistry<Tile>();
     
-    public static Tile VOID = REGISTRY.registerValue("tinker:void", new Tile());
+    public static Tile VOID = registerTile(new Tile("tinker:void"));
+    
+    /**
+     * The ID that the tile is registered under.
+     */
+    public final String ID;
+    
+    /**
+     * Constructs a tile with the ID that the tile was registered under.
+     * 
+     * @param id The ID that the tile is registered under.
+     */
+    public Tile(String id) {
+        
+        this.ID = id;
+    }
+    
+    /**
+     * Registers a tile with the {@link #REGISTRY} using the ID stored in the Tile. This should
+     * be used over directly accessing the REGISTRY.
+     * 
+     * @param tile The Tile to register.
+     * @return Tile The same Tile being registered. Provided to make life easier.
+     */
+    public static Tile registerTile (Tile tile) {
+        
+        return REGISTRY.registerValue(tile.ID, tile);
+    }
+    
+    /**
+     * Gets a Tile from the {@link #REGISTRY} which is associated with the name. If no tile
+     * exists, {@link #VOID} will be returned.
+     * 
+     * @param name The name of the Tile you are looking for.
+     * @return Tile The Tile associated with the specified name, or {@link #VOID} if no tile is
+     *         found.
+     */
+    public static Tile getTileByName (String name) {
+        
+        Tile tile = REGISTRY.getValue(name);
+        return (tile == null) ? VOID : tile;
+    }
     
     /**
      * Called when the tile is being placed on a TileMap. Can be used to initialize data,
