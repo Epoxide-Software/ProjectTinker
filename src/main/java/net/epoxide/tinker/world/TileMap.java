@@ -296,8 +296,15 @@ public class TileMap {
      */
     public CompoundTag getTileDataUnsafely (int posX, int posY) {
         
-        final CompoundTag tag = this.tileData[posX][posY];
-        return (tag == null) ? new CompoundTag("TileData") : tag;
+        CompoundTag tag = this.tileData[posX][posY];
+        
+        if (tag == null) {
+            
+            tag = new CompoundTag("TileData");
+            this.tileData[posX][posY] = tag;
+        }
+        
+        return tag;
     }
     
     /**
@@ -409,7 +416,7 @@ public class TileMap {
      * 
      * @param tag The CompoundTag to write this map data on.
      */
-    public void writeMap (CompoundTag tag) {
+    public CompoundTag writeMap (CompoundTag tag) {
         
         tag.setString("MapName", this.name);
         tag.setInt("MapWidth", this.width);
@@ -431,6 +438,7 @@ public class TileMap {
         tag.setTagList("TileData", tileData);
         
         // TODO Add entity read/write
+        return tag;
     }
     
     /**
@@ -445,12 +453,15 @@ public class TileMap {
         this.height = tag.getInt("MapHeight");
         
         String[] tileIDs = tag.getStringArray("TileIDs");
-        List<Tag> tileData = tag.getTagList(name);
+        List<Tag> tileData = tag.getTagList("TileData");
         
         for (int x = 0; x < this.width; x++) {
             
             for (int y = 0; y < this.height; y++) {
-            
+                
+                final int index = y % this.height + x * this.height;
+                this.tileMap[x][y] = Tile.getTileByName(tileIDs[index]);
+                this.tileData[x][y] = (CompoundTag) tileData.get(index);
             }
         }
     }
