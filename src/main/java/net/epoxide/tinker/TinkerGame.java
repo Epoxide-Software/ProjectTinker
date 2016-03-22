@@ -13,6 +13,7 @@ import net.darkhax.opennbt.NBTHelper;
 import net.epoxide.tinker.client.render.RenderEntitySystem;
 import net.epoxide.tinker.client.render.RenderSystem;
 import net.epoxide.tinker.client.render.entity.RenderEntityPlayer;
+import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.living.EntityPlayer;
 import net.epoxide.tinker.tile.Tile;
 import net.epoxide.tinker.world.TileMap;
@@ -22,7 +23,7 @@ public class TinkerGame extends Game {
     /**
      * TODO Temp
      */
-    public EntityPlayer entityPlayer = new EntityPlayer();
+    public EntityPlayer entityPlayer;
     private RenderSystem renderSystem = new RenderSystem();
     /**
      * TODO Temp
@@ -77,6 +78,8 @@ public class TinkerGame extends Game {
     @Override
     public void init () {
         
+        entityPlayer = new EntityPlayer(tileMap);
+        Entity.REGISTRY.registerValue("tinker:player", EntityPlayer.class);
         // entityPlayer.renderers.add("entityPlayer");
         tileMap.spawnEntity(entityPlayer);
         
