@@ -437,7 +437,10 @@ public class TileMap {
         tag.setStringArray("TileIDs", tileIDs.toArray(new String[this.width * this.height]));
         tag.setTagList("TileData", tileData);
         
-        // TODO Add entity read/write
+        List<Tag> entityData = new ArrayList<Tag>();
+        this.entityList.forEach(entity -> entityData.add(entity.writeData(new CompoundTag("EntityData"))));
+        tag.setTagList("Entities", entityData);
+        
         return tag;
     }
     
@@ -452,8 +455,8 @@ public class TileMap {
         this.width = tag.getInt("MapWidth");
         this.height = tag.getInt("MapHeight");
         
-        String[] tileIDs = tag.getStringArray("TileIDs");
-        List<Tag> tileData = tag.getTagList("TileData");
+        final String[] tileIDs = tag.getStringArray("TileIDs");
+        final List<Tag> tileData = tag.getTagList("TileData");
         
         for (int x = 0; x < this.width; x++) {
             
@@ -463,6 +466,16 @@ public class TileMap {
                 this.tileMap[x][y] = Tile.getTileByName(tileIDs[index]);
                 this.tileData[x][y] = (CompoundTag) tileData.get(index);
             }
+        }
+        
+        final List<Tag> entities = tag.getTagList("Entities");
+        
+        for (Tag entityTag : entities) {
+            
+            final CompoundTag entityData = (CompoundTag) entityTag;
+            final Entity entity = Entity.REGISTRY.getValue(entityData.getString("EntityID"));
+            entity.readData(entityData);
+            this.addEntity(entity);
         }
     }
 }
