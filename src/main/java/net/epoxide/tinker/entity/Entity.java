@@ -269,6 +269,7 @@ public class Entity {
      */
     public void writeData (CompoundTag tag) {
         
+        tag.setString("EntityID", REGISTRY.getNameForValue(this));
         tag.setString("EntityName", this.displayName);
         tag.setString("EntityUUID", this.uniqueId.toString());
         tag.setFloat("XPos", this.xPos);
