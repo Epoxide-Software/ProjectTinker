@@ -473,8 +473,9 @@ public class TileMap {
         for (Tag entityTag : entities) {
             
             final CompoundTag entityData = (CompoundTag) entityTag;
-            final Entity entity = Entity.REGISTRY.getValue(entityData.getString("EntityID"));
+            final Entity entity = Entity.createInstance(Entity.REGISTRY.getValue(entityData.getString("EntityID")));
             entity.readData(entityData);
+            entity.setEntityData(entityData);
             this.addEntity(entity);
         }
     }
