@@ -265,14 +265,18 @@ public class Entity {
     
     /**
      * Called when the entity is being written to data. Things saved here can be loaded during
-     * readData.
+     * {@link #readData(CompoundTag)}.
+     * 
+     * @param tag The CompoundTag to write the entity to.
+     * @return CompoundTag The same CompoundTag passed to the entity.
      */
-    public void writeData (CompoundTag tag) {
+    public CompoundTag writeData (CompoundTag tag) {
         
         tag.setString("EntityID", REGISTRY.getNameForValue(this));
         tag.setString("EntityName", this.displayName);
         tag.setString("EntityUUID", this.uniqueId.toString());
         tag.setFloat("XPos", this.xPos);
         tag.setFloat("YPos", this.yPos);
+        return tag;
     }
 }
