@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.Validate;
 
-import com.google.common.collect.Maps;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import com.shc.silenceengine.utils.Logger;
 
 public class NamedRegistry<V> implements Iterable<V> {
@@ -19,7 +19,7 @@ public class NamedRegistry<V> implements Iterable<V> {
     /**
      * A Map which contains all of the names and values that have been registered.
      */
-    protected final Map<String, V> registry = Maps.<String, V> newHashMap();
+    protected final BiMap<String, V> registry = HashBiMap.create();
     
     /**
      * An array that holds a cache of all registered values. This cache should only be altered
@@ -94,6 +94,17 @@ public class NamedRegistry<V> implements Iterable<V> {
     public Set<String> getNames () {
         
         return Collections.<String> unmodifiableSet(this.registry.keySet());
+    }
+    
+    /**
+     * Retrieves the name that was used to register the passed value.
+     * 
+     * @param value The value to get the name of.
+     * @return String The name that the value was registered under. Can be null if no results.
+     */
+    public String getNameForValue (V value) {
+        
+        return registry.inverse().get(value);
     }
     
     /**
