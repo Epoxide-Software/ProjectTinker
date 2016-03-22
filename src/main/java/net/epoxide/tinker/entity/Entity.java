@@ -3,9 +3,15 @@ package net.epoxide.tinker.entity;
 import java.util.UUID;
 
 import net.darkhax.opennbt.tags.CompoundTag;
+import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.world.TileMap;
 
 public class Entity {
+    
+    /**
+     * A registry for registering Entities into the game.
+     */
+    public static final NamedRegistry<Entity> REGISTRY = new NamedRegistry<Entity>();
     
     /**
      * A name that is associated with this entity. It is generally not unique.
