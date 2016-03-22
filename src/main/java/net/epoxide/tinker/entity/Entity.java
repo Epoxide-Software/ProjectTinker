@@ -1,6 +1,10 @@
 package net.epoxide.tinker.entity;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
+
+import com.shc.silenceengine.utils.Logger;
 
 import net.darkhax.opennbt.tags.CompoundTag;
 import net.epoxide.tinker.util.NamedRegistry;
@@ -11,7 +15,7 @@ public class Entity {
     /**
      * A registry for registering Entities into the game.
      */
-    public static final NamedRegistry<Entity> REGISTRY = new NamedRegistry<Entity>();
+    public static final NamedRegistry<Class<? extends Entity>> REGISTRY = new NamedRegistry<Class<? extends Entity>>();
     
     /**
      * A name that is associated with this entity. It is generally not unique.
@@ -84,6 +88,31 @@ public class Entity {
     }
     
     /**
+     * Creates an instance of an entity from the class it was registered with. All sub types of
+     * Entity must have the standard blank constructor or else this will fail.
+     * 
+     * @param entityClass The Class of the entity you are trying to instantiated.
+     * @return Entity A new entity instance, or null of an issue occurred.
+     */
+    public static Entity createInstance (Class<? extends Entity> entityClass) {
+        
+        try {
+            
+            Constructor<? extends Entity> constructor = entityClass.getDeclaredConstructor();
+            constructor.setAccessible(true);
+            return constructor.newInstance();
+        }
+        
+        catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException exception) {
+            
+            Logger.warn("The Entity type " + entityClass.getName() + " Could not be instantiated!");
+            exception.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    /**
      * Gets the name associated with the entity.
      *
      * @return String The name associated with the entity.
@@ -123,6 +152,17 @@ public class Entity {
     public CompoundTag getEntityData () {
         
         return this.entityData;
+    }
+    
+    /**
+     * Overrides the data of the entity with a new tag compound. Be careful when using this as
+     * it completely deletes the CompoundTag and if set to null will break stuff.
+     * 
+     * @param tag The new CompoundTag. Please don't use null!
+     */
+    public void setEntityData (CompoundTag tag) {
+        
+        this.entityData = tag;
     }
     
     /**
@@ -272,7 +312,7 @@ public class Entity {
      */
     public CompoundTag writeData (CompoundTag tag) {
         
-        tag.setString("EntityID", REGISTRY.getNameForValue(this));
+        tag.setString("EntityID", REGISTRY.getNameForValue(this.getClass()));
         tag.setString("EntityName", this.displayName);
         tag.setString("EntityUUID", this.uniqueId.toString());
         tag.setFloat("XPos", this.xPos);
