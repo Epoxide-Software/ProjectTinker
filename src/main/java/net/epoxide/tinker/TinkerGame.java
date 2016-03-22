@@ -61,7 +61,7 @@ public class TinkerGame extends Game {
             
             if (exception instanceof SilenceException && exception.getMessage().startsWith("java.nio.file.AccessDeniedException:") && exception.getMessage().contains("glfw.dll"))
                 JOptionPane.showMessageDialog(null, "Another instance of this game is already running. Please close that instance and try again.", "Project Tinker", JOptionPane.WARNING_MESSAGE);
-
+                
             else
                 exception.printStackTrace();
         }
@@ -73,16 +73,16 @@ public class TinkerGame extends Game {
         Logger.info("[OpenNBT] Version " + NBTHelper.VERSION + " detected.");
         Display.setVSync(false);
     }
-
+    
     @Override
     public void init () {
-
+        
         // entityPlayer.renderers.add("entityPlayer");
         tileMap.spawnEntity(entityPlayer);
         
         for (int x = 0; x < 512; x++) {
             for (int y = 0; y < 512; y++) {
-                tileMap.setTile(Tile.VOID, x, y);
+                tileMap.setTile((Math.random() < 0.5) ? Tile.VOID : Tile.STONE, x, y);
             }
         }
         
