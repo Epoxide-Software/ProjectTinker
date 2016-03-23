@@ -61,13 +61,18 @@ public class RegistryName {
      */
     private static String[] splitNameSafely (String name) {
         
-        String[] defaultNames = new String[] { "tinker", name };
-        String[] splitNames = name.split(":");
+        String[] astring = new String[] { "tinker", name };
+        int seperator = name.indexOf(":");
         
-        if (splitNames.length == 2)
-            defaultNames[0] = splitNames[0];
+        if (seperator >= 0) {
             
-        return defaultNames;
+            astring[1] = name.substring(seperator + 1, name.length());
+            
+            if (seperator > 1)
+                astring[0] = name.substring(0, seperator);
+        }
+        
+        return astring;
     }
     
     /**
@@ -93,18 +98,27 @@ public class RegistryName {
     @Override
     public boolean equals (Object obj) {
         
-        if (obj instanceof RegistryName) {
+        if (this == obj)
+            return true;
+            
+        else if (obj instanceof RegistryName) {
             
             RegistryName regName = (RegistryName) obj;
             return (this.domain.equals(regName.domain) && this.name.equals(regName.name));
         }
         
-        return super.equals(obj);
+        return false;
     }
     
     @Override
     public String toString () {
         
         return this.domain + ":" + this.name;
+    }
+    
+    @Override
+    public int hashCode () {
+        
+        return this.domain.hashCode() + this.name.hashCode();
     }
 }
