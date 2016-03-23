@@ -5,6 +5,7 @@ import java.awt.Color;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.util.ItemObject;
 import net.epoxide.tinker.util.NamedRegistry;
+import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.world.TileMap;
 
 public class Tile {
@@ -43,7 +44,7 @@ public class Tile {
      */
     public static Tile registerTile (Tile tile) {
         
-        return REGISTRY.registerValue(tile.ID, tile);
+        return REGISTRY.registerValue(new RegistryName(tile.ID), tile);
     }
     
     /**

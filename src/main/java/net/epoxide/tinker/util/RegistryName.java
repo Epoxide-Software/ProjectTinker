@@ -91,7 +91,7 @@ public class RegistryName {
     }
     
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals (Object obj) {
         
         if (obj instanceof RegistryName) {
             
@@ -103,7 +103,7 @@ public class RegistryName {
     }
     
     @Override
-    public String toString() {
+    public String toString () {
         
         return this.domain + ":" + this.name;
     }

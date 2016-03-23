@@ -1,7 +1,6 @@
 package net.epoxide.tinker.util;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -19,7 +18,7 @@ public class NamedRegistry<V> implements Iterable<V> {
     /**
      * A Map which contains all of the names and values that have been registered.
      */
-    protected final BiMap<String, V> registry = HashBiMap.create();
+    protected final BiMap<RegistryName, V> registry = HashBiMap.create();
     
     /**
      * An array that holds a cache of all registered values. This cache should only be altered
@@ -31,11 +30,34 @@ public class NamedRegistry<V> implements Iterable<V> {
      * Retrieves a value from the registry that is associated with the name passed.
      * 
      * @param name The name of the Object you want to retrieve.
-     * @return V The value associated with the name. If none is found, expect null.
+     * @return V The value associated with the name. If none are found, expect null.
+     */
+    public V getValue (RegistryName name) {
+        
+        return this.registry.get(name);
+    }
+    
+    /**
+     * Retrieves a value from the registry that is associated with the domain and name passed.
+     * 
+     * @param domain The domain of the value you are looking for.
+     * @param name The name of the value you are looking for.
+     * @return V The value associated with the name. If none are found, expect null.
+     */
+    public V getValue (String domain, String name) {
+        
+        return getValue(new RegistryName(domain, name));
+    }
+    
+    /**
+     * Retrieves a value from the registry that is associated with a name.
+     * 
+     * @param name The name of the value you are looking for.
+     * @return V The value associated with the name. If none are found, expect null.
      */
     public V getValue (String name) {
         
-        return this.registry.get(name);
+        return getValue(new RegistryName(name));
     }
     
     /**
@@ -50,7 +72,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public V registerValue (String domain, String name, V value) {
         
-        registerValue(domain + ":" + name, value);
+        registerValue(new RegistryName(domain, name), value);
         return value;
     }
     
@@ -62,7 +84,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      * @param name The name to register the value with.
      * @param value The value to register.
      */
-    public V registerValue (String name, V value) {
+    public V registerValue (RegistryName name, V value) {
         
         Validate.notNull(name);
         Validate.notNull(value);
@@ -79,30 +101,31 @@ public class NamedRegistry<V> implements Iterable<V> {
      * Retrieves a List of all registered names that use the passed domain.
      * 
      * @param domain The domain to get the names for.
-     * @return List<String> A List of all registered names using the passed domain.
+     * @return List<RegistryName> A List of all registered names using the passed domain.
      */
-    public List<String> getNames (String domain) {
+    public List<RegistryName> getNames (String domain) {
         
-        return getNames().stream().filter(name -> name.startsWith(domain + ":")).collect(Collectors.toList());
+        return getNames().stream().filter(name -> name.getDomain().equals(domain)).collect(Collectors.toList());
     }
     
     /**
      * Retrieves a Set of the names that are currently in use.
      * 
-     * @return Set<String> The Set of names.
+     * @return Set<RegistryName> The Set of names.
      */
-    public Set<String> getNames () {
+    public Set<RegistryName> getNames () {
         
-        return Collections.<String> unmodifiableSet(this.registry.keySet());
+        return this.registry.keySet();
     }
     
     /**
      * Retrieves the name that was used to register the passed value.
      * 
      * @param value The value to get the name of.
-     * @return String The name that the value was registered under. Can be null if no results.
+     * @return RegistryName The name that the value was registered under. Can be null if no
+     *         results.
      */
-    public String getNameForValue (V value) {
+    public RegistryName getNameForValue (V value) {
         
         return registry.inverse().get(value);
     }
@@ -116,7 +139,7 @@ public class NamedRegistry<V> implements Iterable<V> {
     public List<V> getValues (String domain) {
         
         List<V> values = new ArrayList<V>();
-        registry.entrySet().stream().filter(pair -> pair.getKey().startsWith(domain + ":")).forEach(pair -> values.add(pair.getValue()));
+        registry.entrySet().stream().filter(pair -> pair.getKey().getDomain().equals(domain)).forEach(pair -> values.add(pair.getValue()));
         return values;
     }
     
@@ -143,7 +166,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public boolean hasDomain (String domain) {
         
-        return this.registry.keySet().stream().filter(name -> name.startsWith(domain + ":")).findFirst() != null;
+        return this.registry.keySet().stream().filter(name -> name.getDomain().equals(domain)).findFirst() != null;
     }
     
     /**
@@ -152,7 +175,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      * @param name The name to check for.
      * @return boolean True if the name is in use, false if it is not.
      */
-    public boolean hasName (String name) {
+    public boolean hasName (RegistryName name) {
         
         return this.registry.containsKey(name);
     }

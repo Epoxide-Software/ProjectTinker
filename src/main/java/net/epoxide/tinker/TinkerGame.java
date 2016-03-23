@@ -16,6 +16,7 @@ import net.epoxide.tinker.client.render.entity.RenderEntityPlayer;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.living.EntityPlayer;
 import net.epoxide.tinker.tile.Tile;
+import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.world.TileMap;
 
 public class TinkerGame extends Game {
@@ -79,7 +80,7 @@ public class TinkerGame extends Game {
     public void init () {
         
         entityPlayer = new EntityPlayer(tileMap);
-        Entity.REGISTRY.registerValue("tinker:player", EntityPlayer.class);
+        Entity.REGISTRY.registerValue(new RegistryName("player"), EntityPlayer.class);
         // entityPlayer.renderers.add("entityPlayer");
         tileMap.spawnEntity(entityPlayer);
         

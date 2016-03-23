@@ -312,7 +312,7 @@ public class Entity {
      */
     public CompoundTag writeData (CompoundTag tag) {
         
-        tag.setString("EntityID", REGISTRY.getNameForValue(this.getClass()));
+        tag.setString("EntityID", REGISTRY.getNameForValue(this.getClass()).toString());
         tag.setString("EntityName", this.displayName);
         tag.setString("EntityUUID", this.uniqueId.toString());
         tag.setFloat("XPos", this.xPos);
