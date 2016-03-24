@@ -1,8 +1,5 @@
 package net.epoxide.tinker.item;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.StatModifier;
 import net.epoxide.tinker.util.ItemObject;
@@ -14,17 +11,18 @@ public class Item {
     public static final NamedRegistry<Item> REGISTRY = new NamedRegistry<Item>();
     
     /**
-     * Gets a MultiMap of StatModifiers. All StatModifiers returned will be applied to the
-     * entity that is using the item. This can be used to allow for things like additional
-     * damage or decreased movement speed.
+     * Gets a StatModifier for the Item. This can allow the Item to manipulate entity stats,
+     * such as increasing damage, or lowering speed.
      * 
      * @param item The ItemObject being used.
      * @param map The TileMap where this is happening.
      * @param user The entity using the item.
-     * @return Multimap<String, StatModifier> A Multimap of StatModifiers for the Item.
+     * @param type The name of the stat to provide a modifier for.
+     * @return StatModifier A StatModifier object which represents the modifier effects of the
+     *         Item. Return null to have no effect.
      */
-    public Multimap<String, StatModifier> getStatModifiers (ItemObject item, TileMap map, Entity user) {
+    public StatModifier getStatModifier (ItemObject item, TileMap map, Entity user, String type) {
         
-        return HashMultimap.<String, StatModifier> create();
+        return null;
     }
 }
