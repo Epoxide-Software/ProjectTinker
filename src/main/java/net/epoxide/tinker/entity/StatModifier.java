@@ -5,9 +5,9 @@ import java.util.UUID;
 public class StatModifier {
     
     /**
-     * The name of the stat being modified.
+     * The type of the stat being modified.
      */
-    private final String type;
+    private final EntityStat type;
     
     /**
      * The value of the stat modifier.
@@ -27,15 +27,15 @@ public class StatModifier {
     /**
      * Constructs a new StatModifier which handles the modification of a certain stat type.
      * 
+     * @param type The EntityStat being modified.
      * @param value The value of the stat modifier.
      * @param modType The type of modifications being performed.
-     * @param type The name of the stat being modified.
      */
-    public StatModifier(float value, byte modType, String type) {
+    public StatModifier(EntityStat type, float value, byte modType) {
         
+        this.type = type;
         this.value = value;
         this.modType = modType;
-        this.type = type;
         this.id = UUID.randomUUID();
     }
     
@@ -60,11 +60,11 @@ public class StatModifier {
     }
     
     /**
-     * Gets the name of the stat being modified.
+     * Gets the EntityStat being modified.
      * 
-     * @return String The name of the stat being modified.
+     * @return EntityStat The EntityStat being modified.
      */
-    public String getType () {
+    public EntityStat getType () {
         
         return type;
     }

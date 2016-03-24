@@ -1,6 +1,7 @@
 package net.epoxide.tinker.item;
 
 import net.epoxide.tinker.entity.Entity;
+import net.epoxide.tinker.entity.EntityStat;
 import net.epoxide.tinker.entity.StatModifier;
 import net.epoxide.tinker.util.ItemObject;
 import net.epoxide.tinker.util.NamedRegistry;
@@ -17,11 +18,11 @@ public class Item {
      * @param item The ItemObject being used.
      * @param map The TileMap where this is happening.
      * @param user The entity using the item.
-     * @param type The name of the stat to provide a modifier for.
+     * @param type The EntityStat to provide a modifier for.
      * @return StatModifier A StatModifier object which represents the modifier effects of the
      *         Item. Return null to have no effect.
      */
-    public StatModifier getStatModifier (ItemObject item, TileMap map, Entity user, String type) {
+    public StatModifier getStatModifier (ItemObject item, TileMap map, Entity user, EntityStat type) {
         
         return null;
     }
