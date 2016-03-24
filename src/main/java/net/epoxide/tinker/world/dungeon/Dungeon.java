@@ -111,13 +111,15 @@ public class Dungeon {
     
     /**
      * Provides a way to generate a dungeon map depending on the Dungeon. This allows for
-     * different world generation based on the dungeon type.
+     * different world generation based on the dungeon type. This will also set the Dungeon for
+     * the TileMap to this dungeon.
      * 
      * @param map The TileMap to populate with worldgen.
      */
     public void generateMap (TileMap map) {
         
+        map.setDungeon(this);
         for (Tile[] row : map.getTileMap())
-            Arrays.fill(row, Tile.STONE);
+            Arrays.fill(row, (Math.random() < 0.5) ? Tile.VOID : Tile.STONE);
     }
 }

@@ -15,9 +15,9 @@ import net.epoxide.tinker.client.render.RenderSystem;
 import net.epoxide.tinker.client.render.entity.RenderEntityPlayer;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.living.EntityPlayer;
-import net.epoxide.tinker.tile.Tile;
 import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.world.TileMap;
+import net.epoxide.tinker.world.dungeon.Dungeon;
 
 public class TinkerGame extends Game {
     
@@ -79,17 +79,11 @@ public class TinkerGame extends Game {
     @Override
     public void init () {
         
+        Dungeon.DEFAULT.generateMap(tileMap);
         entityPlayer = new EntityPlayer(tileMap);
         Entity.REGISTRY.registerValue(new RegistryName("player"), EntityPlayer.class);
         // entityPlayer.renderers.add("entityPlayer");
         tileMap.spawnEntity(entityPlayer);
-        
-        for (int x = 0; x < 512; x++) {
-            for (int y = 0; y < 512; y++) {
-                tileMap.setTile((Math.random() < 0.5) ? Tile.VOID : Tile.STONE, x, y);
-            }
-        }
-        
         RenderEntitySystem.registerRenderer("entityPlayer", new RenderEntityPlayer());
     }
     
