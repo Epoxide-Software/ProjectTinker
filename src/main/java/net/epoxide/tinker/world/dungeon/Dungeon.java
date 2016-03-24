@@ -13,6 +13,8 @@ public class Dungeon {
      */
     public static final NamedRegistry<Dungeon> REGISTRY = new NamedRegistry<Dungeon>();
     
+    public static final Dungeon DEFAULT = new Dungeon("default", 0);
+    
     /**
      * The name used in dungeon name localization.
      */
