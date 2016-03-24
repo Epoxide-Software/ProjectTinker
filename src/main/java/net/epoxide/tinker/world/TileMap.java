@@ -6,6 +6,8 @@ import java.util.List;
 import net.darkhax.opennbt.tags.CompoundTag;
 import net.darkhax.opennbt.tags.Tag;
 import net.epoxide.tinker.entity.Entity;
+import net.epoxide.tinker.entity.EntityStat;
+import net.epoxide.tinker.entity.StatModifier;
 import net.epoxide.tinker.tile.Tile;
 import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.world.dungeon.Dungeon;
@@ -432,6 +434,19 @@ public class TileMap {
     public boolean isValidLocation (int posX, int posY) {
         
         return posX >= 0 && posX < this.width && posY >= 0 && posY < this.height;
+    }
+    
+    /**
+     * Gets a StatModifier for the TileMap to apply to all entities on it. This allows for
+     * modifier effects on a global scale, such as lower max hp or higher speed.
+     * 
+     * @param type The EntityStat to provide a modifier for.
+     * @return StatModifier A StatModifier object which represents the modifier effects of the
+     *         world. null can be returned to have no effect.
+     */
+    public StatModifier getGlobalModifier (EntityStat type) {
+        
+        return null;
     }
     
     /**
