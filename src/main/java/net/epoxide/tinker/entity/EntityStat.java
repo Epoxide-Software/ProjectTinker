@@ -8,6 +8,61 @@ import net.epoxide.tinker.util.RegistryName;
 public class EntityStat {
     
     /**
+     * A registry of all the different types of EntityStat.
+     */
+    public static final NamedRegistry<EntityStat> REGISTRY = new NamedRegistry<EntityStat>();
+    
+    /**
+     * A stat which represents the entities maximum health.
+     */
+    public static final EntityStat MAX_HEALTH = createStat("maxhealth");
+    
+    /**
+     * A stat which represents the entities physical strength.
+     */
+    public static final EntityStat STRENGTH = createStat("strength");
+    
+    /**
+     * A stat which represents the entities physical damage.
+     */
+    public static final EntityStat DAMAGE = createStat("damage");
+    
+    /**
+     * A stat which represents the entities physical defence.
+     */
+    public static final EntityStat DEFENCE = createStat("defence");
+    
+    /**
+     * A stat which represents the entities intelligence.
+     */
+    public static final EntityStat INT = createStat("intelligence");
+    
+    /**
+     * A stat which represents the entities magical damage.
+     */
+    public static final EntityStat MAGIC_DAMAGE = createStat("magicdamage");
+    
+    /**
+     * A stat which represents the entities magical defence.
+     */
+    public static final EntityStat MAGIC_RESIST = createStat("magicresist");
+    
+    /**
+     * A stat which represents the entities movement speed.
+     */
+    public static final EntityStat SPEED = createStat("speed");
+    
+    /**
+     * A stat which represents the entities luck. Used as a random outcome modifier.
+     */
+    public static final EntityStat LUCK = createStat("luck");
+    
+    /**
+     * A stat which represents the entities charm. Used as a friendship speed modifier.
+     */
+    public static final EntityStat CHARM = createStat("charm");
+    
+    /**
      * The registry Id for the EntityStat.
      */
     private final String ID;
@@ -21,11 +76,6 @@ public class EntityStat {
      * A unique UUID specific to the instance of the EntityStat. Not reliable!
      */
     private final UUID UNIQUE_ID;
-    
-    /**
-     * A registry of all the different types of EntityStat.
-     */
-    public static final NamedRegistry<EntityStat> REGISTRY = new NamedRegistry<EntityStat>();
     
     /**
      * Constructs a new EntityStat using the basic registry info.
