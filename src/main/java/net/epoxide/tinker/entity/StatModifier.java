@@ -2,6 +2,8 @@ package net.epoxide.tinker.entity;
 
 import java.util.UUID;
 
+import net.darkhax.opennbt.tags.CompoundTag;
+
 public class StatModifier {
     
     /**
@@ -23,6 +25,17 @@ public class StatModifier {
      * A UUID specific to the instance of StatModifier.
      */
     private final UUID id;
+    
+    /**
+     * Constructs a new StatModifier from a CompoundTag. Expects a tag containing data from
+     * {@link #writeStat(CompoundTag)}.
+     * 
+     * @param tag The CompoundTag to read the data from.
+     */
+    public StatModifier(CompoundTag tag) {
+        
+        this(EntityStat.REGISTRY.getValue(tag.getString("StatType")), tag.getFloat("StatValue"), tag.getByte("StatModifier"));
+    }
     
     /**
      * Constructs a new StatModifier which handles the modification of a certain stat type.
@@ -67,6 +80,19 @@ public class StatModifier {
     public EntityStat getType () {
         
         return type;
+    }
+    
+    /**
+     * Writes all important stat data to a CompoundTag. The data can later be turned into a
+     * StatModifier again by using {@link #StatModifier(CompoundTag)}.
+     * 
+     * @param tag The CompoundTag to write data to.
+     */
+    public void writeStat (CompoundTag tag) {
+        
+        tag.setString("StatType", this.type.getId());
+        tag.setFloat("StatValue", this.value);
+        tag.setByte("StatModifier", this.modType);
     }
     
     @Override
