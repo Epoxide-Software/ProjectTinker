@@ -8,6 +8,7 @@ import net.darkhax.opennbt.tags.Tag;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.tile.Tile;
 import net.epoxide.tinker.util.NamedRegistry;
+import net.epoxide.tinker.world.dungeon.Dungeon;
 
 public class TileMap {
     
@@ -46,6 +47,8 @@ public class TileMap {
      * A List of all entities on the TileMap.
      */
     private List<Entity> entityList;
+    
+    private Dungeon dungeon;
     
     /**
      * Constructs a new TileMap using basic data. The Tile array will have the correct size,
@@ -396,6 +399,26 @@ public class TileMap {
         
         this.entityList.add(entity);
         entity.setCurrentMap(this);
+    }
+    
+    /**
+     * Gets the Dungeon type of this map. This might be null.
+     * 
+     * @return Dungeon The dungeon type for this map.
+     */
+    public Dungeon getDungeon () {
+        
+        return dungeon;
+    }
+    
+    /**
+     * Sets the Dungeon type for the map.
+     * 
+     * @param dungeon The dungeon type to set for this map.
+     */
+    public void setDungeon (Dungeon dungeon) {
+        
+        this.dungeon = dungeon;
     }
     
     /**
