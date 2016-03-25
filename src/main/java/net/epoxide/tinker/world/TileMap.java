@@ -176,9 +176,10 @@ public class TileMap {
     
     /**
      * Sets a tile on the TileMap. This will check that the location specified is valid. This
-     * will call {@link Tile#placeTile(TileMap, int, int)} which will allow the tile to initialize, and
-     * can cancel the placing of the tile. If you know that the location is valid, and you are
-     * setting lots of tiles, {@link #setTileUnsafely(Tile, int, int)} will be more efficient.
+     * will call {@link Tile#placeTile(TileMap, int, int)} which will allow the tile to
+     * initialize, and can cancel the placing of the tile. If you know that the location is
+     * valid, and you are setting lots of tiles, {@link #setTileUnsafely(Tile, int, int)} will
+     * be more efficient.
      * 
      * @param tile The Tile to set on the map.
      * @param posX The X position to set the tile at.
@@ -193,8 +194,8 @@ public class TileMap {
     /**
      * Sets a tile on the TileMap without checking if the location is valid. This is a bit
      * faster than {@link #setTile(Tile, int, int)}. This will still call
-     * {@link Tile#placeTile(TileMap, int, int)} which will allow the tile to initialize, or cancel the
-     * placement.
+     * {@link Tile#placeTile(TileMap, int, int)} which will allow the tile to initialize, or
+     * cancel the placement.
      * 
      * @param tile The Tile to set on the map.
      * @param posX The X position to set the tile at.
@@ -208,10 +209,10 @@ public class TileMap {
     
     /**
      * Removes a tile from the TileMap. This will check that the location specified is valid.
-     * This will also call {@link Tile#removeTile(TileMap, int, int)} which will allow the tile to clean
-     * up, or do removal effects, it can also prevent removal. If you know that the location is
-     * valid, and you are setting lots of tiles, #setTileUnsafely(Tile, int, int) will be more
-     * efficient.
+     * This will also call {@link Tile#removeTile(TileMap, int, int)} which will allow the tile
+     * to clean up, or do removal effects, it can also prevent removal. If you know that the
+     * location is valid, and you are setting lots of tiles, #setTileUnsafely(Tile, int, int)
+     * will be more efficient.
      * 
      * @param posX The X position of the tile to remove.
      * @param posY The Y position of the tile to remove.
@@ -233,8 +234,8 @@ public class TileMap {
     /**
      * Removes a tile from the TileMap without checking if the location is valid. This is a bit
      * faster than {@link #removeTile(int, int)}. This will still call
-     * {@link Tile#removeTile(TileMap, int, int)} which will allow the tile to clean up, or do removal
-     * effects, it can also prevent removal.
+     * {@link Tile#removeTile(TileMap, int, int)} which will allow the tile to clean up, or do
+     * removal effects, it can also prevent removal.
      * 
      * @param posX The X position of the tile to remove.
      * @param posY The Y position of the tile to remove.

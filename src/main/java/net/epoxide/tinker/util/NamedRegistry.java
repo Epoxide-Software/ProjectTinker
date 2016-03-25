@@ -7,12 +7,13 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import net.epoxide.tinker.client.render.textures.TileTexture;
 import org.apache.commons.lang3.Validate;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.shc.silenceengine.utils.Logger;
+
+import net.epoxide.tinker.client.render.textures.TileTexture;
 
 public class NamedRegistry<V> implements Iterable<V> {
     
@@ -67,7 +68,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      * Registering a value using a name that already exists is discouraged.
      * 
      * @param domain The domain for the entry. This is like a category to register the value
-     *            under.
+     *        under.
      * @param name The name to register the value with.
      * @param value The value to register.
      */

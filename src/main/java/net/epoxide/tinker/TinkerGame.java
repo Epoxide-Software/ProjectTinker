@@ -8,6 +8,7 @@ import com.shc.silenceengine.core.SilenceEngine;
 import com.shc.silenceengine.core.SilenceException;
 import com.shc.silenceengine.graphics.Batcher;
 import com.shc.silenceengine.utils.Logger;
+
 import net.darkhax.opennbt.NBTHelper;
 import net.epoxide.tinker.client.render.RenderEntitySystem;
 import net.epoxide.tinker.client.render.RenderSystem;
@@ -41,8 +42,8 @@ public class TinkerGame extends Game {
      * The initial call for the application. Handles program arguments after the game is
      * constructed but before the game is started.
      *
-     * The following is a list of valid program arguments and what they do.
-     * <li>debug - Allows GLExceptions to display in the log. Disables the Logger.
+     * The following is a list of valid program arguments and what they do. <li>debug - Allows
+     * GLExceptions to display in the log. Disables the Logger.
      *
      * @param args An array of the different program arguments being used.
      */
@@ -63,7 +64,7 @@ public class TinkerGame extends Game {
             
             if (exception instanceof SilenceException && exception.getMessage().startsWith("java.nio.file.AccessDeniedException:") && exception.getMessage().contains("glfw.dll"))
                 JOptionPane.showMessageDialog(null, "Another instance of this game is already running. Please close that instance and try again.", "Project Tinker", JOptionPane.WARNING_MESSAGE);
-
+                
             else
                 exception.printStackTrace();
         }
@@ -74,11 +75,11 @@ public class TinkerGame extends Game {
         
         Logger.info("[OpenNBT] Version " + NBTHelper.VERSION + " detected.");
         Display.setVSync(false);
-
+        
         TextureSystem.registerTileTextures("stone");
         TextureSystem.registerTileTextures("slime");
         TextureSystem.registerTileTextures("missing");
-
+        
     }
     
     @Override
@@ -90,7 +91,7 @@ public class TinkerGame extends Game {
         // entityPlayer.renderers.add("entityPlayer");
         tileMap.spawnEntity(entityPlayer);
         RenderEntitySystem.registerRenderer("entityPlayer", new RenderEntityPlayer());
-
+        
         TextureSystem.init();
     }
     

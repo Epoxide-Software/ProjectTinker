@@ -1,12 +1,12 @@
 package net.epoxide.tinker.tile;
 
+import java.awt.Color;
+
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.util.ItemObject;
 import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.world.TileMap;
-
-import java.awt.*;
 
 public class Tile {
     
@@ -30,7 +30,7 @@ public class Tile {
      *
      * @param id The ID that the tile is registered under.
      */
-    public Tile (String id) {
+    public Tile(String id) {
         
         this.ID = id;
     }
@@ -53,7 +53,7 @@ public class Tile {
      *
      * @param name The name of the Tile you are looking for.
      * @return Tile The Tile associated with the specified name, or {@link #VOID} if no tile is
-     * found.
+     *         found.
      */
     public static Tile getTileByName (String name) {
         
@@ -161,14 +161,14 @@ public class Tile {
         
         return Color.white.getRGB();
     }
-
+    
     public int getRenderPasses () {
-
+        
         return 2;
     }
-
+    
     public String getTexture (int renderPass) {
-
+        
         if (renderPass == 0)
             return ID;
         else

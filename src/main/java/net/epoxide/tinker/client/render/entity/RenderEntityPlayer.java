@@ -2,6 +2,7 @@ package net.epoxide.tinker.client.render.entity;
 
 import com.shc.silenceengine.graphics.Batcher;
 import com.shc.silenceengine.graphics.Color;
+
 import net.epoxide.tinker.client.render.RenderSystem;
 import net.epoxide.tinker.entity.Entity;
 
@@ -13,7 +14,7 @@ public class RenderEntityPlayer extends RenderEntity {
         float yPos = RenderSystem.displayHeight / 2;
         
         float tileHalfSize = RenderSystem.tileSize / 2;
-
+        
         batcher.color(Color.WHITE);
         batcher.color(Color.WHITE);
         batcher.color(Color.WHITE);
@@ -21,7 +22,7 @@ public class RenderEntityPlayer extends RenderEntity {
         batcher.color(Color.WHITE);
         batcher.color(Color.WHITE);
         batcher.color(Color.WHITE);
-
+        
         batcher.vertex(xPos - tileHalfSize, yPos + tileHalfSize);
         batcher.vertex(xPos + tileHalfSize, yPos + tileHalfSize);
         batcher.vertex(xPos - tileHalfSize, yPos - tileHalfSize);

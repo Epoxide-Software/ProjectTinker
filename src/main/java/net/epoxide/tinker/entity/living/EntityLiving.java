@@ -110,7 +110,8 @@ public class EntityLiving extends Entity {
      * 
      * @return double The percentage as a double.
      */
-    // TODO Round this down to show up to 1 decimal place, if that decimal is not 0.
+    // TODO Round this down to show up to 1 decimal place, if that decimal is
+    // not 0.
     public double getHealthPercentage () {
         
         return (double) this.health / (double) this.maxHealth;
