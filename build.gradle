@@ -12,7 +12,8 @@ apply plugin: 'eclipse'
 apply plugin: 'idea-utils'
 apply plugin: 'maven'
 
-group 'game'
+archivesBaseName  'TinkerGame'
+group 'net.epoxide.tinker'
 version = getVersionFromJava(file("src/main/java/net/epoxide/tinker/TinkerGame.java"))
 
 project.ext.lwjglVersion = "3.0.0-SNAPSHOT"
