@@ -12,7 +12,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea-utils'
 apply plugin: 'maven'
 
-archivesBaseName  'TinkerGame'
+archivesBaseName = "ProjectTinker"
 group 'net.epoxide.tinker'
 version = getVersionFromJava(file("src/main/java/net/epoxide/tinker/TinkerGame.java"))
 
