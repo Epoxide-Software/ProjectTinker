@@ -8,36 +8,54 @@ import net.epoxide.tinker.world.TileMap;
 
 public class RenderSystem {
     
-    private OrthoCam ortho;
-    private RenderWorldSystem worldSystem;
-    private RenderEntitySystem entitySystem;
+    /**
+     * The Orthographic camera used by the main renderer.
+     */
+    private OrthoCam camera;
+    
+    /**
+     * The renderer for the world map.
+     */
+    private RenderWorldSystem worldRenderer;
+    
+    /**
+     * The renderer for entities. 
+     */
+    private RenderEntitySystem entityRenderer;
     
     public static float tileSize;
     public static float tileWidth;
     public static float tileHeight;
     
+    /**
+     * The width of the current display window.
+     */
     public static int displayWidth;
+    
+    /**
+     * The height of the current display window.
+     */
     public static int displayHeight;
     
     public static final int TILE_WINDOW_WIDTH = 16;
     
     public RenderSystem() {
         
-        this.worldSystem = new RenderWorldSystem();
-        this.entitySystem = new RenderEntitySystem();
+        this.worldRenderer = new RenderWorldSystem();
+        this.entityRenderer = new RenderEntitySystem();
         resize();
     }
     
     public void render (float delta, Batcher batcher, TileMap tileMap) {
         
-        ortho.apply();
-        worldSystem.renderWorld(delta, batcher, tileMap);
-        entitySystem.renderEntities(delta, batcher, tileMap);
+        camera.apply();
+        worldRenderer.renderWorld(delta, batcher, tileMap);
+        entityRenderer.renderEntities(delta, batcher, tileMap);
     }
     
     public void resize () {
         
-        this.ortho = new OrthoCam();
+        this.camera = new OrthoCam();
         displayWidth = Display.getWidth();
         displayHeight = Display.getHeight();
         
