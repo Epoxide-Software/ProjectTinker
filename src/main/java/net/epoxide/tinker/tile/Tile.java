@@ -1,12 +1,12 @@
 package net.epoxide.tinker.tile;
 
-import java.awt.Color;
-
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.util.ItemObject;
 import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.world.TileMap;
+
+import java.awt.*;
 
 public class Tile {
     
@@ -27,10 +27,10 @@ public class Tile {
     
     /**
      * Constructs a tile with the ID that the tile was registered under.
-     * 
+     *
      * @param id The ID that the tile is registered under.
      */
-    public Tile(String id) {
+    public Tile (String id) {
         
         this.ID = id;
     }
@@ -38,7 +38,7 @@ public class Tile {
     /**
      * Registers a tile with the {@link #REGISTRY} using the ID stored in the Tile. This should
      * be used over directly accessing the REGISTRY.
-     * 
+     *
      * @param tile The Tile to register.
      * @return Tile The same Tile being registered. Provided to make life easier.
      */
@@ -50,10 +50,10 @@ public class Tile {
     /**
      * Gets a Tile from the {@link #REGISTRY} which is associated with the name. If no tile
      * exists, {@link #VOID} will be returned.
-     * 
+     *
      * @param name The name of the Tile you are looking for.
      * @return Tile The Tile associated with the specified name, or {@link #VOID} if no tile is
-     *         found.
+     * found.
      */
     public static Tile getTileByName (String name) {
         
@@ -64,7 +64,7 @@ public class Tile {
     /**
      * Called when the tile is being placed on a TileMap. Can be used to initialize data,
      * trigger events, or to prevent the tile from being placed.
-     * 
+     *
      * @param map The TileMap where the Tile was placed.
      * @param posX The X coordinate of the tile on the tile map.
      * @param posY The Y coordinate of the tile on the tile map.
@@ -78,7 +78,7 @@ public class Tile {
     /**
      * Called when the tile is being removed from a TileMap. Can be used to clear data, trigger
      * events, or to prevent the tile from being removed..
-     * 
+     *
      * @param map The TileMap where the Tile was removed.
      * @param posX The X coordinate of the tile on the tile map.
      * @param posY The Y coordinate of the tile on the tile map.
@@ -92,7 +92,7 @@ public class Tile {
     /**
      * Called when the tile is being harvested by an entity. Can be used to handle custom
      * harvest logic, or prevent harvesting.
-     * 
+     *
      * @param map The TileMap where the Tile was harvested.
      * @param harvester An instance of the Entity that is trying to harvest the Tile.
      * @param item The Item used to harvest the tile. Might be null.
@@ -108,7 +108,7 @@ public class Tile {
     /**
      * Called when the tile is being activated by an entity. Can be used to handle custom
      * activation logic.
-     * 
+     *
      * @param map The TileMap where the Tile was activated.
      * @param activator An instance of the Entity that is trying to activate the Tile.
      * @param item The Item used to activate the tile. Might be null.
@@ -124,7 +124,7 @@ public class Tile {
     /**
      * Called when an entity is about to collide with the tile. Can be used to handle custom
      * collision logic, or to prevent collision all together.
-     * 
+     *
      * @param map The TileMap where the Tile was collided with.
      * @param collider The Entity that is about to collide with the tile.
      * @param posX The X coordinate of the tile on the tile map.
@@ -138,8 +138,8 @@ public class Tile {
     
     /**
      * Checks if the tile has a color multiplier. if it does,
-     * {@link Tile#getColorMultiplier(int, int)}} will be used when rendering the tile.
-     * 
+     * {@link Tile#getColorMultiplier(TileMap, int, int)} will be used when rendering the tile.
+     *
      * @return boolean Whether or not the tile requires a color multiplier.
      */
     public boolean hasColorMultiplier () {
@@ -160,5 +160,18 @@ public class Tile {
     public int getColorMultiplier (TileMap map, int posX, int posY) {
         
         return Color.white.getRGB();
+    }
+
+    public int getRenderPasses () {
+
+        return 2;
+    }
+
+    public String getTexture (int renderPass) {
+
+        if (renderPass == 0)
+            return ID;
+        else
+            return "slime";
     }
 }

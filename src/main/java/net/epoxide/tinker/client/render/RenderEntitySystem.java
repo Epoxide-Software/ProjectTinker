@@ -3,15 +3,18 @@ package net.epoxide.tinker.client.render;
 import com.shc.silenceengine.graphics.Batcher;
 
 import net.epoxide.tinker.client.render.entity.RenderEntity;
+import net.epoxide.tinker.client.render.entity.RenderEntityPlayer;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.util.NamedRegistry;
+import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.world.TileMap;
 
 public class RenderEntitySystem {
     
     private static NamedRegistry<RenderEntity> REGISTRY = new NamedRegistry<>();
-    
-    private RenderEntity DEFAULT_RENDER = new RenderEntity();
+
+    //TODO Temp Change back to RenderEntity
+    private RenderEntity DEFAULT_RENDER = new RenderEntityPlayer();
     
     public void renderEntities (float delta, Batcher batcher, TileMap tileMap) {
         
@@ -32,12 +35,13 @@ public class RenderEntitySystem {
     }
     
     public static void registerRenderer (String modelID, RenderEntity entityRenderer) {
-        
-        if (REGISTRY.hasName(modelID)) {
+
+        RegistryName name = new RegistryName(modelID);
+        if (REGISTRY.hasName(name)) {
             System.out.println("Conflict");
             return;
         }
         
-        REGISTRY.registerValue(modelID, entityRenderer);
+        REGISTRY.registerValue(name, entityRenderer);
     }
 }

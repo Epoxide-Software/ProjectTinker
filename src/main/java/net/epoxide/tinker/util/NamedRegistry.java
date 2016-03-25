@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import net.epoxide.tinker.client.render.textures.TileTexture;
 import org.apache.commons.lang3.Validate;
 
 import com.google.common.collect.BiMap;
@@ -153,7 +154,7 @@ public class NamedRegistry<V> implements Iterable<V> {
     public V[] getValues () {
         
         if (this.valueCache == null)
-            this.valueCache = (V[]) registry.values().toArray();
+            this.valueCache = (V[]) registry.values().toArray(new TileTexture[registry.values().size()]);
             
         return this.valueCache;
     }
