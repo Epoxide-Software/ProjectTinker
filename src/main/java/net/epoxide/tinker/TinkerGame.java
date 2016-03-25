@@ -10,6 +10,7 @@ import com.shc.silenceengine.graphics.Batcher;
 import com.shc.silenceengine.utils.Logger;
 
 import net.darkhax.opennbt.NBTHelper;
+
 import net.epoxide.tinker.client.render.RenderEntitySystem;
 import net.epoxide.tinker.client.render.RenderSystem;
 import net.epoxide.tinker.client.render.entity.RenderEntityPlayer;

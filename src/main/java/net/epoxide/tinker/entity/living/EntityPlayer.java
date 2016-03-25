@@ -1,6 +1,7 @@
 package net.epoxide.tinker.entity.living;
 
 import net.darkhax.opennbt.tags.CompoundTag;
+
 import net.epoxide.tinker.world.TileMap;
 
 public class EntityPlayer extends EntityLiving {

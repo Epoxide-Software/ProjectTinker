@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.darkhax.opennbt.tags.CompoundTag;
 import net.darkhax.opennbt.tags.Tag;
+
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.EntityStat;
 import net.epoxide.tinker.entity.StatModifier;

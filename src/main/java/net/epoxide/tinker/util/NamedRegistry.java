@@ -7,11 +7,12 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.Validate;
-
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+
 import com.shc.silenceengine.utils.Logger;
+
+import org.apache.commons.lang3.Validate;
 
 import net.epoxide.tinker.client.render.textures.TileTexture;
 

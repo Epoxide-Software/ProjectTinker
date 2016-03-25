@@ -1,6 +1,7 @@
 package net.epoxide.tinker.util;
 
 import net.darkhax.opennbt.tags.CompoundTag;
+
 import net.epoxide.tinker.item.Item;
 
 public class ItemObject {

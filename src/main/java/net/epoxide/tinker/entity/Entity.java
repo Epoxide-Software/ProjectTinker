@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.shc.silenceengine.utils.Logger;
 
 import net.darkhax.opennbt.tags.CompoundTag;
+
 import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.world.TileMap;
 
