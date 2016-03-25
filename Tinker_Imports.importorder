@@ -1,0 +1,15 @@
+#Organize Import Order
+#Fri Mar 25 02:56:39 MDT 2016
+9=com.shc
+8=com.google
+7=com
+6=org.lwjgl
+5=org.hamcrest
+4=org.junit
+12=net.epoxide
+3=org.apache
+11=net.darkhax
+2=org
+10=org.apache
+1=javax
+0=java
