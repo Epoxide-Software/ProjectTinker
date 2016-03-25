@@ -91,7 +91,7 @@ public class TinkerGame extends Game {
         Entity.REGISTRY.registerValue(new RegistryName("player"), EntityPlayer.class);
         // entityPlayer.renderers.add("entityPlayer");
         tileMap.spawnEntity(entityPlayer);
-        RenderEntitySystem.registerRenderer("entityPlayer", new RenderEntityPlayer());
+        RenderEntitySystem.REGISTRY.registerValue("player", new RenderEntityPlayer());
         
         TextureSystem.init();
     }
