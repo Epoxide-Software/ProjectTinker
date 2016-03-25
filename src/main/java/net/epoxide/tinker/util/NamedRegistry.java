@@ -64,14 +64,16 @@ public class NamedRegistry<V> implements Iterable<V> {
     }
     
     /**
-     * Registers a new value with the registry with a domain specified. This will also reset
-     * the value cache. If the name or value passed are null, the application will crash.
-     * Registering a value using a name that already exists is discouraged.
+     * Registers a new value with the registry with a domain specified. If the name or value
+     * passed are null, the application will crash. This will also cause the
+     * {@link #valueCache} to be reset when it is next accessed. Registering with duplicate
+     * names is discouraged, and may have bad effects.
      * 
      * @param domain The domain for the entry. This is like a category to register the value
      *        under.
      * @param name The name to register the value with.
      * @param value The value to register.
+     * @return V The value being registered.
      */
     public V registerValue (String domain, String name, V value) {
         
@@ -80,12 +82,31 @@ public class NamedRegistry<V> implements Iterable<V> {
     }
     
     /**
-     * Registers a new value with the registry. This will also reset the value cache. If the
-     * name or value passed are null, the application will crash. Registering a value using a
-     * name that already exists is discouraged.
+     * Registers a new value with the registry with the name specified. If the name or value
+     * passed are null, the application will crash. This will also cause the
+     * {@link #valueCache} to be reset when it is next accessed. Registering with duplicate
+     * names is discouraged, and may have bad effects.
      * 
      * @param name The name to register the value with.
      * @param value The value to register.
+     * @return V The value being registered.
+     */
+    public V registerValue (String name, V value) {
+        
+        registerValue(new RegistryName(name), value);
+        return value;
+    }
+    
+    /**
+     *
+     * Registers a new value with the registry. If the name or value passed are null, the
+     * application will crash. This will also cause the {@link #valueCache} to be reset when it
+     * is next accessed. Registering with duplicate names is discouraged, and may have bad
+     * effects.
+     * 
+     * @param name The name to register the value with.
+     * @param value The value to register.
+     * @return V The value being registered.
      */
     public V registerValue (RegistryName name, V value) {
         
