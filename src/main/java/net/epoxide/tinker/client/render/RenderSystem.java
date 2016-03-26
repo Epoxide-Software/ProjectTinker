@@ -36,9 +36,7 @@ public class RenderSystem {
      * The height of the current display window.
      */
     public static int displayHeight;
-    
-    public static final int TILE_WINDOW_WIDTH = 16;
-    
+
     public RenderSystem() {
         
         this.worldRenderer = new RenderWorldSystem();
@@ -60,7 +58,7 @@ public class RenderSystem {
         displayWidth = Display.getWidth();
         displayHeight = Display.getHeight();
         
-        tileSize = Math.max(displayWidth / TILE_WINDOW_WIDTH, displayHeight / TILE_WINDOW_WIDTH);
+        tileSize = Math.max(displayWidth / 16, displayHeight / 16);
         
         tileWidth = displayWidth / tileSize;
         tileHeight = displayHeight / tileSize;
