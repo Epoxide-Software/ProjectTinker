@@ -56,6 +56,7 @@ public class RenderSystem {
     public void resize () {
         
         this.camera = new OrthoCam();
+
         displayWidth = Display.getWidth();
         displayHeight = Display.getHeight();
         
