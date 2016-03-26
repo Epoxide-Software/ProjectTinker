@@ -19,7 +19,7 @@ public class NamedRegistry<V> implements Iterable<V> {
     /**
      * A Map which contains all of the names and values that have been registered.
      */
-    protected final BiMap<RegistryName, V> registry = HashBiMap.create();
+    protected final BiMap<RegistryName, V> REGISTRY = HashBiMap.create();
     
     /**
      * An array that holds a cache of all registered values. This cache should only be altered
@@ -35,7 +35,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public V getValue (RegistryName name) {
         
-        return this.registry.get(name);
+        return this.REGISTRY.get(name);
     }
     
     /**
@@ -111,11 +111,11 @@ public class NamedRegistry<V> implements Iterable<V> {
         Validate.notNull(name);
         Validate.notNull(value);
         
-        if (this.registry.containsKey(name))
+        if (this.REGISTRY.containsKey(name))
             Logger.warn("A value with the name /'" + name + "/' has already been registered. Duplicate names are discouraged.");
             
         this.valueCache = null;
-        this.registry.put(name, value);
+        this.REGISTRY.put(name, value);
         return value;
     }
     
@@ -137,7 +137,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public Set<RegistryName> getNames () {
         
-        return this.registry.keySet();
+        return this.REGISTRY.keySet();
     }
     
     /**
@@ -149,7 +149,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public RegistryName getNameForValue (V value) {
         
-        return registry.inverse().get(value);
+        return this.REGISTRY.inverse().get(value);
     }
     
     /**
@@ -160,8 +160,8 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public List<V> getValues (String domain) {
         
-        List<V> values = new ArrayList<V>();
-        registry.entrySet().stream().filter(pair -> pair.getKey().getDomain().equals(domain)).forEach(pair -> values.add(pair.getValue()));
+        final List<V> values = new ArrayList<V>();
+        this.REGISTRY.entrySet().stream().filter(pair -> pair.getKey().getDomain().equals(domain)).forEach(pair -> values.add(pair.getValue()));
         return values;
     }
     
@@ -172,7 +172,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public List<V> getValues () {
         
-        return new ArrayList<V>(this.registry.values());
+        return new ArrayList<V>(this.REGISTRY.values());
     }
     
     /**
@@ -184,7 +184,7 @@ public class NamedRegistry<V> implements Iterable<V> {
     public Object[] getValueCache () {
         
         if (this.valueCache == null)
-            this.valueCache = this.registry.values().toArray(new Object[this.registry.size()]);
+            this.valueCache = this.REGISTRY.values().toArray(new Object[this.REGISTRY.size()]);
             
         return this.valueCache;
     }
@@ -197,7 +197,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public boolean hasDomain (String domain) {
         
-        return this.registry.keySet().stream().filter(name -> name.getDomain().equals(domain)).findFirst() != null;
+        return this.REGISTRY.keySet().stream().filter(name -> name.getDomain().equals(domain)).findFirst() != null;
     }
     
     /**
@@ -208,7 +208,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public boolean hasName (RegistryName name) {
         
-        return this.registry.containsKey(name);
+        return this.REGISTRY.containsKey(name);
     }
     
     /**
@@ -235,13 +235,13 @@ public class NamedRegistry<V> implements Iterable<V> {
     @SuppressWarnings("unchecked")
     public V getRandomValue (Random random) {
         
-        Object[] values = getValueCache();
+        final Object[] values = getValueCache();
         return (values.length == 0) ? null : (V) values[random.nextInt(values.length)];
     }
     
     @Override
     public Iterator<V> iterator () {
         
-        return this.registry.values().iterator();
+        return this.REGISTRY.values().iterator();
     }
 }
