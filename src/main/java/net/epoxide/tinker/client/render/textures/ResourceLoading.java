@@ -63,8 +63,7 @@ public class ResourceLoading {
         loader.setProgressRenderCallback(ResourceLoading::renderResourceLoaderCallback);
         ResourceLoader.setHelper(TileTexture.class, ResourceLoading::loadTileTexture);
         
-        TileTexture[] x = REGISTRY.getValues();
-        for (TileTexture tileTexture : x) {
+        for (TileTexture tileTexture : REGISTRY) {
             if (tileTexture.path.exists()) {
                 loader.loadResource(TileTexture.class, tileTexture.path);
                 textureMap.put(tileTexture.path, tileTexture);

@@ -14,8 +14,6 @@ import com.shc.silenceengine.utils.Logger;
 
 import org.apache.commons.lang3.Validate;
 
-import net.epoxide.tinker.client.render.textures.TileTexture;
-
 public class NamedRegistry<V> implements Iterable<V> {
     
     /**
@@ -27,7 +25,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      * An array that holds a cache of all registered values. This cache should only be altered
      * internally.
      */
-    private V[] valueCache;
+    private Object[] valueCache;
     
     /**
      * Retrieves a value from the registry that is associated with the name passed.
@@ -168,16 +166,25 @@ public class NamedRegistry<V> implements Iterable<V> {
     }
     
     /**
+     * Gets the values of the registry as a List.
+     * 
+     * @return List<V> An ArrayList containing all registered values.
+     */
+    public List<V> getValues () {
+        
+        return new ArrayList<V>(this.registry.values());
+    }
+    
+    /**
      * Retrieves the value cache for the registry. If the value cache is null, then it will be
      * automatically regenerated.
      * 
      * @return V[] An array of all the cached values.
      */
-    @SuppressWarnings("unchecked")
-    public V[] getValues () {
+    public Object[] getValueCache () {
         
         if (this.valueCache == null)
-            this.valueCache = (V[]) registry.values().toArray(new TileTexture[registry.values().size()]);
+            this.valueCache = this.registry.values().toArray(new Object[this.registry.size()]);
             
         return this.valueCache;
     }
@@ -225,9 +232,10 @@ public class NamedRegistry<V> implements Iterable<V> {
      * @param random The Random instance to use for retrieving values.
      * @return V A random value from the value cache. null if the cache is empty.
      */
+    @SuppressWarnings("unchecked")
     public V getRandomValue (Random random) {
         
-        V[] values = getValues();
+        Object[] values = getValueCache();
         return (values.length == 0) ? null : (V) values[random.nextInt(values.length)];
     }
     

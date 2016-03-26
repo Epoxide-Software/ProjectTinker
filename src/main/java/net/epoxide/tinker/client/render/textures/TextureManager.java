@@ -1,6 +1,5 @@
 package net.epoxide.tinker.client.render.textures;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.shc.silenceengine.backend.lwjgl3.opengl.Texture;
@@ -26,7 +25,7 @@ public class TextureManager {
      */
     public static void init () {
         
-        List<TileTexture> textureList = Arrays.asList(REGISTRY.getValues());
+        List<TileTexture> textureList = REGISTRY.getValues();
         ResourceLoading resourceLoading = new ResourceLoading();
         
         resourceLoading.load(REGISTRY);
