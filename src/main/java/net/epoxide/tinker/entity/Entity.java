@@ -8,6 +8,7 @@ import com.shc.silenceengine.utils.Logger;
 
 import net.darkhax.opennbt.tags.CompoundTag;
 
+import net.epoxide.tinker.util.Direction;
 import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.world.TileMap;
 
@@ -52,7 +53,11 @@ public class Entity {
      * The position of the entity on the Y axis.
      */
     private float yPos;
-    
+
+    /**
+     * The rotation of the entity
+     */
+    private Direction rotation;
     /**
      * Constructs the entity with no internal logic. Allows for all of the logic to be handled
      * by the entity.
@@ -72,6 +77,7 @@ public class Entity {
         this.entityData = new CompoundTag("data");
         this.setPos(0, 0);
         this.setCurrentMap(map);
+        this.setRotation(Direction.UP);
     }
     
     /**
@@ -238,7 +244,7 @@ public class Entity {
         this.xPos = xPos;
         this.yPos = yPos;
     }
-    
+
     /**
      * Gets the current TileMap that the entity is on.
      * 
@@ -260,7 +266,22 @@ public class Entity {
         this.tileMap = map;
         this.onJoinWorld(map);
     }
-    
+
+    /**
+     * Gets the current Direction that the entity is facing
+     * @return Direction The current direction that the entity is facing
+     */
+    public Direction getRotation () {
+
+        return rotation;
+    }
+
+    //TODO
+    public void setRotation (Direction rotation) {
+
+        this.rotation = rotation;
+    }
+
     /**
      * Called whenever the entity is added to a TileMap. This is not limited to the initial
      * spawn of the mob, and happens on loading.
