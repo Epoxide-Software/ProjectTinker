@@ -2,13 +2,13 @@ package net.epoxide.tinker.client.render.textures.packer;
 
 import java.awt.Dimension;
 import java.nio.ByteBuffer;
+import java.util.List;
 
+import net.epoxide.tinker.client.render.textures.AtlasTexture;
 import org.lwjgl.BufferUtils;
 
 import com.shc.silenceengine.backend.lwjgl3.opengl.Texture;
 import com.shc.silenceengine.math.geom2d.Rectangle;
-
-import net.epoxide.tinker.client.render.textures.TileTexture;
 
 public class TexturePacker {
     
@@ -19,31 +19,31 @@ public class TexturePacker {
     
     /**
      * Packs all textures into a single texture atlas.
-     * 
+     *
      * @param entries A List of textures to pack.
      * @return Texture A single texture that has been packed together.
      */
-    public Texture packImages (java.util.List<TileTexture> entries) {
+    public Texture packImages (List<AtlasTexture> entries) {
         
         if (packed)
             System.out.println("Already Packed");
-            
+
         if (entries.isEmpty())
             throw new IllegalStateException("nothing to pack");
-            
+
         int maxWidth = 0;
         int maxHeight = 0;
         int totalArea = 0;
         
-        for (TileTexture img : entries) {
-            int width = img.width;
-            int height = img.height;
+        for (AtlasTexture texture : entries) {
+            int width = texture.getWidth();
+            int height = texture.getHeight();
             
             if (width > maxWidth)
                 maxWidth = width;
             if (height > maxHeight)
                 maxHeight = height;
-                
+
             totalArea += width * height;
         }
         
@@ -58,8 +58,8 @@ public class TexturePacker {
             }
             
             Node root = new Node(size.width, size.height);
-            for (TileTexture img : entries) {
-                Node inserted = root.insert(img);
+            for (AtlasTexture texture : entries) {
+                Node inserted = root.insert(texture);
                 if (inserted == null) {
                     nextSize(size);
                     continue loop;
@@ -70,27 +70,26 @@ public class TexturePacker {
         
         ByteBuffer imageBuffer = BufferUtils.createByteBuffer(size.width * size.height * 4);
         
-        for (TileTexture img : entries) {
+        for (AtlasTexture texture : entries) {
             
-            System.out.println(img.comp);
-            ByteBuffer buffer = img.getImage();
+            ByteBuffer buffer = texture.getImage();
             
-            for (int y = 0; y < img.height; y++) {
-                for (int x = 0; x < img.width; x++) {
-                    int position = (x + img.x) * img.comp + (y + img.y) * (size.width * 4);
+            for (int y = 0; y < texture.getHeight(); y++) {
+                for (int x = 0; x < texture.getWidth(); x++) {
+                    int position = (x + texture.getX()) * texture.getComponents() + (y + texture.getY()) * (size.width * 4);
                     
                     imageBuffer.put(position, buffer.get());
                     imageBuffer.put(position + 1, buffer.get());
                     imageBuffer.put(position + 2, buffer.get());
-                    imageBuffer.put(position + 3, img.comp == 4 ? buffer.get() : 0);
+                    imageBuffer.put(position + 3, texture.getComponents() == 4 ? buffer.get() : 0);
                 }
             }
             
-            float minU = (float) (img.x) / size.width;
-            float minV = (float) (img.y) / size.height;
-            float maxU = (float) (img.x + img.width) / size.width;
-            float maxV = (float) (img.y + img.height) / size.height;
-            img.setUV(minU, minV, maxU, maxV);
+            float minU = (float) (texture.getX()) / size.width;
+            float minV = (float) (texture.getY()) / size.height;
+            float maxU = (float) (texture.getX() + texture.getWidth()) / size.width;
+            float maxV = (float) (texture.getY() + texture.getHeight()) / size.height;
+            texture.setUV(minU, minV, maxU, maxV);
         }
         imageBuffer.flip();
         packed = true;
@@ -118,10 +117,10 @@ public class TexturePacker {
     private static class Node {
         private final Node[] child = new Node[2];
         private final Rectangle rc = new Rectangle();
-        private TileTexture image;
+        private AtlasTexture image;
         
         private Node() {
-        
+
         }
         
         private Node(int width, int height) {
@@ -134,54 +133,48 @@ public class TexturePacker {
             return child[0] == null && child[1] == null;
         }
         
-        private Node insert (TileTexture image) {
+        private Node insert (AtlasTexture texture) {
             
             if (!isLeaf()) {
-                Node newNode = child[0].insert(image);
+                Node newNode = child[0].insert(texture);
                 if (newNode != null)
                     return newNode;
-                    
-                // no room, insert into second
-                return child[1].insert(image);
+
+                return child[1].insert(texture);
             }
             else {
-                // if there's already a image here, return
+
                 if (this.image != null)
                     return null;
-                    
-                int width = image.width;
-                int height = image.height;
-                
-                // (if we're too small, return)
+
+                int width = texture.getWidth();
+                int height = texture.getHeight();
+
                 if ((width > rc.getWidth()) || (height > rc.getHeight()))
                     return null;
-                    
-                // (if we're just right, accept)
+
                 if ((width == rc.getWidth()) && (height == rc.getHeight())) {
-                    this.image = image;
-                    this.image.x = (int) this.rc.getX();
-                    this.image.y = (int) this.rc.getY();
+                    this.image = texture;
+                    this.image.setX((int) this.rc.getX());
+                    this.image.setY((int) this.rc.getY());
                     return this;
                 }
-                
-                // otherwise, split this node
+
                 child[0] = new Node();
                 child[1] = new Node();
-                
-                // (decide which way to split)
+
                 float dw = rc.getWidth() - width;
                 float dh = rc.getHeight() - height;
                 
-                if (dw > dh) { // split horizontally
+                if (dw > dh) {
                     child[0].rc.set(rc.getX(), rc.getY(), width, rc.getHeight());
                     child[1].rc.set(rc.getX() + width, rc.getY(), rc.getWidth() - width, rc.getHeight());
                 }
-                else { // split vertically
+                else {
                     child[0].rc.set(rc.getX(), rc.getY(), rc.getWidth(), height);
                     child[1].rc.set(rc.getX(), rc.getY() + height, rc.getWidth(), rc.getHeight() - height);
                 }
-                // insert into first child we created
-                return child[0].insert(image);
+                return child[0].insert(texture);
             }
             
         }
@@ -189,7 +182,7 @@ public class TexturePacker {
         @Override
         public String toString () {
             
-            return rc + ((image == null) ? " <no entry>" : " " + image.toString());
+            return rc + ((this.image == null) ? " <no entry>" : " " + this.image.toString());
         }
     }
 }

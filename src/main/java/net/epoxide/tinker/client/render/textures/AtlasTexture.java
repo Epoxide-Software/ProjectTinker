@@ -11,12 +11,12 @@ import com.shc.silenceengine.io.FilePath;
 import com.shc.silenceengine.utils.BufferUtils;
 import com.shc.silenceengine.utils.FileUtils;
 
-public class TileTexture implements IResource {
+public class AtlasTexture implements IResource {
     
     /**
      * The path for the texture to load.
      */
-    public FilePath path;
+    private FilePath path;
     
     /**
      * A buffer of bytes which contain the loaded image.
@@ -26,51 +26,51 @@ public class TileTexture implements IResource {
     /**
      * The width of the image.
      */
-    public int width;
+    private int width;
     
     /**
      * The height of the image.
      */
-    public int height;
+    private int height;
     
     /**
      * The X of the texture.
      */
-    public int x;
+    private int x;
     
     /**
      * The Y of the texture.
      */
-    public int y;
+    private int y;
     
     /**
      * The starting U value.
      */
-    public float minU;
+    private float minU;
     
     /**
      * The starting V value.
      */
-    public float minV;
+    private float minV;
     
     /**
      * The end U value.
      */
-    public float maxU;
+    private float maxU;
     
     /**
      * The end V value.
      */
-    public float maxV;
+    private float maxV;
     
-    public int comp;
+    private int components;
     
     /**
      * Constructs a new TileTexture from a String that contains a file path.
      * 
      * @param path The path to the file.
      */
-    public TileTexture(String path) {
+    public AtlasTexture(String path) {
         
         this(FilePath.getResourceFile(path));
     }
@@ -80,7 +80,7 @@ public class TileTexture implements IResource {
      * 
      * @param path The path to the file.
      */
-    public TileTexture(FilePath path) {
+    public AtlasTexture(FilePath path) {
         
         this.path = path;
     }
@@ -103,7 +103,7 @@ public class TileTexture implements IResource {
         
         this.width = width.get(0);
         this.height = height.get(0);
-        this.comp = comp.get(0);
+        this.components = comp.get(0);
     }
     
     /**
@@ -131,7 +131,67 @@ public class TileTexture implements IResource {
         
         return image;
     }
-    
+
+    public int getX () {
+
+        return x;
+    }
+
+    public void setX (int x) {
+
+        this.x = x;
+    }
+
+    public int getY () {
+
+        return y;
+    }
+
+    public void setY (int y) {
+
+        this.y = y;
+    }
+
+    public int getHeight () {
+
+        return height;
+    }
+
+    public int getWidth () {
+
+        return width;
+    }
+
+    public int getComponents () {
+
+        return components;
+    }
+
+    public FilePath getPath () {
+
+        return path;
+    }
+
+    public float getMinU () {
+
+        return minU;
+    }
+
+    public float getMinV () {
+
+        return minV;
+    }
+
+    public float getMaxU () {
+
+        return maxU;
+    }
+
+    public float getMaxV () {
+
+        return maxV;
+    }
+
     @Override
     public void dispose () {
     

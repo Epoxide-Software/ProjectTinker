@@ -2,19 +2,18 @@ package net.epoxide.tinker.client.render;
 
 import com.shc.silenceengine.graphics.Batcher;
 import com.shc.silenceengine.graphics.Color;
-
 import net.epoxide.tinker.TinkerGame;
+import net.epoxide.tinker.client.render.textures.AtlasTexture;
 import net.epoxide.tinker.client.render.textures.TextureManager;
-import net.epoxide.tinker.client.render.textures.TileTexture;
 import net.epoxide.tinker.entity.living.EntityPlayer;
 import net.epoxide.tinker.tile.Tile;
 import net.epoxide.tinker.world.TileMap;
 
 public class RenderWorldSystem {
-    
+
     /**
      * Handles a render tick of the world by rendering all of the tiles on the map.
-     * 
+     *
      * @param delta Change in time since the last render.
      * @param batcher An instance of the game batcher.
      * @param tileMap The map which the entity is on.
@@ -31,7 +30,7 @@ public class RenderWorldSystem {
         
         float renderX = (float) ((x - Math.floor(x)) * RenderSystem.tileSize) - RenderSystem.tileSize / 2;
         float renderY = (float) ((y - Math.floor(y)) * RenderSystem.tileSize) - RenderSystem.tileSize / 2;
-        
+
         TextureManager.texture.bind();
         batcher.begin();
         for (int xx = 0; xx < RenderSystem.renderWidth + 1; xx++) {
@@ -42,17 +41,17 @@ public class RenderWorldSystem {
                 Tile tile = tileMap.getTile(xx - tileX, yy - tileY);
                 
                 if (tile != null && tile != Tile.VOID) {
-                    TileTexture texture = TextureManager.REGISTRY.getValue(tile.getTexture(0));
-                    if (texture == null)
-                        texture = TextureManager.REGISTRY.getValue("missing");
-                        
-                    batcher.texCoord(texture.minU, texture.maxV);
-                    batcher.texCoord(texture.maxU, texture.maxV);
-                    batcher.texCoord(texture.minU, texture.minV);
+                    AtlasTexture atlasTexture = TextureManager.REGISTRY.getValue(tile.getTexture(0));
+                    if (atlasTexture == null)
+                        atlasTexture = TextureManager.REGISTRY.getValue("missing");
+
+                    batcher.texCoord(atlasTexture.getMinU(), atlasTexture.getMaxV());
+                    batcher.texCoord(atlasTexture.getMaxU(), atlasTexture.getMaxV());
+                    batcher.texCoord(atlasTexture.getMinU(), atlasTexture.getMinV());
                     
-                    batcher.texCoord(texture.maxU, texture.maxV);
-                    batcher.texCoord(texture.minU, texture.minV);
-                    batcher.texCoord(texture.maxU, texture.minV);
+                    batcher.texCoord(atlasTexture.getMaxU(), atlasTexture.getMaxV());
+                    batcher.texCoord(atlasTexture.getMinU(), atlasTexture.getMinV());
+                    batcher.texCoord(atlasTexture.getMaxU(), atlasTexture.getMinV());
                     
                     batcher.color(Color.TRANSPARENT);
                     batcher.color(Color.TRANSPARENT);

@@ -18,14 +18,14 @@ public class TextureManager {
     /**
      * The registry of textures to be loaded.
      */
-    public static NamedRegistry<TileTexture> REGISTRY = new NamedRegistry<>();
+    public static NamedRegistry<AtlasTexture> REGISTRY = new NamedRegistry<>();
     
     /**
      * Initializes the loading of textures.
      */
     public static void init () {
         
-        List<TileTexture> textureList = REGISTRY.getValues();
+        List<AtlasTexture> textureList = REGISTRY.getValues();
         ResourceLoading resourceLoading = new ResourceLoading();
         
         resourceLoading.load(REGISTRY);
@@ -40,6 +40,6 @@ public class TextureManager {
     public static void registerTileTextures (String texture) {
         
         RegistryName name = new RegistryName(texture);
-        REGISTRY.registerValue(name, new TileTexture("assets/" + name.getDomain() + "/textures/tiles/" + name.getName() + (name.getName().contains("png") ? "" : ".png")));
+        REGISTRY.registerValue(name, new AtlasTexture("assets/" + name.getDomain() + "/textures/tiles/" + name.getName() + (name.getName().contains("png") ? "" : ".png")));
     }
 }

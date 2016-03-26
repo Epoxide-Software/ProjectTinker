@@ -48,28 +48,29 @@ public class ResourceLoading {
     /**
      * A map that holds all of the newly loaded textures.
      */
-    private static HashMap<FilePath, TileTexture> textureMap;
+    private static HashMap<FilePath, AtlasTexture> textureMap;
     
     /**
      * Loads all of the registered textures.
      * 
      * @param REGISTRY A registry of TileTexture objects.
      */
-    public void load (NamedRegistry<TileTexture> REGISTRY) {
+    public void load (NamedRegistry<AtlasTexture> REGISTRY) {
         
         textureMap = new HashMap<>();
         loader = new ResourceLoader();
         loader.setLogo(FilePath.getResourceFile("assets/tinker/textures/logo_epoxide.png"));
         loader.setProgressRenderCallback(ResourceLoading::renderResourceLoaderCallback);
-        ResourceLoader.setHelper(TileTexture.class, ResourceLoading::loadTileTexture);
+        ResourceLoader.setHelper(AtlasTexture.class, ResourceLoading::loadTileTexture);
         
-        for (TileTexture tileTexture : REGISTRY) {
-            if (tileTexture.path.exists()) {
-                loader.loadResource(TileTexture.class, tileTexture.path);
-                textureMap.put(tileTexture.path, tileTexture);
+        for (AtlasTexture tileTexture : REGISTRY) {
+            FilePath filePath = tileTexture.getPath();
+            if (filePath.exists()) {
+                loader.loadResource(AtlasTexture.class, filePath);
+                textureMap.put(filePath, tileTexture);
             }
             else {
-                System.out.println(tileTexture.path + " NOT FOUND");
+                System.out.println(filePath + " NOT FOUND");
             }
             
         }
@@ -83,8 +84,8 @@ public class ResourceLoading {
      * @param resourceLoader The ResourceLoader to load the resource.
      */
     private static void loadTileTexture (FilePath filePath, ResourceLoader resourceLoader) {
-        
-        TileTexture tileTexture = textureMap.get(filePath);
+
+        AtlasTexture tileTexture = textureMap.get(filePath);
         if (tileTexture != null) {
             tileTexture.loadFile();
             resourceLoader.putResource("tileTexture", filePath, tileTexture);
