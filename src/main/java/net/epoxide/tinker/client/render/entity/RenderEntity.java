@@ -8,7 +8,13 @@ import net.epoxide.tinker.entity.Entity;
 
 public class RenderEntity {
     
-    public void render (Batcher batcher, Entity e) {
+    /**
+     * Handles the render tick for an entity.
+     * 
+     * @param batcher An instance of the game batcher.
+     * @param entity The entity being rendered.
+     */
+    public void render (Batcher batcher, Entity entity) {
         
         float tileHalfSize = RenderSystem.tileSize / 2;
         
@@ -20,12 +26,12 @@ public class RenderEntity {
         batcher.color(Color.WHITE);
         batcher.color(Color.WHITE);
         
-        batcher.vertex(e.getXPos() - tileHalfSize, e.getYPos() + tileHalfSize);
-        batcher.vertex(e.getXPos() + tileHalfSize, e.getYPos() + tileHalfSize);
-        batcher.vertex(e.getXPos() - tileHalfSize, e.getYPos() - tileHalfSize);
+        batcher.vertex(entity.getXPos() - tileHalfSize, entity.getYPos() + tileHalfSize);
+        batcher.vertex(entity.getXPos() + tileHalfSize, entity.getYPos() + tileHalfSize);
+        batcher.vertex(entity.getXPos() - tileHalfSize, entity.getYPos() - tileHalfSize);
         
-        batcher.vertex(e.getXPos() + tileHalfSize, e.getYPos() + tileHalfSize);
-        batcher.vertex(e.getXPos() - tileHalfSize, e.getYPos() - tileHalfSize);
-        batcher.vertex(e.getXPos() + tileHalfSize, e.getYPos() - tileHalfSize);
+        batcher.vertex(entity.getXPos() + tileHalfSize, entity.getYPos() + tileHalfSize);
+        batcher.vertex(entity.getXPos() - tileHalfSize, entity.getYPos() - tileHalfSize);
+        batcher.vertex(entity.getXPos() + tileHalfSize, entity.getYPos() - tileHalfSize);
     }
 }

@@ -8,11 +8,13 @@ import com.shc.silenceengine.core.SilenceEngine;
 import com.shc.silenceengine.core.SilenceException;
 import com.shc.silenceengine.graphics.Batcher;
 import com.shc.silenceengine.utils.Logger;
+
 import net.darkhax.opennbt.NBTHelper;
+
 import net.epoxide.tinker.client.render.RenderEntitySystem;
 import net.epoxide.tinker.client.render.RenderSystem;
 import net.epoxide.tinker.client.render.entity.RenderEntityPlayer;
-import net.epoxide.tinker.client.render.textures.TextureSystem;
+import net.epoxide.tinker.client.render.textures.TextureManager;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.living.EntityPlayer;
 import net.epoxide.tinker.input.KeyHandler;
@@ -37,7 +39,7 @@ public class TinkerGame extends Game {
      * of major.minor.patch.build.
      */
     public static final String version = "0.0.0.0";
-
+    
     /**
      * The initial call for the application. Handles program arguments after the game is
      * constructed but before the game is started.
@@ -64,7 +66,7 @@ public class TinkerGame extends Game {
             
             if (exception instanceof SilenceException && exception.getMessage().startsWith("java.nio.file.AccessDeniedException:") && exception.getMessage().contains("glfw.dll"))
                 JOptionPane.showMessageDialog(null, "Another instance of this game is already running. Please close that instance and try again.", "Project Tinker", JOptionPane.WARNING_MESSAGE);
-
+                
             else
                 exception.printStackTrace();
         }
@@ -75,10 +77,10 @@ public class TinkerGame extends Game {
         
         Logger.info("[OpenNBT] Version " + NBTHelper.VERSION + " detected.");
         Display.setVSync(false);
-
-        TextureSystem.registerTileTextures("stone");
-        TextureSystem.registerTileTextures("slime");
-        TextureSystem.registerTileTextures("missing");
+        
+        TextureManager.registerTileTextures("stone");
+        TextureManager.registerTileTextures("slime");
+        TextureManager.registerTileTextures("missing");
         
     }
     
@@ -92,7 +94,7 @@ public class TinkerGame extends Game {
         tileMap.spawnEntity(entityPlayer);
         RenderEntitySystem.REGISTRY.registerValue("player", new RenderEntityPlayer());
         
-        TextureSystem.init();
+        TextureManager.init();
     }
     
     @Override
@@ -106,7 +108,7 @@ public class TinkerGame extends Game {
         
         if (Game.DEVELOPMENT)
             Display.setTitle("FPS: " + Game.getFPS() + " | UPS: " + Game.getUPS() + " | RC: " + SilenceEngine.graphics.renderCallsPerFrame);
-
+            
         KeyHandler.update(entityPlayer, delta);
     }
     

@@ -15,21 +15,46 @@ import com.shc.silenceengine.utils.MathUtils;
 
 import net.epoxide.tinker.util.NamedRegistry;
 
-/**
- * @author lclc98
- */
 public class ResourceLoading {
     
+    /**
+     * The main resource loader.
+     */
     public ResourceLoader loader;
     
+    /**
+     * The color of the progression bar during startup.
+     */
     public static Paint progressionColor;
+    
+    /**
+     * The color of the progression bar text on startup.
+     */
     public static Paint textColor;
+    
+    /**
+     * The texture for the logo being displayed during the loading process.
+     */
     public static Texture logo;
+    
+    /**
+     * The texture for the background being displayed during the loading process.
+     */
     public static Texture background;
+    
+    // TODO This is kind of lame. I want to remove
     public static boolean hasSwitched;
     
+    /**
+     * A map that holds all of the newly loaded textures.
+     */
     private static HashMap<FilePath, TileTexture> textureMap;
     
+    /**
+     * Loads all of the registered textures.
+     * 
+     * @param REGISTRY A registry of TileTexture objects.
+     */
     public void load (NamedRegistry<TileTexture> REGISTRY) {
         
         textureMap = new HashMap<>();
@@ -52,6 +77,12 @@ public class ResourceLoading {
         loader.startLoading();
     }
     
+    /**
+     * Loads a file into the resource loader.
+     * 
+     * @param filePath The path to the file to load.
+     * @param resourceLoader The ResourceLoader to load the resource.
+     */
     private static void loadTileTexture (FilePath filePath, ResourceLoader resourceLoader) {
         
         TileTexture tileTexture = textureMap.get(filePath);
@@ -61,6 +92,13 @@ public class ResourceLoading {
         }
     }
     
+    /**
+     * A callback from the SilenceEngine which allows for special loader effects to be
+     * displayed.
+     * 
+     * @param info The current render info.
+     * @param percentage The percent completion of the resource loading.
+     */
     private static void renderResourceLoaderCallback (String info, float percentage) {
         
         if (logo == null)
@@ -79,7 +117,6 @@ public class ResourceLoading {
             textColor = new Paint(Color.DARK_GREEN);
             logo = Texture.fromFilePath(FilePath.getResourceFile("assets/tinker/textures/logo_epoxide.png"));
             hasSwitched = true;
-            
         }
         
         float adjustedPercentage = MathUtils.convertRange(percentage, 0, 100, 0, Display.getWidth() - 100);

@@ -8,7 +8,8 @@ import net.epoxide.tinker.entity.Entity;
 
 public class RenderEntityPlayer extends RenderEntity {
     
-    public void render (Batcher batcher, Entity e) {
+    @Override
+    public void render (Batcher batcher, Entity enttity) {
         
         float xPos = RenderSystem.displayWidth / 2;
         float yPos = RenderSystem.displayHeight / 2;

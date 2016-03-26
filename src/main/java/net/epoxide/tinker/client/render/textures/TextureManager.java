@@ -9,13 +9,20 @@ import net.epoxide.tinker.client.render.textures.packer.TexturePacker;
 import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.util.RegistryName;
 
-public class TextureSystem {
+public class TextureManager {
     
+    /**
+     * The texture atlas generated for the tiles.
+     */
     public static Texture texture;
+    
+    /**
+     * The registry of textures to be loaded.
+     */
     public static NamedRegistry<TileTexture> REGISTRY = new NamedRegistry<>();
     
     /**
-     *
+     * Initializes the loading of textures.
      */
     public static void init () {
         
@@ -26,6 +33,11 @@ public class TextureSystem {
         texture = new TexturePacker().packImages(textureList);
     }
     
+    /**
+     * Registers a tile texture to be loaded at the end of the preInit stage.
+     * 
+     * @param texture The texture to render, follows standard RegistryName convention.
+     */
     public static void registerTileTextures (String texture) {
         
         RegistryName name = new RegistryName(texture);
