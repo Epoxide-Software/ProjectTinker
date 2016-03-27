@@ -1,4 +1,4 @@
-package net.epoxide.tinker.input;
+package net.epoxide.tinker.client.input;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,22 +26,22 @@ public class KeyHandler {
         
         if (forward.isPressed())
             entityPlayer.setYPos(entityPlayer.getYPos() + delta);
-        else if (back.isPressed())
+        if (back.isPressed())
             entityPlayer.setYPos(entityPlayer.getYPos() - delta);
-        else if (left.isPressed())
+        if (left.isPressed())
             entityPlayer.setXPos(entityPlayer.getXPos() + delta);
-        else if (right.isPressed())
+        if (right.isPressed())
             entityPlayer.setXPos(entityPlayer.getXPos() - delta);
-            
+
         REGISTRY.forEach(keyBind -> {
-            boolean wasPressed = keyBind.pressed;
-            keyBind.setPressed(Keyboard.isPressed(keyBind.getKey()));
-            
-            if (keyBind.isEvent) {
-                if (!wasPressed && keyBind.isPressed()) {
+            boolean wasPressed = keyBind.isPressed();
+
+            keyBind.updatePressed();
+            if (keyBind.isEventEnabled()) {
+                if (!wasPressed && Keyboard.isPressed(keyBind.getKey())) {
                     keyBind.onKeyPressed(delta);
                 }
-                if (wasPressed && !keyBind.isPressed()) {
+                if (wasPressed && !Keyboard.isPressed(keyBind.getKey())) {
                     keyBind.onKeyReleased(delta);
                 }
             }

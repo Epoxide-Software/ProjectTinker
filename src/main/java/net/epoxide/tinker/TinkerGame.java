@@ -17,22 +17,16 @@ import net.epoxide.tinker.client.render.entity.RenderEntityPlayer;
 import net.epoxide.tinker.client.render.textures.TextureManager;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.living.EntityPlayer;
-import net.epoxide.tinker.input.KeyHandler;
+import net.epoxide.tinker.client.input.KeyHandler;
 import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.world.TileMap;
 import net.epoxide.tinker.world.dungeon.Dungeon;
 
 public class TinkerGame extends Game {
     
-    /**
-     * TODO Temp
-     */
-    public EntityPlayer entityPlayer;
+    public static EntityPlayer entityPlayer;
     private RenderSystem renderSystem = new RenderSystem();
-    /**
-     * TODO Temp
-     */
-    public static TileMap tileMap = new TileMap(512, 512, "world");
+    private TileMap tileMap = new TileMap(512, 512, "world");
     
     /**
      * The current version of the game. Version system follows a fairly standard version system
