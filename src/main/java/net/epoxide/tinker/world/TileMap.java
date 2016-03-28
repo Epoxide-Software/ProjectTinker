@@ -19,7 +19,7 @@ public class TileMap {
      * A registry for maps. TileMaps do not need to be registered here for them to work,
      * however static locations that can be warped to must be registered here.
      */
-    public static final NamedRegistry<TileMap> REGISTRY = new NamedRegistry<TileMap>();
+    public static final NamedRegistry<TileMap> REGISTRY = new NamedRegistry<>();
     
     /**
      * The tile width of the map.
@@ -69,7 +69,7 @@ public class TileMap {
         this.name = name;
         this.tileMap = new Tile[width][height];
         this.tileData = new CompoundTag[width][height];
-        this.entityList = new ArrayList<Entity>();
+        this.entityList = new ArrayList<>();
     }
     
     /**
@@ -462,8 +462,8 @@ public class TileMap {
         tag.setInt("MapWidth", this.width);
         tag.setInt("MapHeight", this.height);
         
-        List<String> tileIDs = new ArrayList<String>();
-        List<Tag> tileData = new ArrayList<Tag>();
+        List<String> tileIDs = new ArrayList<>();
+        List<Tag> tileData = new ArrayList<>();
         
         for (int x = 0; x < this.width; x++) {
             
@@ -477,7 +477,7 @@ public class TileMap {
         tag.setStringArray("TileIDs", tileIDs.toArray(new String[this.width * this.height]));
         tag.setTagList("TileData", tileData);
         
-        List<Tag> entityData = new ArrayList<Tag>();
+        List<Tag> entityData = new ArrayList<>();
         this.entityList.forEach(entity -> entityData.add(entity.writeData(new CompoundTag("EntityData"))));
         tag.setTagList("Entities", entityData);
         

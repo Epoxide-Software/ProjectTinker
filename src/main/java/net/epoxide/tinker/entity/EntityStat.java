@@ -10,7 +10,7 @@ public class EntityStat {
     /**
      * A registry of all the different types of EntityStat.
      */
-    public static final NamedRegistry<EntityStat> REGISTRY = new NamedRegistry<EntityStat>();
+    public static final NamedRegistry<EntityStat> REGISTRY = new NamedRegistry<>();
     
     /**
      * A stat which represents the entities maximum health.
@@ -150,13 +150,13 @@ public class EntityStat {
     
     @Override
     public boolean equals (Object obj) {
-        
+
         if (this == obj)
             return true;
-            
+
         else if (obj instanceof EntityStat)
             return (this.ID.equals(((EntityStat) obj).ID));
-            
+
         else
             return false;
     }

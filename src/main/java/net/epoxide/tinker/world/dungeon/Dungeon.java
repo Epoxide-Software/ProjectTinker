@@ -11,7 +11,7 @@ public class Dungeon {
     /**
      * A registry that holds all of the dungeons registered into the game.
      */
-    public static final NamedRegistry<Dungeon> REGISTRY = new NamedRegistry<Dungeon>();
+    public static final NamedRegistry<Dungeon> REGISTRY = new NamedRegistry<>();
     
     public static final Dungeon DEFAULT = new Dungeon("default", 0);
     

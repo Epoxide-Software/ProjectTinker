@@ -20,7 +20,7 @@ public class RenderWorldSystem {
      */
     public void renderWorld (float delta, Batcher batcher, TileMap tileMap) {
         
-        EntityPlayer entityPlayer = ((TinkerGame) TinkerGame.getInstance()).entityPlayer;
+        EntityPlayer entityPlayer = TinkerGame.entityPlayer;
         
         float x = entityPlayer.getXPos();
         float y = entityPlayer.getYPos();

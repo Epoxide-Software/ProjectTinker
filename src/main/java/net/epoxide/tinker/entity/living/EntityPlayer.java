@@ -22,6 +22,7 @@ public class EntityPlayer extends EntityLiving {
     public EntityPlayer(TileMap map) {
         
         super(map);
+        this.renderers.add("entityPlayer");
     }
     
     /**
@@ -34,5 +35,6 @@ public class EntityPlayer extends EntityLiving {
     public EntityPlayer(TileMap map, CompoundTag tag) {
         
         super(map, tag);
+        this.renderers.add("entityPlayer");
     }
 }

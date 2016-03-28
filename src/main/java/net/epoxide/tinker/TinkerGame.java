@@ -75,7 +75,6 @@ public class TinkerGame extends Game {
         TextureManager.registerTileTextures("stone");
         TextureManager.registerTileTextures("slime");
         TextureManager.registerTileTextures("missing");
-        
     }
     
     @Override
@@ -83,10 +82,10 @@ public class TinkerGame extends Game {
         
         Dungeon.DEFAULT.generateMap(tileMap);
         entityPlayer = new EntityPlayer(tileMap);
-        Entity.REGISTRY.registerValue(new RegistryName("player"), EntityPlayer.class);
-        // entityPlayer.renderers.add("entityPlayer");
+        Entity.REGISTRY.registerValue(new RegistryName("entityPlayer"), EntityPlayer.class);
+
         tileMap.spawnEntity(entityPlayer);
-        RenderEntitySystem.REGISTRY.registerValue("player", new RenderEntityPlayer());
+        RenderEntitySystem.REGISTRY.registerValue("entityPlayer", new RenderEntityPlayer());
         
         TextureManager.init();
     }

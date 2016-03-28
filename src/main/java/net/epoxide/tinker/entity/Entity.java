@@ -2,6 +2,8 @@ package net.epoxide.tinker.entity;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.shc.silenceengine.utils.Logger;
@@ -17,7 +19,7 @@ public class Entity {
     /**
      * A registry for registering Entities into the game.
      */
-    public static final NamedRegistry<Class<? extends Entity>> REGISTRY = new NamedRegistry<Class<? extends Entity>>();
+    public static final NamedRegistry<Class<? extends Entity>> REGISTRY = new NamedRegistry<>();
     
     /**
      * A name that is associated with this entity. It is generally not unique.
@@ -58,6 +60,8 @@ public class Entity {
      * The rotation of the entity
      */
     private Direction rotation;
+
+    public List<String> renderers = new ArrayList<>();
     /**
      * Constructs the entity with no internal logic. Allows for all of the logic to be handled
      * by the entity.

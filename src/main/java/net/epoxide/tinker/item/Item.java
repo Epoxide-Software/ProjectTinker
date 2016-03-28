@@ -9,7 +9,7 @@ import net.epoxide.tinker.world.TileMap;
 
 public class Item {
     
-    public static final NamedRegistry<Item> REGISTRY = new NamedRegistry<Item>();
+    public static final NamedRegistry<Item> REGISTRY = new NamedRegistry<>();
     
     /**
      * Gets a StatModifier for the Item. This can allow the Item to manipulate entity stats,

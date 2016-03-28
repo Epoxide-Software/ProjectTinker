@@ -15,7 +15,7 @@ public class Tile {
      * registration using this registry should only be done through {@link #registerTile(Tile)}
      * which uses the Tile's static ID value.
      */
-    public static final NamedRegistry<Tile> REGISTRY = new NamedRegistry<Tile>();
+    public static final NamedRegistry<Tile> REGISTRY = new NamedRegistry<>();
     
     public static final Tile VOID = registerTile(new Tile("tinker:void"));
     public static final Tile STONE = registerTile(new Tile("tinker:stone"));

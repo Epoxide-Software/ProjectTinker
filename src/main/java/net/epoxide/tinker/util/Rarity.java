@@ -43,7 +43,7 @@ public enum Rarity {
      * @param weight The weight for the rarity in a tier system.
      * @param percentage The chance of this rarity happening out of 100.
      */
-    private Rarity(String name, int tier, int weight, double percentage) {
+    Rarity(String name, int tier, int weight, double percentage) {
         
         this.name = name;
         this.tier = tier;

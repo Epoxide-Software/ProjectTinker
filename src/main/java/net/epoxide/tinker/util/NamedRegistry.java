@@ -160,7 +160,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public List<V> getValues (String domain) {
         
-        final List<V> values = new ArrayList<V>();
+        final List<V> values = new ArrayList<>();
         this.REGISTRY.entrySet().stream().filter(pair -> pair.getKey().getDomain().equals(domain)).forEach(pair -> values.add(pair.getValue()));
         return values;
     }
@@ -172,7 +172,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public List<V> getValues () {
         
-        return new ArrayList<V>(this.REGISTRY.values());
+        return new ArrayList<>(this.REGISTRY.values());
     }
     
     /**
