@@ -150,13 +150,13 @@ public class EntityStat {
     
     @Override
     public boolean equals (Object obj) {
-
+        
         if (this == obj)
             return true;
-
+            
         else if (obj instanceof EntityStat)
             return (this.ID.equals(((EntityStat) obj).ID));
-
+            
         else
             return false;
     }

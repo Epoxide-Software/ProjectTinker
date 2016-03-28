@@ -32,10 +32,10 @@ public class KeyHandler {
             entityPlayer.setXPos(entityPlayer.getXPos() + delta);
         if (right.isPressed())
             entityPlayer.setXPos(entityPlayer.getXPos() - delta);
-
+            
         REGISTRY.forEach(keyBind -> {
             boolean wasPressed = keyBind.isPressed();
-
+            
             keyBind.updatePressed();
             if (keyBind.isEventEnabled()) {
                 if (!wasPressed && Keyboard.isPressed(keyBind.getKey())) {

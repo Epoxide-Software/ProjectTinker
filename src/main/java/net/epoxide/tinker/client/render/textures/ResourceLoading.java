@@ -84,7 +84,7 @@ public class ResourceLoading {
      * @param resourceLoader The ResourceLoader to load the resource.
      */
     private static void loadTileTexture (FilePath filePath, ResourceLoader resourceLoader) {
-
+        
         AtlasTexture tileTexture = textureMap.get(filePath);
         if (tileTexture != null) {
             tileTexture.loadFile();

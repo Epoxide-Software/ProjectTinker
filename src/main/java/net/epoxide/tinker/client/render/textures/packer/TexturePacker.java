@@ -4,11 +4,12 @@ import java.awt.Dimension;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-import net.epoxide.tinker.client.render.textures.AtlasTexture;
 import org.lwjgl.BufferUtils;
 
 import com.shc.silenceengine.backend.lwjgl3.opengl.Texture;
 import com.shc.silenceengine.math.geom2d.Rectangle;
+
+import net.epoxide.tinker.client.render.textures.AtlasTexture;
 
 public class TexturePacker {
     
@@ -27,10 +28,10 @@ public class TexturePacker {
         
         if (packed)
             System.out.println("Already Packed");
-
+            
         if (entries.isEmpty())
             throw new IllegalStateException("nothing to pack");
-
+            
         int maxWidth = 0;
         int maxHeight = 0;
         int totalArea = 0;
@@ -43,7 +44,7 @@ public class TexturePacker {
                 maxWidth = width;
             if (height > maxHeight)
                 maxHeight = height;
-
+                
             totalArea += width * height;
         }
         
@@ -120,7 +121,7 @@ public class TexturePacker {
         private AtlasTexture image;
         
         private Node() {
-
+        
         }
         
         private Node(int width, int height) {
@@ -139,30 +140,30 @@ public class TexturePacker {
                 Node newNode = child[0].insert(texture);
                 if (newNode != null)
                     return newNode;
-
+                    
                 return child[1].insert(texture);
             }
             else {
-
+                
                 if (this.image != null)
                     return null;
-
+                    
                 int width = texture.getWidth();
                 int height = texture.getHeight();
-
+                
                 if ((width > rc.getWidth()) || (height > rc.getHeight()))
                     return null;
-
+                    
                 if ((width == rc.getWidth()) && (height == rc.getHeight())) {
                     this.image = texture;
                     this.image.setX((int) this.rc.getX());
                     this.image.setY((int) this.rc.getY());
                     return this;
                 }
-
+                
                 child[0] = new Node();
                 child[1] = new Node();
-
+                
                 float dw = rc.getWidth() - width;
                 float dh = rc.getHeight() - height;
                 
