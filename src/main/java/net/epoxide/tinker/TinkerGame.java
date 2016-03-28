@@ -1,6 +1,7 @@
 package net.epoxide.tinker;
 
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 import com.shc.silenceengine.core.Display;
 import com.shc.silenceengine.core.Game;
@@ -53,6 +54,12 @@ public class TinkerGame extends Game {
                 if (arg.equalsIgnoreCase("debug"))
                     DEVELOPMENT = true;
             }
+            
+            if (!DEVELOPMENT) {
+                
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            }
+            
             game.start();
         }
         
