@@ -1,8 +1,8 @@
 package net.epoxide.tinker.util;
 
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -12,8 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
-
-import org.apache.commons.lang.SystemUtils;
 
 public class GenericUtilities {
     
@@ -51,19 +49,24 @@ public class GenericUtilities {
      * @param title The title for the window.
      * @param text The contents to display on the pane.
      * @param type The option type. See JOptionPane for more specifics.
+     * @param width The desired width of the window.
+     * @param height The desired height of the window.
+     * @param fontSizeMod A modifier applied to the system default font size. Allows for font
+     *        to be larger.
      * @return boolean Whether or not the dialog was confirmed.
      */
-    public static boolean displayHTMLOptionPane (String title, String text, int type) {
+    public static boolean displayHTMLOptionPane (String title, String text, int type, int width, int height, int fontSizeMod) {
         
         JLabel label = new JLabel();
         Font font = label.getFont();
         
         StringBuffer style = new StringBuffer("font-family:" + font.getFamily() + ";");
         style.append("font-weight:" + (font.isBold() ? "bold" : "normal") + ";");
-        style.append("font-size:" + font.getSize() + "pt;");
+        style.append("font-size:" + (font.getSize() + fontSizeMod) + "pt;");
         
         JEditorPane htmlText = new JEditorPane("text/html", "<html><body style=\"" + style + "\">" + text + "</body></html>");
         
+        htmlText.setPreferredSize(new Dimension(width, height));
         htmlText.addHyperlinkListener(new HyperlinkListener() {
             
             @Override
