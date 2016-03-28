@@ -12,13 +12,14 @@ import com.shc.silenceengine.utils.Logger;
 
 import net.darkhax.opennbt.NBTHelper;
 
+import net.epoxide.tinker.client.input.KeyHandler;
 import net.epoxide.tinker.client.render.RenderEntitySystem;
 import net.epoxide.tinker.client.render.RenderSystem;
 import net.epoxide.tinker.client.render.entity.RenderEntityPlayer;
 import net.epoxide.tinker.client.render.textures.TextureManager;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.living.EntityPlayer;
-import net.epoxide.tinker.client.input.KeyHandler;
+import net.epoxide.tinker.util.GenericUtilities;
 import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.world.TileMap;
 import net.epoxide.tinker.world.dungeon.Dungeon;
@@ -58,6 +59,7 @@ public class TinkerGame extends Game {
             if (!DEVELOPMENT) {
                 
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                GenericUtilities.displayHTMLOptionPane("Hardware Survey", "Would you like to participate in the automatic hardware survey? If you select yes, the demo will submit anonymous information about your hardware, and how your well your computer handles the demo. No personal information is collected and submissions are completely anonymous. For more information read " + GenericUtilities.createHyperlink("http://www.google.com", "here"), JOptionPane.YES_NO_OPTION, 500, 80, 2);
             }
             
             game.start();
@@ -90,7 +92,7 @@ public class TinkerGame extends Game {
         Dungeon.DEFAULT.generateMap(tileMap);
         entityPlayer = new EntityPlayer(tileMap);
         Entity.REGISTRY.registerValue(new RegistryName("entityPlayer"), EntityPlayer.class);
-
+        
         tileMap.spawnEntity(entityPlayer);
         RenderEntitySystem.REGISTRY.registerValue("entityPlayer", new RenderEntityPlayer());
         
