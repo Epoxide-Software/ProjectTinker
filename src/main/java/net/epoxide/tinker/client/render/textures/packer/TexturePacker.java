@@ -26,7 +26,7 @@ public class TexturePacker {
      */
     public Texture packImages (List<AtlasTexture> entries) {
         
-        if (packed)
+        if (this.packed)
             System.out.println("Already Packed");
             
         if (entries.isEmpty())
@@ -36,7 +36,7 @@ public class TexturePacker {
         int maxHeight = 0;
         int totalArea = 0;
         
-        for (AtlasTexture texture : entries) {
+        for (final AtlasTexture texture : entries) {
             
             final int width = texture.getWidth();
             final int height = texture.getHeight();
@@ -50,21 +50,21 @@ public class TexturePacker {
             totalArea += width * height;
         }
         
-        final Dimension size = new Dimension(closestTwoPower(maxWidth), closestTwoPower(maxHeight));
+        final Dimension size = new Dimension(this.closestTwoPower(maxWidth), this.closestTwoPower(maxHeight));
         boolean fitAll = false;
         
         loop : while (!fitAll) {
-            int area = size.width * size.height;
+            final int area = size.width * size.height;
             if (area < totalArea) {
-                nextSize(size);
+                this.nextSize(size);
                 continue;
             }
             
-            Node root = new Node(size.width, size.height);
-            for (AtlasTexture texture : entries) {
-                Node inserted = root.insert(texture);
+            final Node root = new Node(size.width, size.height);
+            for (final AtlasTexture texture : entries) {
+                final Node inserted = root.insert(texture);
                 if (inserted == null) {
-                    nextSize(size);
+                    this.nextSize(size);
                     continue loop;
                 }
             }
@@ -73,31 +73,30 @@ public class TexturePacker {
         
         final ByteBuffer imageBuffer = BufferUtils.createByteBuffer(size.width * size.height * 4);
         
-        for (AtlasTexture texture : entries) {
+        for (final AtlasTexture texture : entries) {
             
-            ByteBuffer buffer = texture.getImage();
+            final ByteBuffer buffer = texture.getImage();
             
-            for (int y = 0; y < texture.getHeight(); y++) {
+            for (int y = 0; y < texture.getHeight(); y++)
                 for (int x = 0; x < texture.getWidth(); x++) {
                     
-                    final int position = (x + texture.getX()) * texture.getComponents() + (y + texture.getY()) * (size.width * 4);
+                    final int position = (x + texture.getX()) * texture.getComponents() + (y + texture.getY()) * size.width * 4;
                     
                     imageBuffer.put(position, buffer.get());
                     imageBuffer.put(position + 1, buffer.get());
                     imageBuffer.put(position + 2, buffer.get());
                     imageBuffer.put(position + 3, texture.getComponents() == 4 ? buffer.get() : 0);
                 }
-            }
-            
-            final float minU = (float) (texture.getX()) / size.width;
-            final float minV = (float) (texture.getY()) / size.height;
+                
+            final float minU = (float) texture.getX() / size.width;
+            final float minV = (float) texture.getY() / size.height;
             final float maxU = (float) (texture.getX() + texture.getWidth()) / size.width;
             final float maxV = (float) (texture.getY() + texture.getHeight()) / size.height;
             texture.setUV(minU, minV, maxU, maxV);
         }
         
         imageBuffer.flip();
-        packed = true;
+        this.packed = true;
         return Texture.fromByteBuffer(imageBuffer, size.width, size.height, 4);
     }
     
@@ -113,9 +112,8 @@ public class TexturePacker {
     private int closestTwoPower (int i) {
         
         int power = 1;
-        while (power < i) {
+        while (power < i)
             power <<= 1;
-        }
         return power;
     }
     
@@ -130,22 +128,22 @@ public class TexturePacker {
         
         private Node(int width, int height) {
             
-            rc.set(0, 0, width, height);
+            this.rc.set(0, 0, width, height);
         }
         
         private boolean isLeaf () {
             
-            return child[0] == null && child[1] == null;
+            return this.child[0] == null && this.child[1] == null;
         }
         
         private Node insert (AtlasTexture texture) {
             
-            if (!isLeaf()) {
-                final Node newNode = child[0].insert(texture);
+            if (!this.isLeaf()) {
+                final Node newNode = this.child[0].insert(texture);
                 if (newNode != null)
                     return newNode;
                     
-                return child[1].insert(texture);
+                return this.child[1].insert(texture);
             }
             else {
                 
@@ -155,31 +153,31 @@ public class TexturePacker {
                 final int width = texture.getWidth();
                 final int height = texture.getHeight();
                 
-                if ((width > rc.getWidth()) || (height > rc.getHeight()))
+                if (width > this.rc.getWidth() || height > this.rc.getHeight())
                     return null;
                     
-                if ((width == rc.getWidth()) && (height == rc.getHeight())) {
+                if (width == this.rc.getWidth() && height == this.rc.getHeight()) {
                     this.image = texture;
                     this.image.setX((int) this.rc.getX());
                     this.image.setY((int) this.rc.getY());
                     return this;
                 }
                 
-                child[0] = new Node();
-                child[1] = new Node();
+                this.child[0] = new Node();
+                this.child[1] = new Node();
                 
-                final float dw = rc.getWidth() - width;
-                final float dh = rc.getHeight() - height;
+                final float dw = this.rc.getWidth() - width;
+                final float dh = this.rc.getHeight() - height;
                 
                 if (dw > dh) {
-                    child[0].rc.set(rc.getX(), rc.getY(), width, rc.getHeight());
-                    child[1].rc.set(rc.getX() + width, rc.getY(), rc.getWidth() - width, rc.getHeight());
+                    this.child[0].rc.set(this.rc.getX(), this.rc.getY(), width, this.rc.getHeight());
+                    this.child[1].rc.set(this.rc.getX() + width, this.rc.getY(), this.rc.getWidth() - width, this.rc.getHeight());
                 }
                 else {
-                    child[0].rc.set(rc.getX(), rc.getY(), rc.getWidth(), height);
-                    child[1].rc.set(rc.getX(), rc.getY() + height, rc.getWidth(), rc.getHeight() - height);
+                    this.child[0].rc.set(this.rc.getX(), this.rc.getY(), this.rc.getWidth(), height);
+                    this.child[1].rc.set(this.rc.getX(), this.rc.getY() + height, this.rc.getWidth(), this.rc.getHeight() - height);
                 }
-                return child[0].insert(texture);
+                return this.child[0].insert(texture);
             }
             
         }
@@ -187,7 +185,7 @@ public class TexturePacker {
         @Override
         public String toString () {
             
-            return rc + ((this.image == null) ? " <no entry>" : " " + this.image.toString());
+            return this.rc + (this.image == null ? " <no entry>" : " " + this.image.toString());
         }
     }
 }

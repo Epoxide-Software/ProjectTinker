@@ -73,6 +73,6 @@ public enum Rarity {
     public static Rarity getRandomRarity (Random rng) {
         
         final double percent = rng.nextDouble();
-        return (percent >= COMMON.percentage) ? COMMON : (percent >= UNCOMMON.percentage) ? UNCOMMON : (percent >= RARE.percentage) ? RARE : (percent >= EPIC.percentage) ? EPIC : MYTHIC;
+        return percent >= COMMON.percentage ? COMMON : percent >= UNCOMMON.percentage ? UNCOMMON : percent >= RARE.percentage ? RARE : percent >= EPIC.percentage ? EPIC : MYTHIC;
     }
 }

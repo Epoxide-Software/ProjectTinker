@@ -53,7 +53,7 @@ public class Item {
     public static Item getItemByName (String name) {
         
         final Item item = REGISTRY.getValue(name);
-        return (item == null) ? ERROR : item;
+        return item == null ? ERROR : item;
     }
     
     /**

@@ -47,7 +47,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public V getValue (String domain, String name) {
         
-        return getValue(new RegistryName(domain, name));
+        return this.getValue(new RegistryName(domain, name));
     }
     
     /**
@@ -58,7 +58,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public V getValue (String name) {
         
-        return getValue(new RegistryName(name));
+        return this.getValue(new RegistryName(name));
     }
     
     /**
@@ -75,7 +75,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public V registerValue (String domain, String name, V value) {
         
-        registerValue(new RegistryName(domain, name), value);
+        this.registerValue(new RegistryName(domain, name), value);
         return value;
     }
     
@@ -91,7 +91,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public V registerValue (String name, V value) {
         
-        registerValue(new RegistryName(name), value);
+        this.registerValue(new RegistryName(name), value);
         return value;
     }
     
@@ -127,7 +127,7 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public List<RegistryName> getNames (String domain) {
         
-        return getNames().stream().filter(name -> name.getDomain().equals(domain)).collect(Collectors.toList());
+        return this.getNames().stream().filter(name -> name.getDomain().equals(domain)).collect(Collectors.toList());
     }
     
     /**
@@ -221,8 +221,8 @@ public class NamedRegistry<V> implements Iterable<V> {
      */
     public V getRandomValue (Random random, String domain) {
         
-        List<V> values = getValues(domain);
-        return (values.isEmpty()) ? null : values.get(random.nextInt(values.size()));
+        final List<V> values = this.getValues(domain);
+        return values.isEmpty() ? null : values.get(random.nextInt(values.size()));
     }
     
     /**
@@ -235,8 +235,8 @@ public class NamedRegistry<V> implements Iterable<V> {
     @SuppressWarnings("unchecked")
     public V getRandomValue (Random random) {
         
-        final Object[] values = getValueCache();
-        return (values.length == 0) ? null : (V) values[random.nextInt(values.length)];
+        final Object[] values = this.getValueCache();
+        return values.length == 0 ? null : (V) values[random.nextInt(values.length)];
     }
     
     @Override

@@ -55,7 +55,7 @@ public class Dungeon {
      */
     public String getName () {
         
-        return name;
+        return this.name;
     }
     
     /**
@@ -66,7 +66,7 @@ public class Dungeon {
      */
     public int getFloors () {
         
-        return floors;
+        return this.floors;
     }
     
     /**
@@ -76,7 +76,7 @@ public class Dungeon {
      */
     public Dungeon getParent () {
         
-        return parent;
+        return this.parent;
     }
     
     /**
@@ -96,7 +96,7 @@ public class Dungeon {
      */
     public Dungeon getChild () {
         
-        return child;
+        return this.child;
     }
     
     /**
@@ -119,7 +119,7 @@ public class Dungeon {
     public void generateMap (TileMap map) {
         
         map.setDungeon(this);
-        for (Tile[] row : map.getTileMap())
-            Arrays.fill(row, (Math.random() < 0.5) ? Tile.VOID : Tile.STONE);
+        for (final Tile[] row : map.getTileMap())
+            Arrays.fill(row, Math.random() < 0.5 ? Tile.VOID : Tile.STONE);
     }
 }

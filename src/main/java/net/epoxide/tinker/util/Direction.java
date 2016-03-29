@@ -22,7 +22,7 @@ public enum Direction {
     
     public static Direction getValue (float motionX, float motionY) {
         
-        for (Direction direction : values())
+        for (final Direction direction : values())
             if (direction.x == (motionX == 0 ? 0 : motionX < 0 ? 1 : -1) && direction.y == (motionY == 0 ? 0 : motionY < 0 ? 1 : -1))
                 return direction;
                 

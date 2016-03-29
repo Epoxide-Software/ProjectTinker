@@ -5,7 +5,7 @@ import com.shc.silenceengine.input.Keyboard;
 public class KeyBind {
     
     private int key;
-    private boolean eventEnabled;
+    private final boolean eventEnabled;
     private boolean pressed;
     
     public KeyBind(int key) {
@@ -36,12 +36,12 @@ public class KeyBind {
     
     public void updatePressed () {
         
-        this.pressed = Keyboard.isPressed(key);
+        this.pressed = Keyboard.isPressed(this.key);
     }
     
     public boolean isEventEnabled () {
         
-        return eventEnabled;
+        return this.eventEnabled;
     }
     
     public void onKeyPressed (float delta) {

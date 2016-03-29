@@ -11,7 +11,6 @@ import javax.swing.JEditorPane;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 
 public class GenericUtilities {
     
@@ -57,32 +56,28 @@ public class GenericUtilities {
      */
     public static boolean displayHTMLOptionPane (String title, String text, int type, int width, int height, int fontSizeMod) {
         
-        JLabel label = new JLabel();
-        Font font = label.getFont();
+        final JLabel label = new JLabel();
+        final Font font = label.getFont();
         
-        StringBuffer style = new StringBuffer("font-family:" + font.getFamily() + ";");
+        final StringBuffer style = new StringBuffer("font-family:" + font.getFamily() + ";");
         style.append("font-weight:" + (font.isBold() ? "bold" : "normal") + ";");
         style.append("font-size:" + (font.getSize() + fontSizeMod) + "pt;");
         
-        JEditorPane htmlText = new JEditorPane("text/html", "<html><body style=\"" + style + "\">" + text + "</body></html>");
+        final JEditorPane htmlText = new JEditorPane("text/html", "<html><body style=\"" + style + "\">" + text + "</body></html>");
         
         htmlText.setPreferredSize(new Dimension(width, height));
-        htmlText.addHyperlinkListener(new HyperlinkListener() {
+        htmlText.addHyperlinkListener(event -> {
             
-            @Override
-            public void hyperlinkUpdate (HyperlinkEvent event) {
+            if (event.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED))
                 
-                if (event.getEventType().equals(HyperlinkEvent.EventType.ACTIVATED))
+                try {
                     
-                    try {
-                        
-                        Desktop.getDesktop().browse(event.getURL().toURI());
-                    }
-                    
-                    catch (IOException | URISyntaxException exception) {
-                    
-                    }
-            }
+                    Desktop.getDesktop().browse(event.getURL().toURI());
+                }
+                
+                catch (IOException | URISyntaxException exception) {
+                
+                }
         });
         
         htmlText.setEditable(false);

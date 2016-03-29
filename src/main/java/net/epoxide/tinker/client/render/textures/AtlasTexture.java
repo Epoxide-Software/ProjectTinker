@@ -16,7 +16,7 @@ public class AtlasTexture implements IResource {
     /**
      * The path for the texture to load.
      */
-    private FilePath path;
+    private final FilePath path;
     
     /**
      * A buffer of bytes which contain the loaded image.
@@ -95,10 +95,10 @@ public class AtlasTexture implements IResource {
         final IntBuffer comp = BufferUtils.createIntBuffer(1);
         
         try {
-            ByteBuffer imageBuffer = FileUtils.readToByteBuffer(path.getInputStream());
+            final ByteBuffer imageBuffer = FileUtils.readToByteBuffer(this.path.getInputStream());
             this.image = STBImage.stbi_load_from_memory(imageBuffer, width, height, comp, 0);
         }
-        catch (IOException exception) {
+        catch (final IOException exception) {
             
             exception.printStackTrace();
         }
@@ -131,12 +131,12 @@ public class AtlasTexture implements IResource {
      */
     public ByteBuffer getImage () {
         
-        return image;
+        return this.image;
     }
     
     public int getX () {
         
-        return x;
+        return this.x;
     }
     
     public void setX (int x) {
@@ -146,7 +146,7 @@ public class AtlasTexture implements IResource {
     
     public int getY () {
         
-        return y;
+        return this.y;
     }
     
     public void setY (int y) {
@@ -156,42 +156,42 @@ public class AtlasTexture implements IResource {
     
     public int getHeight () {
         
-        return height;
+        return this.height;
     }
     
     public int getWidth () {
         
-        return width;
+        return this.width;
     }
     
     public int getComponents () {
         
-        return components;
+        return this.components;
     }
     
     public FilePath getPath () {
         
-        return path;
+        return this.path;
     }
     
     public float getMinU () {
         
-        return minU;
+        return this.minU;
     }
     
     public float getMinV () {
         
-        return minV;
+        return this.minV;
     }
     
     public float getMaxU () {
         
-        return maxU;
+        return this.maxU;
     }
     
     public float getMaxV () {
         
-        return maxV;
+        return this.maxV;
     }
     
     @Override

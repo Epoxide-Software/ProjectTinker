@@ -16,12 +16,12 @@ public class RenderSystem {
     /**
      * The renderer for the world map.
      */
-    private RenderWorldSystem worldRenderer;
+    private final RenderWorldSystem worldRenderer;
     
     /**
      * The renderer for entities.
      */
-    private RenderEntitySystem entityRenderer;
+    private final RenderEntitySystem entityRenderer;
     
     /**
      * The length of a tile's size to be rendered on the screen.
@@ -55,7 +55,7 @@ public class RenderSystem {
         
         this.worldRenderer = new RenderWorldSystem();
         this.entityRenderer = new RenderEntitySystem();
-        resize();
+        this.resize();
     }
     
     /**
@@ -67,9 +67,9 @@ public class RenderSystem {
      */
     public void render (float delta, Batcher batcher, TileMap tileMap) {
         
-        camera.apply();
-        worldRenderer.renderWorld(delta, batcher, tileMap);
-        entityRenderer.renderEntities(delta, batcher, tileMap);
+        this.camera.apply();
+        this.worldRenderer.renderWorld(delta, batcher, tileMap);
+        this.entityRenderer.renderEntities(delta, batcher, tileMap);
     }
     
     /**

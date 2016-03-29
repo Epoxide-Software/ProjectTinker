@@ -136,7 +136,7 @@ public class Entity {
         
         try {
             
-            Constructor<? extends Entity> constructor = entityClass.getDeclaredConstructor();
+            final Constructor<? extends Entity> constructor = entityClass.getDeclaredConstructor();
             constructor.setAccessible(true);
             return constructor.newInstance();
         }
@@ -157,7 +157,7 @@ public class Entity {
      */
     public String getDisplayName () {
         
-        return (this.displayName == null || this.displayName.isEmpty()) ? this.getTranslatedName() : this.displayName;
+        return this.displayName == null || this.displayName.isEmpty() ? this.getTranslatedName() : this.displayName;
     }
     
     /**
@@ -231,7 +231,7 @@ public class Entity {
      */
     public float getXPos () {
         
-        return xPos;
+        return this.xPos;
     }
     
     /**
@@ -251,7 +251,7 @@ public class Entity {
      */
     public float getYPos () {
         
-        return yPos;
+        return this.yPos;
     }
     
     /**
@@ -305,7 +305,7 @@ public class Entity {
      */
     public Direction getRotation () {
         
-        return rotation;
+        return this.rotation;
     }
     
     // TODO

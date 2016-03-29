@@ -42,7 +42,7 @@ public class TileMap {
     /**
      * A List of all entities on the TileMap.
      */
-    private List<Entity> entityList;
+    private final List<Entity> entityList;
     
     private Dungeon dungeon;
     
@@ -72,7 +72,7 @@ public class TileMap {
      */
     public int getWidth () {
         
-        return width;
+        return this.width;
     }
     
     /**
@@ -82,7 +82,7 @@ public class TileMap {
      */
     public int getHeight () {
         
-        return height;
+        return this.height;
     }
     
     /**
@@ -93,7 +93,7 @@ public class TileMap {
      */
     public String getName () {
         
-        return name;
+        return this.name;
     }
     
     /**
@@ -114,7 +114,7 @@ public class TileMap {
      */
     public Tile[][] getTileMap () {
         
-        return tileMap;
+        return this.tileMap;
     }
     
     /**
@@ -165,7 +165,7 @@ public class TileMap {
     public Tile getTileUnsafely (int posX, int posY) {
         
         final Tile tile = this.tileMap[posX][posY];
-        return (tile == null) ? Tile.VOID : tile;
+        return tile == null ? Tile.VOID : tile;
     }
     
     /**
@@ -213,14 +213,14 @@ public class TileMap {
      */
     public void removeTile (int posX, int posY) {
         
-        if (isValidLocation(posX, posY)) {
+        if (this.isValidLocation(posX, posY)) {
             
-            Tile tile = this.tileMap[posX][posY];
+            final Tile tile = this.tileMap[posX][posY];
             
             if (tile != null && tile.removeTile(this, posX, posY)) {
                 
                 this.tileMap[posX][posY] = null;
-                removeTileDataUnsafely(posX, posY);
+                this.removeTileDataUnsafely(posX, posY);
             }
         }
     }
@@ -236,12 +236,12 @@ public class TileMap {
      */
     public void removeTileUnsafely (int posX, int posY) {
         
-        Tile tile = this.tileMap[posX][posY];
+        final Tile tile = this.tileMap[posX][posY];
         
         if (tile != null && tile.removeTile(this, posX, posY)) {
             
             this.tileMap[posX][posY] = null;
-            removeTileDataUnsafely(posX, posY);
+            this.removeTileDataUnsafely(posX, posY);
         }
     }
     
@@ -279,7 +279,7 @@ public class TileMap {
      */
     public Tag getTileData (int posX, int posY) {
         
-        if (isValidLocation(posX, posY))
+        if (this.isValidLocation(posX, posY))
             return this.tileData[posX][posY];
             
         return null;
@@ -318,7 +318,7 @@ public class TileMap {
      */
     public void setTileData (CompoundTag tag, int posX, int posY) {
         
-        if (isValidLocation(posX, posY))
+        if (this.isValidLocation(posX, posY))
             this.tileData[posX][posY] = tag;
     }
     
@@ -345,7 +345,7 @@ public class TileMap {
      */
     public void removeTileData (int posX, int posY) {
         
-        if (isValidLocation(posX, posY))
+        if (this.isValidLocation(posX, posY))
             this.tileData[posX][posY] = null;
     }
     
@@ -368,7 +368,7 @@ public class TileMap {
      */
     public List<Entity> getEntityList () {
         
-        return entityList;
+        return this.entityList;
     }
     
     /**
@@ -405,7 +405,7 @@ public class TileMap {
      */
     public Dungeon getDungeon () {
         
-        return dungeon;
+        return this.dungeon;
     }
     
     /**
@@ -455,22 +455,20 @@ public class TileMap {
         tag.setInt("MapWidth", this.width);
         tag.setInt("MapHeight", this.height);
         
-        List<String> tileIDs = new ArrayList<>();
-        List<Tag> tileData = new ArrayList<>();
+        final List<String> tileIDs = new ArrayList<>();
+        final List<Tag> tileData = new ArrayList<>();
         
-        for (int x = 0; x < this.width; x++) {
-            
+        for (int x = 0; x < this.width; x++)
             for (int y = 0; y < this.height; y++) {
                 
-                tileIDs.add(getTileUnsafely(x, y).ID.toString());
-                tileData.add(getTileDataUnsafely(x, y));
+                tileIDs.add(this.getTileUnsafely(x, y).ID.toString());
+                tileData.add(this.getTileDataUnsafely(x, y));
             }
-        }
-        
+            
         tag.setStringArray("TileIDs", tileIDs.toArray(new String[this.width * this.height]));
         tag.setTagList("TileData", tileData);
         
-        List<Tag> entityData = new ArrayList<>();
+        final List<Tag> entityData = new ArrayList<>();
         this.entityList.forEach(entity -> entityData.add(entity.writeData(new CompoundTag("EntityData"))));
         tag.setTagList("Entities", entityData);
         
@@ -491,19 +489,17 @@ public class TileMap {
         final String[] tileIDs = tag.getStringArray("TileIDs");
         final List<Tag> tileData = tag.getTagList("TileData");
         
-        for (int x = 0; x < this.width; x++) {
-            
+        for (int x = 0; x < this.width; x++)
             for (int y = 0; y < this.height; y++) {
                 
                 final int index = y % this.height + x * this.height;
                 this.tileMap[x][y] = Tile.getTileByName(tileIDs[index]);
                 this.tileData[x][y] = (CompoundTag) tileData.get(index);
             }
-        }
-        
+            
         final List<Tag> entities = tag.getTagList("Entities");
         
-        for (Tag entityTag : entities) {
+        for (final Tag entityTag : entities) {
             
             final CompoundTag entityData = (CompoundTag) entityTag;
             final Entity entity = Entity.createInstance(Entity.REGISTRY.getValue(entityData.getString("EntityID")));

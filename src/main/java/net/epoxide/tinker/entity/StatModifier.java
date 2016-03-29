@@ -59,7 +59,7 @@ public class StatModifier {
      */
     public float getValue () {
         
-        return value;
+        return this.value;
     }
     
     /**
@@ -69,7 +69,7 @@ public class StatModifier {
      */
     public byte getModifierTpe () {
         
-        return modType;
+        return this.modType;
     }
     
     /**
@@ -79,7 +79,7 @@ public class StatModifier {
      */
     public EntityStat getType () {
         
-        return type;
+        return this.type;
     }
     
     /**
@@ -102,7 +102,7 @@ public class StatModifier {
             return true;
             
         else if (obj instanceof StatModifier)
-            return (this.id.equals(((StatModifier) obj).id));
+            return this.id.equals(((StatModifier) obj).id);
             
         else
             return false;

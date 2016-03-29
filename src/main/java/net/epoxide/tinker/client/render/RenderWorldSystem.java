@@ -34,7 +34,7 @@ public class RenderWorldSystem {
         
         TextureManager.texture.bind();
         batcher.begin();
-        for (int xx = 0; xx < RenderSystem.renderWidth + 1; xx++) {
+        for (int xx = 0; xx < RenderSystem.renderWidth + 1; xx++)
             for (int yy = 0; yy < RenderSystem.renderHeight + 1; yy++) {
                 
                 final float xRender = renderX + xx * RenderSystem.tileSize;
@@ -73,8 +73,7 @@ public class RenderWorldSystem {
                     
                 }
             }
-        }
-        
+            
         batcher.end();
     }
 }

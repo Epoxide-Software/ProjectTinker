@@ -124,7 +124,7 @@ public class EntityStat {
      */
     public String getId () {
         
-        return ID;
+        return this.ID;
     }
     
     /**
@@ -134,7 +134,7 @@ public class EntityStat {
      */
     public String getName () {
         
-        return NAME;
+        return this.NAME;
     }
     
     /**
@@ -145,7 +145,7 @@ public class EntityStat {
      */
     public UUID getUUID () {
         
-        return UNIQUE_ID;
+        return this.UNIQUE_ID;
     }
     
     @Override
@@ -155,7 +155,7 @@ public class EntityStat {
             return true;
             
         else if (obj instanceof EntityStat)
-            return (this.ID.equals(((EntityStat) obj).ID));
+            return this.ID.equals(((EntityStat) obj).ID);
             
         else
             return false;

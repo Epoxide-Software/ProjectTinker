@@ -27,8 +27,8 @@ import net.epoxide.tinker.world.dungeon.Dungeon;
 public class TinkerGame extends Game {
     
     public static EntityPlayer entityPlayer;
-    private RenderSystem renderSystem = new RenderSystem();
-    private TileMap tileMap = new TileMap(512, 512, "world");
+    private final RenderSystem renderSystem = new RenderSystem();
+    private final TileMap tileMap = new TileMap(512, 512, "world");
     
     /**
      * The current version of the game. Version system follows a fairly standard version system
@@ -52,12 +52,10 @@ public class TinkerGame extends Game {
             
             final TinkerGame game = new TinkerGame();
             
-            for (String arg : args) {
-                
+            for (final String arg : args)
                 if (arg.equalsIgnoreCase("debug"))
                     DEVELOPMENT = true;
-            }
-            
+                    
             if (!DEVELOPMENT) {
                 
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -68,7 +66,7 @@ public class TinkerGame extends Game {
             game.start();
         }
         
-        catch (Exception exception) {
+        catch (final Exception exception) {
             
             if (exception instanceof SilenceException && exception.getMessage().startsWith("java.nio.file.AccessDeniedException:") && exception.getMessage().contains("glfw.dll"))
                 JOptionPane.showMessageDialog(null, "Another instance of this game is already running. Please close that instance and try again.", "Project Tinker", JOptionPane.WARNING_MESSAGE);
@@ -92,11 +90,11 @@ public class TinkerGame extends Game {
     @Override
     public void init () {
         
-        Dungeon.DEFAULT.generateMap(tileMap);
-        entityPlayer = new EntityPlayer(tileMap);
+        Dungeon.DEFAULT.generateMap(this.tileMap);
+        entityPlayer = new EntityPlayer(this.tileMap);
         Entity.REGISTRY.registerValue(new RegistryName("entityPlayer"), EntityPlayer.class);
         
-        tileMap.spawnEntity(entityPlayer);
+        this.tileMap.spawnEntity(entityPlayer);
         RenderEntitySystem.REGISTRY.registerValue("entityPlayer", new RenderEntityPlayer());
         
         TextureManager.init();
@@ -105,7 +103,7 @@ public class TinkerGame extends Game {
     @Override
     public void resize () {
         
-        renderSystem.resize();
+        this.renderSystem.resize();
     }
     
     @Override
@@ -120,6 +118,6 @@ public class TinkerGame extends Game {
     @Override
     public void render (float delta, Batcher batcher) {
         
-        renderSystem.render(delta, batcher, tileMap);
+        this.renderSystem.render(delta, batcher, this.tileMap);
     }
 }

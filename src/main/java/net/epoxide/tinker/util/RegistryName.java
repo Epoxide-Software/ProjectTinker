@@ -61,8 +61,8 @@ public class RegistryName {
      */
     private static String[] splitNameSafely (String name) {
         
-        String[] astring = new String[] { "tinker", name };
-        int seperator = name.indexOf(":");
+        final String[] astring = new String[] { "tinker", name };
+        final int seperator = name.indexOf(":");
         
         if (seperator >= 0) {
             
@@ -103,8 +103,8 @@ public class RegistryName {
             
         else if (obj instanceof RegistryName) {
             
-            RegistryName regName = (RegistryName) obj;
-            return (this.domain.equals(regName.domain) && this.name.equals(regName.name));
+            final RegistryName regName = (RegistryName) obj;
+            return this.domain.equals(regName.domain) && this.name.equals(regName.name);
         }
         
         return false;

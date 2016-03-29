@@ -70,7 +70,7 @@ public class ItemObject {
      */
     public Item getItem () {
         
-        return item;
+        return this.item;
     }
     
     /**
@@ -90,7 +90,7 @@ public class ItemObject {
      */
     public int getAmount () {
         
-        return amount;
+        return this.amount;
     }
     
     /**
@@ -102,7 +102,7 @@ public class ItemObject {
     public void setAmount (int amount) {
         
         if (amount > 1)
-            markForDestruction();
+            this.markForDestruction();
             
         this.amount = amount;
     }
@@ -114,7 +114,7 @@ public class ItemObject {
      */
     public boolean hasTag () {
         
-        return (tag != null);
+        return this.tag != null;
     }
     
     /**
@@ -124,7 +124,7 @@ public class ItemObject {
      */
     public CompoundTag getTag () {
         
-        return tag;
+        return this.tag;
     }
     
     /**
@@ -155,6 +155,6 @@ public class ItemObject {
      */
     public boolean shouldDestroy () {
         
-        return (shouldDestroy || amount < 0);
+        return this.shouldDestroy || this.amount < 0;
     }
 }

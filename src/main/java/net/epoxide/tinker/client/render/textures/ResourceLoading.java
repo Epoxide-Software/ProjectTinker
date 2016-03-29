@@ -58,23 +58,22 @@ public class ResourceLoading {
     public void load (NamedRegistry<AtlasTexture> REGISTRY) {
         
         textureMap = new HashMap<>();
-        loader = new ResourceLoader();
-        loader.setLogo(FilePath.getResourceFile("assets/tinker/textures/logo_epoxide.png"));
-        loader.setProgressRenderCallback(ResourceLoading::renderResourceLoaderCallback);
+        this.loader = new ResourceLoader();
+        this.loader.setLogo(FilePath.getResourceFile("assets/tinker/textures/logo_epoxide.png"));
+        this.loader.setProgressRenderCallback(ResourceLoading::renderResourceLoaderCallback);
         ResourceLoader.setHelper(AtlasTexture.class, ResourceLoading::loadTileTexture);
         
-        for (AtlasTexture tileTexture : REGISTRY) {
-            FilePath filePath = tileTexture.getPath();
+        for (final AtlasTexture tileTexture : REGISTRY) {
+            final FilePath filePath = tileTexture.getPath();
             if (filePath.exists()) {
-                loader.loadResource(AtlasTexture.class, filePath);
+                this.loader.loadResource(AtlasTexture.class, filePath);
                 textureMap.put(filePath, tileTexture);
             }
-            else {
+            else
                 System.out.println(filePath + " NOT FOUND");
-            }
-            
+                
         }
-        loader.startLoading();
+        this.loader.startLoading();
     }
     
     /**

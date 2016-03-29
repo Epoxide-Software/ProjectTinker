@@ -15,7 +15,7 @@ public class RenderEntitySystem {
      */
     public static final NamedRegistry<RenderEntity> REGISTRY = new NamedRegistry<>();
     
-    private RenderEntity DEFAULT_RENDER = new RenderEntity();
+    private final RenderEntity DEFAULT_RENDER = new RenderEntity();
     
     /**
      * Loops through each entity on a TileMap, and calls the registered renderer for each.
@@ -28,7 +28,7 @@ public class RenderEntitySystem {
         
         batcher.begin();
         
-        for (Entity entity : tileMap.getEntityList()) {
+        for (final Entity entity : tileMap.getEntityList()) {
             
             // if (entity.renderers.size() == 0)
             // DEFAULT_RENDER.render(batcher, entity);
