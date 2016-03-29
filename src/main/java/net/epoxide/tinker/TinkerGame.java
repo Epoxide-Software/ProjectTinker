@@ -59,7 +59,8 @@ public class TinkerGame extends Game {
             if (!DEVELOPMENT) {
                 
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                GenericUtilities.displayHTMLOptionPane("Hardware Survey", "Would you like to participate in the automatic hardware survey? If you select yes, the demo will submit anonymous information about your hardware, and how your well your computer handles the demo. No personal information is collected and submissions are completely anonymous. For more information read " + GenericUtilities.createHyperlink("http://www.google.com", "here"), JOptionPane.YES_NO_OPTION, 500, 80, 2);
+                if (!GenericUtilities.displayHTMLOptionPane("Hardware Survey", "Would you like to participate in the automatic hardware survey? If you select yes, the demo will submit anonymous information about your hardware, and how your well your computer handles the demo. No personal information is collected and submissions are completely anonymous. For more information read " + GenericUtilities.createHyperlink("http://www.google.com", "here"), JOptionPane.YES_NO_OPTION, 500, 80, 2))
+                    return;
             }
             
             game.start();
