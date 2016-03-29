@@ -1,6 +1,7 @@
 package net.epoxide.tinker.util.lang;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -80,16 +81,16 @@ public class LanguageMap {
     public void loadLangFile (String domain) {
 
         final String path = "assets/" + domain + "/lang/" + this.type.getLanguage() + ".lang";
-        try (Stream<String> lines = Files.lines(Paths.get(path))) {
+        try (Stream<String> lines = Files.lines(Paths.get(ClassLoader.getSystemResource(path).toURI()))) {
 
-            lines.forEach(line -> {
+            lines.filter(line -> !line.startsWith("#")).forEach(line -> {
 
                 final String[] translationPair = line.split("=");
                 this.translations.put(translationPair[0], translationPair[1]);
             });
         }
 
-        catch (final IOException exception) {
+        catch (final IOException | URISyntaxException exception) {
 
             Logger.error("There was a problem reading " + path);
             exception.printStackTrace();
