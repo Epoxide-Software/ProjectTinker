@@ -30,18 +30,19 @@ public class RenderEntitySystem {
         
         for (Entity entity : tileMap.getEntityList()) {
             
-            if (entity.renderers.size() == 0)
-                DEFAULT_RENDER.render(batcher, entity);
-                
+            // if (entity.renderers.size() == 0)
+            // DEFAULT_RENDER.render(batcher, entity);
+            
             // TODO figure out how to handle multiple layers
-            entity.renderers.stream().filter(modelID -> modelID != null).forEach(modelID -> {
-                RenderEntity renderEntity = REGISTRY.getValue(modelID);
-                if (renderEntity == null)
-                    DEFAULT_RENDER.render(batcher, entity);
-                else
-                    renderEntity.render(batcher, entity);
-                    
-            });
+            // entity.renderers.stream().filter(modelID -> modelID != null).forEach(modelID ->
+            // {
+            // RenderEntity renderEntity = REGISTRY.getValue(modelID);
+            // if (renderEntity == null)
+            // DEFAULT_RENDER.render(batcher, entity);
+            // else
+            // renderEntity.render(batcher, entity);
+            
+            // });
             
         }
         
