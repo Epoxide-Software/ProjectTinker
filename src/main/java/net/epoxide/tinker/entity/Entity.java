@@ -2,8 +2,6 @@ package net.epoxide.tinker.entity;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import com.shc.silenceengine.utils.Logger;
@@ -12,6 +10,8 @@ import net.darkhax.opennbt.tags.CompoundTag;
 
 import net.epoxide.tinker.util.Direction;
 import net.epoxide.tinker.util.NamedRegistry;
+import net.epoxide.tinker.util.RegistryName;
+import net.epoxide.tinker.util.lang.I18n;
 import net.epoxide.tinker.world.TileMap;
 
 public class Entity {
@@ -20,6 +20,11 @@ public class Entity {
      * A registry for registering Entities into the game.
      */
     public static final NamedRegistry<Class<? extends Entity>> REGISTRY = new NamedRegistry<>();
+    
+    /**
+     * The ID that the entity is registered under.
+     */
+    private RegistryName ID;
     
     /**
      * A name that is associated with this entity. It is generally not unique.
@@ -61,7 +66,28 @@ public class Entity {
      */
     private Direction rotation;
     
-    public List<String> renderers = new ArrayList<>();
+    /**
+     * Registers an Entity with the {@link #REGISTRY} using the ID stored in the Entity. This
+     * should be used over directly accessing the REGISTRY.
+     *
+     * @param entity The Entity to register.
+     * @return Class The class for the entity being registered.
+     */
+    public static Class<? extends Entity> registerEntity (RegistryName id, Entity entity) {
+        
+        entity.ID = id;
+        return REGISTRY.registerValue(id, entity.getClass());
+    }
+    
+    /**
+     * Gets the name for the Entity translated with the current language.
+     * 
+     * @return String the name for the Entity.
+     */
+    public String getTranslatedName () {
+        
+        return I18n.translate("entity." + this.ID.getDomain() + "." + this.ID.getName() + ".name");
+    }
     
     /**
      * Constructs the entity with no internal logic. Allows for all of the logic to be handled
