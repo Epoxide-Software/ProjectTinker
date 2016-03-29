@@ -469,7 +469,7 @@ public class TileMap {
             
             for (int y = 0; y < this.height; y++) {
                 
-                tileIDs.add(getTileUnsafely(x, y).ID);
+                tileIDs.add(getTileUnsafely(x, y).ID.toString());
                 tileData.add(getTileDataUnsafely(x, y));
             }
         }

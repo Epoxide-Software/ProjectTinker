@@ -23,7 +23,7 @@ public class Tile {
     /**
      * The ID that the tile is registered under.
      */
-    public final String ID;
+    public final RegistryName ID;
     
     /**
      * Constructs a tile with the ID that the tile was registered under.
@@ -32,7 +32,7 @@ public class Tile {
      */
     public Tile(String id) {
         
-        this.ID = id;
+        this.ID = new RegistryName(id);
     }
     
     /**
@@ -44,7 +44,7 @@ public class Tile {
      */
     public static Tile registerTile (Tile tile) {
         
-        return REGISTRY.registerValue(new RegistryName(tile.ID), tile);
+        return REGISTRY.registerValue(tile.ID, tile);
     }
     
     /**
@@ -169,9 +169,6 @@ public class Tile {
     
     public String getTexture (int renderPass) {
         
-        if (renderPass == 0)
-            return ID;
-        else
-            return "slime";
+        return "slime";
     }
 }
