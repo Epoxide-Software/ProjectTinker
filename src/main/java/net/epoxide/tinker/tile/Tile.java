@@ -20,7 +20,8 @@ public class Tile {
     
     public static final Tile VOID = registerTile(new Tile("tinker:void"));
     public static final Tile STONE = registerTile(new Tile("tinker:stone"));
-    
+    public static final Tile SLIME = registerTile(new TileSlime("tinker:slime"));
+
     /**
      * The ID that the tile is registered under.
      */
@@ -172,9 +173,14 @@ public class Tile {
         
         return Color.white.getRGB();
     }
-    
-    public String getTexture () {
+
+    public int getRenderPasses(){
+
+        return 1;
+    }
+
+    public RegistryName getTexture (int renderPass) {
         
-        return "slime";
+        return this.ID;
     }
 }
