@@ -16,7 +16,7 @@ public class EntityPlayer extends EntityLiving {
     
     /**
      * Constructs a new entity that is on a TileMap.
-     * 
+     *
      * @param map The TileMap to spawn the entity on.
      */
     public EntityPlayer(TileMap map) {
@@ -27,7 +27,7 @@ public class EntityPlayer extends EntityLiving {
     /**
      * Constructs a new entity from a CompoundTag. Intended for loading entities onto a TileMap
      * from the TileMap data.
-     * 
+     *
      * @param map The TileMap to spawn the entity on.
      * @param tag The CompoundTag to load data from.
      */
