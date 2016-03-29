@@ -8,11 +8,14 @@ import net.epoxide.tinker.util.lang.LanguageType;
 
 public class TestGame extends Game {
     
+    public static String[] args;
+    
     public long start;
     public long finish;
     
-    public static void main (String[] args) {
+    public static void main (String[] programArgs) {
         
+        args = programArgs;
         final TestGame game = new TestGame();
         game.start();
     }
@@ -20,8 +23,16 @@ public class TestGame extends Game {
     @Override
     public void init () {
         
-        this.testI18n();
-        this.testI18nGerman();
+        for (final String arg : args) {
+            
+            final boolean all = arg.equalsIgnoreCase("all");
+            
+            if (arg.equalsIgnoreCase("testI18n") || all)
+                this.testI18n();
+                
+            if (arg.equalsIgnoreCase("testI18nGerman") || all)
+                this.testI18nGerman();
+        }
     }
     
     /**
