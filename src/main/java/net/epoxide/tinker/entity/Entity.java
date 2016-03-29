@@ -157,7 +157,7 @@ public class Entity {
      */
     public String getDisplayName () {
         
-        return this.displayName;
+        return (this.displayName == null || this.displayName.isEmpty()) ? this.getTranslatedName() : this.displayName;
     }
     
     /**
