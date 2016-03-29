@@ -10,16 +10,9 @@ import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.EntityStat;
 import net.epoxide.tinker.entity.StatModifier;
 import net.epoxide.tinker.tile.Tile;
-import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.world.dungeon.Dungeon;
 
 public class TileMap {
-    
-    /**
-     * A registry for maps. TileMaps do not need to be registered here for them to work,
-     * however static locations that can be warped to must be registered here.
-     */
-    public static final NamedRegistry<TileMap> REGISTRY = new NamedRegistry<>();
     
     /**
      * The tile width of the map.
