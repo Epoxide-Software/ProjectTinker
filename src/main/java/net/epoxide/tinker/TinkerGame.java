@@ -50,8 +50,10 @@ public class TinkerGame extends Game {
         try {
             DEVELOPMENT = false;
             
-            TinkerGame game = new TinkerGame();
+            final TinkerGame game = new TinkerGame();
+            
             for (String arg : args) {
+                
                 if (arg.equalsIgnoreCase("debug"))
                     DEVELOPMENT = true;
             }

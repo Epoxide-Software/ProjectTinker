@@ -37,18 +37,20 @@ public class TexturePacker {
         int totalArea = 0;
         
         for (AtlasTexture texture : entries) {
-            int width = texture.getWidth();
-            int height = texture.getHeight();
+            
+            final int width = texture.getWidth();
+            final int height = texture.getHeight();
             
             if (width > maxWidth)
                 maxWidth = width;
+                
             if (height > maxHeight)
                 maxHeight = height;
                 
             totalArea += width * height;
         }
         
-        Dimension size = new Dimension(closestTwoPower(maxWidth), closestTwoPower(maxHeight));
+        final Dimension size = new Dimension(closestTwoPower(maxWidth), closestTwoPower(maxHeight));
         boolean fitAll = false;
         
         loop : while (!fitAll) {
@@ -69,7 +71,7 @@ public class TexturePacker {
             fitAll = true;
         }
         
-        ByteBuffer imageBuffer = BufferUtils.createByteBuffer(size.width * size.height * 4);
+        final ByteBuffer imageBuffer = BufferUtils.createByteBuffer(size.width * size.height * 4);
         
         for (AtlasTexture texture : entries) {
             
@@ -77,7 +79,8 @@ public class TexturePacker {
             
             for (int y = 0; y < texture.getHeight(); y++) {
                 for (int x = 0; x < texture.getWidth(); x++) {
-                    int position = (x + texture.getX()) * texture.getComponents() + (y + texture.getY()) * (size.width * 4);
+                    
+                    final int position = (x + texture.getX()) * texture.getComponents() + (y + texture.getY()) * (size.width * 4);
                     
                     imageBuffer.put(position, buffer.get());
                     imageBuffer.put(position + 1, buffer.get());
@@ -86,12 +89,13 @@ public class TexturePacker {
                 }
             }
             
-            float minU = (float) (texture.getX()) / size.width;
-            float minV = (float) (texture.getY()) / size.height;
-            float maxU = (float) (texture.getX() + texture.getWidth()) / size.width;
-            float maxV = (float) (texture.getY() + texture.getHeight()) / size.height;
+            final float minU = (float) (texture.getX()) / size.width;
+            final float minV = (float) (texture.getY()) / size.height;
+            final float maxU = (float) (texture.getX() + texture.getWidth()) / size.width;
+            final float maxV = (float) (texture.getY() + texture.getHeight()) / size.height;
             texture.setUV(minU, minV, maxU, maxV);
         }
+        
         imageBuffer.flip();
         packed = true;
         return Texture.fromByteBuffer(imageBuffer, size.width, size.height, 4);
@@ -137,7 +141,7 @@ public class TexturePacker {
         private Node insert (AtlasTexture texture) {
             
             if (!isLeaf()) {
-                Node newNode = child[0].insert(texture);
+                final Node newNode = child[0].insert(texture);
                 if (newNode != null)
                     return newNode;
                     
@@ -148,8 +152,8 @@ public class TexturePacker {
                 if (this.image != null)
                     return null;
                     
-                int width = texture.getWidth();
-                int height = texture.getHeight();
+                final int width = texture.getWidth();
+                final int height = texture.getHeight();
                 
                 if ((width > rc.getWidth()) || (height > rc.getHeight()))
                     return null;
@@ -164,8 +168,8 @@ public class TexturePacker {
                 child[0] = new Node();
                 child[1] = new Node();
                 
-                float dw = rc.getWidth() - width;
-                float dh = rc.getHeight() - height;
+                final float dw = rc.getWidth() - width;
+                final float dh = rc.getHeight() - height;
                 
                 if (dw > dh) {
                     child[0].rc.set(rc.getX(), rc.getY(), width, rc.getHeight());

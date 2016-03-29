@@ -25,8 +25,8 @@ public class TextureManager {
      */
     public static void init () {
         
-        List<AtlasTexture> textureList = REGISTRY.getValues();
-        ResourceLoading resourceLoading = new ResourceLoading();
+        final List<AtlasTexture> textureList = REGISTRY.getValues();
+        final ResourceLoading resourceLoading = new ResourceLoading();
         
         resourceLoading.load(REGISTRY);
         texture = new TexturePacker().packImages(textureList);
@@ -39,7 +39,7 @@ public class TextureManager {
      */
     public static void registerTileTextures (String texture) {
         
-        RegistryName name = new RegistryName(texture);
+        final RegistryName name = new RegistryName(texture);
         REGISTRY.registerValue(name, new AtlasTexture("assets/" + name.getDomain() + "/textures/tiles/" + name.getName() + (name.getName().contains("png") ? "" : ".png")));
     }
 }

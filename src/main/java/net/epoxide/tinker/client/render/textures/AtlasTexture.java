@@ -90,15 +90,17 @@ public class AtlasTexture implements IResource {
      */
     public void loadFile () {
         
-        IntBuffer width = BufferUtils.createIntBuffer(1);
-        IntBuffer height = BufferUtils.createIntBuffer(1);
-        IntBuffer comp = BufferUtils.createIntBuffer(1);
+        final IntBuffer width = BufferUtils.createIntBuffer(1);
+        final IntBuffer height = BufferUtils.createIntBuffer(1);
+        final IntBuffer comp = BufferUtils.createIntBuffer(1);
+        
         try {
             ByteBuffer imageBuffer = FileUtils.readToByteBuffer(path.getInputStream());
             this.image = STBImage.stbi_load_from_memory(imageBuffer, width, height, comp, 0);
         }
-        catch (IOException e) {
-            e.printStackTrace();
+        catch (IOException exception) {
+            
+            exception.printStackTrace();
         }
         
         this.width = width.get(0);

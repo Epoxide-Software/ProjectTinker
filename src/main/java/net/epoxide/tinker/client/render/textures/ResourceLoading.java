@@ -85,8 +85,10 @@ public class ResourceLoading {
      */
     private static void loadTileTexture (FilePath filePath, ResourceLoader resourceLoader) {
         
-        AtlasTexture tileTexture = textureMap.get(filePath);
+        final AtlasTexture tileTexture = textureMap.get(filePath);
+        
         if (tileTexture != null) {
+            
             tileTexture.loadFile();
             resourceLoader.putResource("tileTexture", filePath, tileTexture);
         }
@@ -119,9 +121,9 @@ public class ResourceLoading {
             hasSwitched = true;
         }
         
-        float adjustedPercentage = MathUtils.convertRange(percentage, 0, 100, 0, Display.getWidth() - 100);
+        final float adjustedPercentage = MathUtils.convertRange(percentage, 0, 100, 0, Display.getWidth() - 100);
         
-        Graphics2D g2d = SilenceEngine.graphics.getGraphics2D();
+        final Graphics2D g2d = SilenceEngine.graphics.getGraphics2D();
         g2d.setFont(TrueTypeFont.DEFAULT);
         
         g2d.drawTexture(background, 0, 0, Display.getWidth(), Display.getHeight());
@@ -147,7 +149,7 @@ public class ResourceLoading {
         
         g2d.drawTexture(logo, logoX, logoY, logoW, logoH);
         
-        Paint originalPaint = g2d.getPaint();
+        final Paint originalPaint = g2d.getPaint();
         g2d.setPaint(progressionColor);
         
         g2d.fillRect(50, Display.getHeight() - 75, adjustedPercentage, 25);

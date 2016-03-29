@@ -11,10 +11,10 @@ public class RenderEntityPlayer extends RenderEntity {
     @Override
     public void render (Batcher batcher, Entity enttity) {
         
-        float xPos = RenderSystem.displayWidth / 2;
-        float yPos = RenderSystem.displayHeight / 2;
+        final float xPos = RenderSystem.displayWidth / 2;
+        final float yPos = RenderSystem.displayHeight / 2;
         
-        float tileHalfSize = RenderSystem.tileSize / 2;
+        final float tileHalfSize = RenderSystem.tileSize / 2;
         
         batcher.color(Color.WHITE);
         batcher.color(Color.WHITE);

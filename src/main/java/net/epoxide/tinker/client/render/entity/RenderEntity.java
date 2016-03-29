@@ -16,7 +16,7 @@ public class RenderEntity {
      */
     public void render (Batcher batcher, Entity entity) {
         
-        float tileHalfSize = RenderSystem.tileSize / 2;
+        final float tileHalfSize = RenderSystem.tileSize / 2;
         
         batcher.color(Color.WHITE);
         batcher.color(Color.WHITE);
