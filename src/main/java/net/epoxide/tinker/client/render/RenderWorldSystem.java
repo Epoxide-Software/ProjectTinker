@@ -54,7 +54,7 @@ public class RenderWorldSystem {
                         if (tile.getRenderPasses() > maxPass)
                             maxPass = tile.getRenderPasses();
                             
-                        if (tile.getRenderPasses() <= renderPass + 1) {
+                        if (renderPass + 1 <= tile.getRenderPasses()) {
                             AtlasTexture atlasTexture = TextureManager.REGISTRY.getValue(tile.getTexture(renderPass));
                             if (atlasTexture == null)
                                 atlasTexture = TextureManager.REGISTRY.getValue("missing");
