@@ -4,7 +4,9 @@ import java.util.UUID;
 
 import net.darkhax.opennbt.tags.CompoundTag;
 
-public class StatModifier {
+import net.epoxide.tinker.util.Persistent;
+
+public class StatModifier implements Persistent {
     
     /**
      * A UUID specific to the instance of StatModifier.
@@ -14,17 +16,17 @@ public class StatModifier {
     /**
      * The modifier type of the stat modifier.
      */
-    private final byte modType;
+    private byte modType;
     
     /**
      * The type of the stat being modified.
      */
-    private final EntityStat type;
+    private EntityStat type;
     
     /**
      * The value of the stat modifier.
      */
-    private final float value;
+    private float value;
     
     /**
      * Constructs a new StatModifier from a CompoundTag. Expects a tag containing data from
@@ -34,7 +36,8 @@ public class StatModifier {
      */
     public StatModifier(CompoundTag tag) {
         
-        this(EntityStat.REGISTRY.getValue(tag.getString("StatType")), tag.getFloat("StatValue"), tag.getByte("StatModifier"));
+        this.readData(tag);
+        this.id = UUID.randomUUID();
     }
     
     /**
@@ -102,21 +105,25 @@ public class StatModifier {
     }
     
     @Override
+    public void readData (CompoundTag tag) {
+        
+        this.type = EntityStat.REGISTRY.getValue(tag.getString("StatType"));
+        this.value = tag.getFloat("StatValue");
+        this.modType = tag.getByte("StatModifier");
+    }
+    
+    @Override
     public String toString () {
         
         return "StatModifier(type=" + this.type + " value=" + this.value + " modType=" + this.modType + " id=" + this.id.toString() + ")";
     }
     
-    /**
-     * Writes all important stat data to a CompoundTag. The data can later be turned into a
-     * StatModifier again by using {@link #StatModifier(CompoundTag)}.
-     * 
-     * @param tag The CompoundTag to write data to.
-     */
-    public void writeStat (CompoundTag tag) {
+    @Override
+    public CompoundTag writeData (CompoundTag tag) {
         
         tag.setString("StatType", this.type.getId());
         tag.setFloat("StatValue", this.value);
         tag.setByte("StatModifier", this.modType);
+        return tag;
     }
 }
