@@ -157,4 +157,32 @@ public class ItemObject {
         
         return this.shouldDestroy || this.amount < 0;
     }
+    
+    /**
+     * Reads important information for an Item from a CompoundTag.
+     * 
+     * @param tag The CompoundTag to read item data from.
+     */
+    public void readData (CompoundTag tag) {
+        
+        tag.setString("ItemID", this.item.ID.toString());
+        tag.setInt("Amount", this.amount);
+        tag.setBoolean("ShouldDestroy", this.shouldDestroy);
+        tag.setCompoundTag("ItemData", this.tag);
+    }
+    
+    /**
+     * Writes important information for an Item to a CompoundTag.
+     * 
+     * @param tag The CompoundTag to write data to.
+     * @return CompoundTag The CompoundTag that was written to.
+     */
+    public CompoundTag writeData (CompoundTag tag) {
+        
+        this.item = Item.getItemByName(tag.getString("ItemID"));
+        this.amount = tag.getInt("Amount");
+        this.shouldDestroy = tag.getBoolean("ShouldDestroy");
+        this.tag = tag.getCompoundTag("ItemData");
+        return tag;
+    }
 }
