@@ -11,6 +11,8 @@ public class BasicInventory implements Inventory {
      */
     private ItemObject[] inventory;
     
+    private String inventoryName;
+    
     /**
      * Constructs a new inventory of the specific size.
      * 
@@ -30,7 +32,7 @@ public class BasicInventory implements Inventory {
     @Override
     public void setItemInPos (int pos, ItemObject item) {
         
-        if (this.isPosValid(pos))
+        if (this.isPosValid(pos) && this.canAddItem(pos, item))
             this.inventory[pos] = item;
     }
     
@@ -64,5 +66,17 @@ public class BasicInventory implements Inventory {
                 tag.setCompoundTag("Slot" + index, this.inventory[index].writeData(new CompoundTag("Slot" + index)));
                 
         return tag;
+    }
+
+    @Override
+    public boolean canAddItem (int pos, ItemObject item) {
+        
+        return true;
+    }
+
+    @Override
+    public String getNameForInventory () {
+        
+        return this.inventoryName;
     }
 }
