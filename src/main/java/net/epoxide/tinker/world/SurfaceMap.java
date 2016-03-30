@@ -19,7 +19,7 @@ public class SurfaceMap extends TileMap implements Persistent {
      * A registry for maps. TileMaps do not need to be registered here for them to work,
      * however static locations that can be warped to must be registered here.
      */
-    public static final NamedRegistry<TileMap> REGISTRY = new NamedRegistry<>();
+    public static final NamedRegistry<SurfaceMap> REGISTRY = new NamedRegistry<>();
     
     /**
      * The ID that the map is registered with.
