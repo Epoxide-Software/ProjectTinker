@@ -67,13 +67,13 @@ public class BasicInventory implements Inventory {
                 
         return tag;
     }
-
+    
     @Override
     public boolean canAddItem (int pos, ItemObject item) {
         
         return true;
     }
-
+    
     @Override
     public String getNameForInventory () {
         
