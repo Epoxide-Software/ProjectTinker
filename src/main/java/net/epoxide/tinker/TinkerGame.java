@@ -1,5 +1,7 @@
 package net.epoxide.tinker;
 
+import java.util.Random;
+
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -25,6 +27,9 @@ import net.epoxide.tinker.world.TileMap;
 import net.epoxide.tinker.world.dungeon.Dungeon;
 
 public class TinkerGame extends Game {
+    
+    public static final  Random RANDOM = new Random();
+    public static final String DOMAIN = "tinker";
     
     public static EntityPlayer entityPlayer;
     private final RenderSystem renderSystem = new RenderSystem();
