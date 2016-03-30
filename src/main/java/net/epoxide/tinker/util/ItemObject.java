@@ -37,6 +37,11 @@ public class ItemObject {
         this(item, 1, null);
     }
     
+    public ItemObject(CompoundTag tag) {
+        
+        this.readData(tag);
+    }
+    
     /**
      * Constructs an ItemObject using an Item and an amount of the item to store. No
      * CompoundTag is set.
