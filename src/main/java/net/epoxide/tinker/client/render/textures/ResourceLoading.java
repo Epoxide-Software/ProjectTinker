@@ -108,7 +108,7 @@ public class ResourceLoading {
         if (progressionColor == null) {
             
             progressionColor = new Paint(Color.RED, Color.DARK_RED, Paint.Gradient.DIAGONAL_LEFT_TO_RIGHT);
-            textColor = new Paint(Color.BLUE);
+            textColor = new Paint(Color.RED);
             background = Texture.fromFilePath(FilePath.getResourceFile("assets/tinker/textures/backdrop.png"));
         }
         
