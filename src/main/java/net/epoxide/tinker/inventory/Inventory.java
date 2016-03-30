@@ -1,10 +1,9 @@
 package net.epoxide.tinker.inventory;
 
-import net.darkhax.opennbt.tags.CompoundTag;
-
 import net.epoxide.tinker.util.ItemObject;
+import net.epoxide.tinker.util.Persistent;
 
-public interface Inventory {
+public interface Inventory extends Persistent {
     
     /**
      * Checks if an ItemObject can be added to a specific position. If this returns false the
@@ -41,13 +40,6 @@ public interface Inventory {
     public boolean isPosValid (int pos);
     
     /**
-     * Reads an Inventory from a CompoundTag.
-     * 
-     * @param tag The CompoundTag to read from.
-     */
-    public void readData (CompoundTag tag);
-    
-    /**
      * Sets an ItemObject in the specified slot. Checks to make sure that the slot is valid for
      * the inventory.
      * 
@@ -55,12 +47,4 @@ public interface Inventory {
      * @param item The ItemObject to place in the slot.
      */
     public void setItemInPos (int pos, ItemObject item);
-    
-    /**
-     * Writes the inventory to a CompoundTag.
-     * 
-     * @param tag The CompoundTag to write to.
-     * @return CompoundTag The tag being written to.
-     */
-    public CompoundTag writeData (CompoundTag tag);
 }

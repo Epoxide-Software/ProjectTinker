@@ -19,32 +19,32 @@ public class TileMap {
     /**
      * A List of all entities on the TileMap.
      */
-    private final List<Entity> entityList;
+    protected final List<Entity> entityList;
     
     /**
      * The tile height of the map.
      */
-    private int height;
+    protected int height;
     
     /**
      * A human readable name for the map. Not an ID!
      */
-    private String name;
+    protected String name;
     
     /**
      * A 2D array of CompoundTag. This is used to store tile data in a persistent way.
      */
-    private CompoundTag[][] tileData;
+    protected CompoundTag[][] tileData;
     
     /**
      * A 2D array of the tiles in the map.
      */
-    private Tile[][] tileMap;
+    protected Tile[][] tileMap;
     
     /**
      * The tile width of the map.
      */
-    private int width;
+    protected int width;
     
     /**
      * Constructs a new TileMap using basic data. The Tile array will have the correct size,
@@ -255,44 +255,6 @@ public class TileMap {
     }
     
     /**
-     * Handles reading of the map from a file on the storage drive.
-     * 
-     * @param tag The CompoundTag to read the map from.
-     */
-    public void readMap (CompoundTag tag) {
-        
-        this.name = tag.getString("MapName");
-        this.width = tag.getInt("MapWidth");
-        this.height = tag.getInt("MapHeight");
-        
-        final String[] tileIDs = tag.getStringArray("TileIDs");
-        final List<Tag> tileData = tag.getTagList("TileData");
-        
-        for (int x = 0; x < this.width; x++)
-            for (int y = 0; y < this.height; y++) {
-                
-                final int index = y % this.height + x * this.height;
-                this.tileMap[x][y] = Tile.getTileByName(tileIDs[index]);
-                this.tileData[x][y] = (CompoundTag) tileData.get(index);
-            }
-            
-        final List<Tag> entities = tag.getTagList("Entities");
-        
-        for (final Tag entityTag : entities) {
-            
-            final CompoundTag entityData = (CompoundTag) entityTag;
-            final Entity entity = Entity.createInstance(Entity.REGISTRY.getValue(entityData.getString("EntityID")));
-            
-            if (entity != null) {
-                
-                entity.readData(entityData);
-                entity.setEntityData(entityData);
-                this.addEntity(entity);
-            }
-        }
-    }
-    
-    /**
      * Removes a tile from the TileMap. This will check that the location specified is valid.
      * This will also call {@link Tile#removeTile(TileMap, int, int)} which will allow the tile
      * to clean up, or do removal effects, it can also prevent removal. If you know that the
@@ -480,36 +442,5 @@ public class TileMap {
         this.entityList.add(entity);
         entity.onSpawn(this);
         entity.setCurrentMap(this);
-    }
-    
-    /**
-     * Handles saving of the map to a file on the storage drive.
-     * 
-     * @param tag The CompoundTag to write this map data on.
-     */
-    public CompoundTag writeMap (CompoundTag tag) {
-        
-        tag.setString("MapName", this.name);
-        tag.setInt("MapWidth", this.width);
-        tag.setInt("MapHeight", this.height);
-        
-        final List<String> tileIDs = new ArrayList<>();
-        final List<Tag> tileData = new ArrayList<>();
-        
-        for (int x = 0; x < this.width; x++)
-            for (int y = 0; y < this.height; y++) {
-                
-                tileIDs.add(this.getTileUnsafely(x, y).ID.toString());
-                tileData.add(this.getTileDataUnsafely(x, y));
-            }
-            
-        tag.setStringArray("TileIDs", tileIDs.toArray(new String[this.width * this.height]));
-        tag.setTagList("TileData", tileData);
-        
-        final List<Tag> entityData = new ArrayList<>();
-        this.entityList.forEach(entity -> entityData.add(entity.writeData(new CompoundTag("EntityData"))));
-        tag.setTagList("Entities", entityData);
-        
-        return tag;
     }
 }

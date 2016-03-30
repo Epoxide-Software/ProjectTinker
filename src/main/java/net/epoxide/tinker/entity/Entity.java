@@ -10,11 +10,12 @@ import net.darkhax.opennbt.tags.CompoundTag;
 
 import net.epoxide.tinker.util.Direction;
 import net.epoxide.tinker.util.NamedRegistry;
+import net.epoxide.tinker.util.Persistent;
 import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.util.lang.I18n;
 import net.epoxide.tinker.world.TileMap;
 
-public class Entity {
+public class Entity implements Persistent {
     
     /**
      * A registry for registering Entities into the game.
@@ -227,9 +228,7 @@ public class Entity {
         // TODO populate arguments
     }
     
-    /**
-     * Called when the entity is being loaded from disk.
-     */
+    @Override
     public void readData (CompoundTag tag) {
         
         this.displayName = tag.getString("EntityName");
@@ -319,13 +318,7 @@ public class Entity {
         return this.shouldRemove;
     }
     
-    /**
-     * Called when the entity is being written to data. Things saved here can be loaded during
-     * {@link #readData(CompoundTag)}.
-     * 
-     * @param tag The CompoundTag to write the entity to.
-     * @return CompoundTag The same CompoundTag passed to the entity.
-     */
+    @Override
     public CompoundTag writeData (CompoundTag tag) {
         
         tag.setString("EntityID", REGISTRY.getNameForValue(this.getClass()).toString());
