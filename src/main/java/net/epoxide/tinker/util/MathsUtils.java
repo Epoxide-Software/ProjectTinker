@@ -10,16 +10,15 @@ import net.epoxide.tinker.TinkerGame;
 public final class MathsUtils {
     
     /**
-     * Checks if a double is within range of two other doubles.
+     * Gets the middle integer between two other integers. The order is not important.
      * 
-     * @param min The smallest valid value.
-     * @param max The largest valid value.
-     * @param value The value to check.
-     * @return boolean Whether or not the value is within the provided scope.
+     * @param first The first integer.
+     * @param second The second integer.
+     * @return int The integer that is between the two provided integers.
      */
-    public static boolean isInRange (double min, double max, double value) {
+    public static int getAverage (int first, int second) {
         
-        return value <= max && value >= min;
+        return Math.round((first + second) / 2.0F);
     }
     
     /**
@@ -39,16 +38,16 @@ public final class MathsUtils {
     }
     
     /**
-     * This method can be used to round a double to a certain amount of places.
+     * Checks if a double is within range of two other doubles.
      * 
-     * @param value The double being round.
-     * @param places The amount of places to round the double to.
-     * @return double The double entered however being rounded to the amount of places
-     *         specified.
+     * @param min The smallest valid value.
+     * @param max The largest valid value.
+     * @param value The value to check.
+     * @return boolean Whether or not the value is within the provided scope.
      */
-    public static double round (double value, int places) {
+    public static boolean isInRange (double min, double max, double value) {
         
-        return value >= 0 && places > 0 ? new BigDecimal(value).setScale(places, RoundingMode.HALF_UP).doubleValue() : value;
+        return value <= max && value >= min;
     }
     
     /**
@@ -64,27 +63,16 @@ public final class MathsUtils {
     }
     
     /**
-     * A method which handles the calculating of percentages. While this isn't a particularly
-     * difficult piece of code, it has been added for the sake of simplicity.
+     * This method can be used to round a double to a certain amount of places.
      * 
-     * @param percent The percent chance that this method should return true. 1.00 = 100%
-     * @return boolean Returns are randomly true or false, based on the suplied percentage.
+     * @param value The double being round.
+     * @param places The amount of places to round the double to.
+     * @return double The double entered however being rounded to the amount of places
+     *         specified.
      */
-    public static boolean tryPercentage (double percent) {
+    public static double round (double value, int places) {
         
-        return Math.random() < percent;
-    }
-    
-    /**
-     * Gets the middle integer between two other integers. The order is not important.
-     * 
-     * @param first The first integer.
-     * @param second The second integer.
-     * @return int The integer that is between the two provided integers.
-     */
-    public static int getAverage (int first, int second) {
-        
-        return Math.round((first + second) / 2.0F);
+        return value >= 0 && places > 0 ? new BigDecimal(value).setScale(places, RoundingMode.HALF_UP).doubleValue() : value;
     }
     
     /**
@@ -98,5 +86,17 @@ public final class MathsUtils {
         final int seconds = ticks / 20;
         final int minutes = seconds / 60;
         return minutes + "" + seconds;
+    }
+    
+    /**
+     * A method which handles the calculating of percentages. While this isn't a particularly
+     * difficult piece of code, it has been added for the sake of simplicity.
+     * 
+     * @param percent The percent chance that this method should return true. 1.00 = 100%
+     * @return boolean Returns are randomly true or false, based on the suplied percentage.
+     */
+    public static boolean tryPercentage (double percent) {
+        
+        return Math.random() < percent;
     }
 }

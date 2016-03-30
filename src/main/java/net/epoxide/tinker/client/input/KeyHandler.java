@@ -8,11 +8,11 @@ import com.shc.silenceengine.input.Keyboard;
 import net.epoxide.tinker.entity.living.EntityPlayer;
 
 public class KeyHandler {
-    public static final List<KeyBind> REGISTRY = new ArrayList<>();
+    public static final KeyBind back = new KeyBind(Keyboard.KEY_S);
     
     public static final KeyBind forward = new KeyBind(Keyboard.KEY_W);
-    public static final KeyBind back = new KeyBind(Keyboard.KEY_S);
     public static final KeyBind left = new KeyBind(Keyboard.KEY_A);
+    public static final List<KeyBind> REGISTRY = new ArrayList<>();
     public static final KeyBind right = new KeyBind(Keyboard.KEY_D);
     
     static {

@@ -8,12 +8,6 @@ import net.epoxide.tinker.world.TileMap;
 public class EntityLiving extends Entity {
     
     /**
-     * The most health that the entity should ever have. It will be possible for entities to
-     * have more health than the maximum in unnatural circumstances.
-     */
-    private int maxHealth;
-    
-    /**
      * The amount of health that the entity is currently at.
      */
     private int health;
@@ -22,6 +16,12 @@ public class EntityLiving extends Entity {
      * A flag used to determine whether or not the entity can lose health.
      */
     private boolean isInvulnerable;
+    
+    /**
+     * The most health that the entity should ever have. It will be possible for entities to
+     * have more health than the maximum in unnatural circumstances.
+     */
+    private int maxHealth;
     
     /**
      * Constructs the entity with no internal logic. Allows for all of the logic to be handled
@@ -54,27 +54,6 @@ public class EntityLiving extends Entity {
     }
     
     /**
-     * Gets the maximum amount of health that the entity should have under normal
-     * circumstances.
-     * 
-     * @return int The maximum amount of health the entity should have.
-     */
-    public int getMaxHealth () {
-        
-        return this.maxHealth;
-    }
-    
-    /**
-     * Sets the maximum health of the entity. The max health must be at least one.
-     * 
-     * @param maxHealth The new maximum health for the entity.
-     */
-    public void setMaxHealth (int maxHealth) {
-        
-        this.maxHealth = Math.max(maxHealth, 1);
-    }
-    
-    /**
      * Gets the current health of the entity.
      * 
      * @return int The current health of the entity.
@@ -82,28 +61,6 @@ public class EntityLiving extends Entity {
     public int getCurrentHealth () {
         
         return this.health;
-    }
-    
-    /**
-     * Heals the entity by the specified amount. Will never heal more than the max health.
-     * 
-     * @param amount The amount to heal the entity by.
-     */
-    public void heal (int amount) {
-        
-        this.health = Math.min(this.health + amount, this.maxHealth);
-    }
-    
-    /**
-     * Harms the entity by the specified amount. Will never harm the entity below 0. If the
-     * entity is invulnerable they will receive no damage.
-     * 
-     * @param amount The amount to damage the entity by.
-     */
-    public void harm (int amount) {
-        
-        if (!this.isInvulnerable)
-            this.health = Math.max(this.health - amount, 0);
     }
     
     /**
@@ -119,6 +76,39 @@ public class EntityLiving extends Entity {
     }
     
     /**
+     * Gets the maximum amount of health that the entity should have under normal
+     * circumstances.
+     * 
+     * @return int The maximum amount of health the entity should have.
+     */
+    public int getMaxHealth () {
+        
+        return this.maxHealth;
+    }
+    
+    /**
+     * Harms the entity by the specified amount. Will never harm the entity below 0. If the
+     * entity is invulnerable they will receive no damage.
+     * 
+     * @param amount The amount to damage the entity by.
+     */
+    public void harm (int amount) {
+        
+        if (!this.isInvulnerable)
+            this.health = Math.max(this.health - amount, 0);
+    }
+    
+    /**
+     * Heals the entity by the specified amount. Will never heal more than the max health.
+     * 
+     * @param amount The amount to heal the entity by.
+     */
+    public void heal (int amount) {
+        
+        this.health = Math.min(this.health + amount, this.maxHealth);
+    }
+    
+    /**
      * Checks if an entity should be immune to damage.
      * 
      * @return boolean Whether or not the entity can not take damage.
@@ -126,6 +116,23 @@ public class EntityLiving extends Entity {
     public boolean isInvulnerable () {
         
         return this.isInvulnerable;
+    }
+    
+    @Override
+    public void onUpdate () {
+        
+        if (this.health <= 0)
+            this.markForRemoval(true);
+    }
+    
+    /**
+     * Sets the maximum health of the entity. The max health must be at least one.
+     * 
+     * @param maxHealth The new maximum health for the entity.
+     */
+    public void setMaxHealth (int maxHealth) {
+        
+        this.maxHealth = Math.max(maxHealth, 1);
     }
     
     /**
@@ -136,12 +143,5 @@ public class EntityLiving extends Entity {
     public void setVulnerability (boolean vulnerability) {
         
         this.isInvulnerable = vulnerability;
-    }
-    
-    @Override
-    public void onUpdate () {
-        
-        if (this.health <= 0)
-            this.markForRemoval(true);
     }
 }

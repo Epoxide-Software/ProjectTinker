@@ -5,18 +5,23 @@ import java.util.Random;
 public enum Rarity {
     
     COMMON("common", 1, 49, 0.49d),
-    UNCOMMON("uncommon", 2, 35, 0.35d),
-    RARE("rare", 3, 10, 0.1d),
     EPIC("epic", 4, 5, 0.05d),
-    MYTHIC("mythic", 5, 1, 0.01d),
+    EXCLUSIVE("exclusive", 0, 0, 0d),
     KEY("key", 0, 0, 0d),
-    VANITY("vanity", 0, 5, 0.05d),
-    EXCLUSIVE("exclusive", 0, 0, 0d);
+    MYTHIC("mythic", 5, 1, 0.01d),
+    RARE("rare", 3, 10, 0.1d),
+    UNCOMMON("uncommon", 2, 35, 0.35d),
+    VANITY("vanity", 0, 5, 0.05d);
     
     /**
      * The name of the Rarity.
      */
     public final String name;
+    
+    /**
+     * The percent chance for the rarity.
+     */
+    public final double percentage;
     
     /**
      * The tier value for the rarity.
@@ -27,11 +32,6 @@ public enum Rarity {
      * The weight for the rarity.
      */
     public final int weight;
-    
-    /**
-     * The percent chance for the rarity.
-     */
-    public final double percentage;
     
     /**
      * Constructs a Rarity. Rarity is used to determine how rare something is. It should be

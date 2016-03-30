@@ -8,17 +8,17 @@ import net.epoxide.tinker.world.TileMap;
 
 public class Dungeon {
     
+    public static final Dungeon DEFAULT = new Dungeon("default", 0);
+    
     /**
      * A registry that holds all of the dungeons registered into the game.
      */
     public static final NamedRegistry<Dungeon> REGISTRY = new NamedRegistry<>();
     
-    public static final Dungeon DEFAULT = new Dungeon("default", 0);
-    
     /**
-     * The name used in dungeon name localization.
+     * The child dungeon that this dungeon would lead to.
      */
-    private final String name;
+    private Dungeon child;
     
     /**
      * The amount of floors that this dungeon makes up.
@@ -26,14 +26,14 @@ public class Dungeon {
     private final int floors;
     
     /**
+     * The name used in dungeon name localization.
+     */
+    private final String name;
+    
+    /**
      * The parent dungeon which leads to this dungeon.
      */
     private Dungeon parent;
-    
-    /**
-     * The child dungeon that this dungeon would lead to.
-     */
-    private Dungeon child;
     
     /**
      * Creates a Dungeon instance using a localization name and the amount of floors held by
@@ -49,13 +49,27 @@ public class Dungeon {
     }
     
     /**
-     * Gets the name used for the name localization of the Dungeon.
+     * Provides a way to generate a dungeon map depending on the Dungeon. This allows for
+     * different world generation based on the dungeon type. This will also set the Dungeon for
+     * the TileMap to this dungeon.
      * 
-     * @return String The localization name for the dungeon.
+     * @param map The TileMap to populate with worldgen.
      */
-    public String getName () {
+    public void generateMap (TileMap map) {
         
-        return this.name;
+        map.setDungeon(this);
+        for (final Tile[] row : map.getTileMap())
+            Arrays.fill(row, Math.random() < 0.5 ? Tile.VOID : Tile.STONE);
+    }
+    
+    /**
+     * Gets the child dungeon which this dungeon leads into.
+     * 
+     * @return Dungeon The child dungeon.
+     */
+    public Dungeon getChild () {
+        
+        return this.child;
     }
     
     /**
@@ -70,6 +84,16 @@ public class Dungeon {
     }
     
     /**
+     * Gets the name used for the name localization of the Dungeon.
+     * 
+     * @return String The localization name for the dungeon.
+     */
+    public String getName () {
+        
+        return this.name;
+    }
+    
+    /**
      * Gets the parent dungeon which leads to this dungeon. Not required, can be null.
      * 
      * @return Dungeon The parent dungeon.
@@ -77,26 +101,6 @@ public class Dungeon {
     public Dungeon getParent () {
         
         return this.parent;
-    }
-    
-    /**
-     * Sets the parent dungeon which leads to this dungeon.
-     * 
-     * @param parent The parent dungeon to set.
-     */
-    public void setParent (Dungeon parent) {
-        
-        this.parent = parent;
-    }
-    
-    /**
-     * Gets the child dungeon which this dungeon leads into.
-     * 
-     * @return Dungeon The child dungeon.
-     */
-    public Dungeon getChild () {
-        
-        return this.child;
     }
     
     /**
@@ -110,16 +114,12 @@ public class Dungeon {
     }
     
     /**
-     * Provides a way to generate a dungeon map depending on the Dungeon. This allows for
-     * different world generation based on the dungeon type. This will also set the Dungeon for
-     * the TileMap to this dungeon.
+     * Sets the parent dungeon which leads to this dungeon.
      * 
-     * @param map The TileMap to populate with worldgen.
+     * @param parent The parent dungeon to set.
      */
-    public void generateMap (TileMap map) {
+    public void setParent (Dungeon parent) {
         
-        map.setDungeon(this);
-        for (final Tile[] row : map.getTileMap())
-            Arrays.fill(row, Math.random() < 0.5 ? Tile.VOID : Tile.STONE);
+        this.parent = parent;
     }
 }

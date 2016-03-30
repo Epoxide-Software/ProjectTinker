@@ -48,6 +48,53 @@ public class RegistryName {
         this(new String[] { domain, name });
     }
     
+    @Override
+    public boolean equals (Object obj) {
+        
+        if (this == obj)
+            return true;
+            
+        else if (obj instanceof RegistryName) {
+            
+            final RegistryName regName = (RegistryName) obj;
+            return this.domain.equals(regName.domain) && this.name.equals(regName.name);
+        }
+        
+        return false;
+    }
+    
+    /**
+     * Gets the domain for the registry name.
+     * 
+     * @return String The domain for this name.
+     */
+    public String getDomain () {
+        
+        return this.domain;
+    }
+    
+    /**
+     * Gets the name for the registry name.
+     * 
+     * @return String the registry name.
+     */
+    public String getName () {
+        
+        return this.name;
+    }
+    
+    @Override
+    public int hashCode () {
+        
+        return this.domain.hashCode() + this.name.hashCode();
+    }
+    
+    @Override
+    public String toString () {
+        
+        return this.domain + ":" + this.name;
+    }
+    
     /**
      * Safely splits a name into two pieces. Used to pull a domain from the name. If no domain
      * is specified, it will default to tinker. A domain is considered to be the first
@@ -73,52 +120,5 @@ public class RegistryName {
         }
         
         return astring;
-    }
-    
-    /**
-     * Gets the domain for the registry name.
-     * 
-     * @return String The domain for this name.
-     */
-    public String getDomain () {
-        
-        return this.domain;
-    }
-    
-    /**
-     * Gets the name for the registry name.
-     * 
-     * @return String the registry name.
-     */
-    public String getName () {
-        
-        return this.name;
-    }
-    
-    @Override
-    public boolean equals (Object obj) {
-        
-        if (this == obj)
-            return true;
-            
-        else if (obj instanceof RegistryName) {
-            
-            final RegistryName regName = (RegistryName) obj;
-            return this.domain.equals(regName.domain) && this.name.equals(regName.name);
-        }
-        
-        return false;
-    }
-    
-    @Override
-    public String toString () {
-        
-        return this.domain + ":" + this.name;
-    }
-    
-    @Override
-    public int hashCode () {
-        
-        return this.domain.hashCode() + this.name.hashCode();
     }
 }

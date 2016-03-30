@@ -8,19 +8,9 @@ import net.epoxide.tinker.util.RegistryName;
 public class EntityStat {
     
     /**
-     * A registry of all the different types of EntityStat.
+     * A stat which represents the entities charm. Used as a friendship speed modifier.
      */
-    public static final NamedRegistry<EntityStat> REGISTRY = new NamedRegistry<>();
-    
-    /**
-     * A stat which represents the entities maximum health.
-     */
-    public static final EntityStat MAX_HEALTH = createStat("maxhealth");
-    
-    /**
-     * A stat which represents the entities physical strength.
-     */
-    public static final EntityStat STRENGTH = createStat("strength");
+    public static final EntityStat CHARM = createStat("charm");
     
     /**
      * A stat which represents the entities physical damage.
@@ -38,6 +28,11 @@ public class EntityStat {
     public static final EntityStat INT = createStat("intelligence");
     
     /**
+     * A stat which represents the entities luck. Used as a random outcome modifier.
+     */
+    public static final EntityStat LUCK = createStat("luck");
+    
+    /**
      * A stat which represents the entities magical damage.
      */
     public static final EntityStat MAGIC_DAMAGE = createStat("magicdamage");
@@ -48,19 +43,24 @@ public class EntityStat {
     public static final EntityStat MAGIC_RESIST = createStat("magicresist");
     
     /**
+     * A stat which represents the entities maximum health.
+     */
+    public static final EntityStat MAX_HEALTH = createStat("maxhealth");
+    
+    /**
+     * A registry of all the different types of EntityStat.
+     */
+    public static final NamedRegistry<EntityStat> REGISTRY = new NamedRegistry<>();
+    
+    /**
      * A stat which represents the entities movement speed.
      */
     public static final EntityStat SPEED = createStat("speed");
     
     /**
-     * A stat which represents the entities luck. Used as a random outcome modifier.
+     * A stat which represents the entities physical strength.
      */
-    public static final EntityStat LUCK = createStat("luck");
-    
-    /**
-     * A stat which represents the entities charm. Used as a friendship speed modifier.
-     */
-    public static final EntityStat CHARM = createStat("charm");
+    public static final EntityStat STRENGTH = createStat("strength");
     
     /**
      * The registry Id for the EntityStat.
@@ -90,31 +90,17 @@ public class EntityStat {
         this.UNIQUE_ID = UUID.randomUUID();
     }
     
-    /**
-     * Creates a new EntityStat from the passed name data and registers it with
-     * {@link #REGISTRY}.
-     * 
-     * @param domain The domain that the EntityStat is added under.
-     * @param name The name for the new EntityStat.
-     * @return EntityStat The new EntityStat.
-     */
-    public static EntityStat createStat (String domain, String name) {
+    @Override
+    public boolean equals (Object obj) {
         
-        return REGISTRY.registerValue(domain, name, new EntityStat(domain, name));
-    }
-    
-    /**
-     * Creates a new EntityStat from the passed name and registers it with {@link #REGISTRY}.
-     * If the name passed does not contain a domain substring the default domain will be
-     * applied.
-     * 
-     * @param name The name for the new EntityStat.
-     * @return EntityStat the new EntityStat.
-     */
-    public static EntityStat createStat (String name) {
-        
-        final RegistryName regName = new RegistryName(name);
-        return REGISTRY.registerValue(regName, new EntityStat(regName.getDomain(), regName.getName()));
+        if (this == obj)
+            return true;
+            
+        else if (obj instanceof EntityStat)
+            return this.ID.equals(((EntityStat) obj).ID);
+            
+        else
+            return false;
     }
     
     /**
@@ -149,19 +135,6 @@ public class EntityStat {
     }
     
     @Override
-    public boolean equals (Object obj) {
-        
-        if (this == obj)
-            return true;
-            
-        else if (obj instanceof EntityStat)
-            return this.ID.equals(((EntityStat) obj).ID);
-            
-        else
-            return false;
-    }
-    
-    @Override
     public int hashCode () {
         
         return this.ID.hashCode();
@@ -171,5 +144,32 @@ public class EntityStat {
     public String toString () {
         
         return "Stat(" + "id=" + this.ID + " uuid=" + this.UNIQUE_ID.toString() + ")";
+    }
+    
+    /**
+     * Creates a new EntityStat from the passed name and registers it with {@link #REGISTRY}.
+     * If the name passed does not contain a domain substring the default domain will be
+     * applied.
+     * 
+     * @param name The name for the new EntityStat.
+     * @return EntityStat the new EntityStat.
+     */
+    public static EntityStat createStat (String name) {
+        
+        final RegistryName regName = new RegistryName(name);
+        return REGISTRY.registerValue(regName, new EntityStat(regName.getDomain(), regName.getName()));
+    }
+    
+    /**
+     * Creates a new EntityStat from the passed name data and registers it with
+     * {@link #REGISTRY}.
+     * 
+     * @param domain The domain that the EntityStat is added under.
+     * @param name The name for the new EntityStat.
+     * @return EntityStat The new EntityStat.
+     */
+    public static EntityStat createStat (String domain, String name) {
+        
+        return REGISTRY.registerValue(domain, name, new EntityStat(domain, name));
     }
 }

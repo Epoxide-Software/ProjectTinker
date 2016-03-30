@@ -13,14 +13,14 @@ import com.shc.silenceengine.utils.Logger;
 public class LanguageMap {
     
     /**
-     * The language that is being translated for.
-     */
-    private final LanguageType type;;
-    
-    /**
      * A map of all the translations loaded.
      */
-    private final Map<String, String> translations;
+    private final Map<String, String> translations;;
+    
+    /**
+     * The language that is being translated for.
+     */
+    private final LanguageType type;
     
     /**
      * Constructs a new language map for a specific LanguageType. Preferably only one map
@@ -36,30 +36,6 @@ public class LanguageMap {
     }
     
     /**
-     * Gets the language that the map is translating for.
-     *
-     * @return LanguageType The language that is being translated for.
-     */
-    public LanguageType getType () {
-        
-        return this.type;
-    }
-    
-    /**
-     * Attempts to translate a localization key into the current language type. If no
-     * translation exists, the key will be sent back out. Will fall back to English if a
-     * language other than english can not translate something.
-     *
-     * @param key The translation key to translate for.
-     * @return String The translated text.
-     */
-    public String translate (String key) {
-        
-        final String translation = this.translations.get(key);
-        return translation == null || translation.isEmpty() ? this.type != LanguageType.ENGLISH ? I18n.ENGLISH.translate(key) : key : translation;
-    }
-    
-    /**
      * Checks if a translation key exists in the LanguageMap.
      *
      * @param key The translation key to look for.
@@ -68,6 +44,16 @@ public class LanguageMap {
     public boolean canTranslation (String key) {
         
         return this.translations.containsKey(key);
+    }
+    
+    /**
+     * Gets the language that the map is translating for.
+     *
+     * @return LanguageType The language that is being translated for.
+     */
+    public LanguageType getType () {
+        
+        return this.type;
     }
     
     /**
@@ -95,5 +81,19 @@ public class LanguageMap {
             Logger.error("There was a problem reading " + path);
             exception.printStackTrace();
         }
+    }
+    
+    /**
+     * Attempts to translate a localization key into the current language type. If no
+     * translation exists, the key will be sent back out. Will fall back to English if a
+     * language other than english can not translate something.
+     *
+     * @param key The translation key to translate for.
+     * @return String The translated text.
+     */
+    public String translate (String key) {
+        
+        final String translation = this.translations.get(key);
+        return translation == null || translation.isEmpty() ? this.type != LanguageType.ENGLISH ? I18n.ENGLISH.translate(key) : key : translation;
     }
 }

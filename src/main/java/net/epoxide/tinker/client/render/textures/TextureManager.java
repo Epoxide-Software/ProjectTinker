@@ -11,14 +11,14 @@ import net.epoxide.tinker.util.RegistryName;
 public class TextureManager {
     
     /**
-     * The texture atlas generated for the tiles.
-     */
-    public static Texture texture;
-    
-    /**
      * The registry of textures to be loaded.
      */
     public static NamedRegistry<AtlasTexture> REGISTRY = new NamedRegistry<>();
+    
+    /**
+     * The texture atlas generated for the tiles.
+     */
+    public static Texture texture;
     
     /**
      * Initializes the loading of textures.

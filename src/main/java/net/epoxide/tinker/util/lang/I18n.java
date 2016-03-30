@@ -6,15 +6,14 @@ import java.util.Map;
 public class I18n {
     
     /**
-     * The English translation. This is used as a fallback for when another language does not
-     * have a translation.
-     */
-    public static final LanguageMap ENGLISH;
-    
-    /**
      * The current language used by the client.
      */
     private static LanguageType currentLanguage = LanguageType.ENGLISH;
+    
+    /**
+     * A cache of all the loaded languages.
+     */
+    private static Map<LanguageType, LanguageMap> languageCache = new HashMap<LanguageType, LanguageMap>();
     
     /**
      * A map of translations loaded for the current language.
@@ -22,9 +21,29 @@ public class I18n {
     private static LanguageMap translations;
     
     /**
-     * A cache of all the loaded languages.
+     * The English translation. This is used as a fallback for when another language does not
+     * have a translation.
      */
-    private static Map<LanguageType, LanguageMap> languageCache = new HashMap<LanguageType, LanguageMap>();
+    public static final LanguageMap ENGLISH;
+    
+    static {
+        
+        ENGLISH = new LanguageMap(LanguageType.ENGLISH);
+        ENGLISH.loadLangFile("tinker");
+        translations = ENGLISH;
+        languageCache.put(LanguageType.ENGLISH, ENGLISH);
+    }
+    
+    /**
+     * Checks if a translation key exists in the current language.
+     * 
+     * @param key The translation key to look for.
+     * @return boolean Whether or not the translation key exists.
+     */
+    public static boolean canTranslate (String key) {
+        
+        return translations.canTranslation(key);
+    }
     
     /**
      * Gets the current language that is being translated for.
@@ -34,6 +53,31 @@ public class I18n {
     public static LanguageType getCurrentLanguage () {
         
         return currentLanguage;
+    }
+    
+    /**
+     * Gets the LanguageMap for the current language. This contains a map of all translations
+     * loaded for that language.
+     * 
+     * @return LanguageMap A map of all loaded translations for the current language
+     *         localization.
+     */
+    public static LanguageMap getTranslations () {
+        
+        return translations;
+    }
+    
+    /**
+     * Loads a language file into the current language map. The name of the file is determined
+     * by the domain that the language file is in. This allows for things like a mod to load
+     * their own language file and have it added to the language map.
+     * 
+     * @param domain The domain for the language file. The domain is the directory after the
+     *        assets one. For example 'assets/DOMAIN/lang/en_US.lang'.
+     */
+    public static void loadLangFile (String domain) {
+        
+        translations.loadLangFile(domain);
     }
     
     /**
@@ -70,49 +114,5 @@ public class I18n {
     public static String translate (String key) {
         
         return translations.translate(key);
-    }
-    
-    /**
-     * Checks if a translation key exists in the current language.
-     * 
-     * @param key The translation key to look for.
-     * @return boolean Whether or not the translation key exists.
-     */
-    public static boolean canTranslate (String key) {
-        
-        return translations.canTranslation(key);
-    }
-    
-    /**
-     * Loads a language file into the current language map. The name of the file is determined
-     * by the domain that the language file is in. This allows for things like a mod to load
-     * their own language file and have it added to the language map.
-     * 
-     * @param domain The domain for the language file. The domain is the directory after the
-     *        assets one. For example 'assets/DOMAIN/lang/en_US.lang'.
-     */
-    public static void loadLangFile (String domain) {
-        
-        translations.loadLangFile(domain);
-    }
-    
-    /**
-     * Gets the LanguageMap for the current language. This contains a map of all translations
-     * loaded for that language.
-     * 
-     * @return LanguageMap A map of all loaded translations for the current language
-     *         localization.
-     */
-    public static LanguageMap getTranslations () {
-        
-        return translations;
-    }
-    
-    static {
-        
-        ENGLISH = new LanguageMap(LanguageType.ENGLISH);
-        ENGLISH.loadLangFile("tinker");
-        translations = ENGLISH;
-        languageCache.put(LanguageType.ENGLISH, ENGLISH);
     }
 }

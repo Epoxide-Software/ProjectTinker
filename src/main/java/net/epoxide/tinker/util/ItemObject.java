@@ -7,24 +7,29 @@ import net.epoxide.tinker.item.Item;
 public class ItemObject {
     
     /**
+     * The amount of the item held by the Object.
+     */
+    private int amount;
+    
+    /**
      * The Item held by this Object.
      */
     private Item item;
     
     /**
-     * The amount of the item held by the Object.
+     * A flag that determines whether or not the ItemObject should be destroyed.
      */
-    private int amount;
+    private boolean shouldDestroy;
     
     /**
      * A CompoundTag which holds additional Item information.
      */
     private CompoundTag tag;
     
-    /**
-     * A flag that determines whether or not the ItemObject should be destroyed.
-     */
-    private boolean shouldDestroy;
+    public ItemObject(CompoundTag tag) {
+        
+        this.readData(tag);
+    }
     
     /**
      * Constructs an ItemObject using only an Item. The amount of items is defaulted to 1, and
@@ -35,11 +40,6 @@ public class ItemObject {
     public ItemObject(Item item) {
         
         this(item, 1, null);
-    }
-    
-    public ItemObject(CompoundTag tag) {
-        
-        this.readData(tag);
     }
     
     /**
@@ -69,6 +69,16 @@ public class ItemObject {
     }
     
     /**
+     * Retrieves the amount of items held by the ItemObject.
+     * 
+     * @return int The amount of items held by the ItemObject.
+     */
+    public int getAmount () {
+        
+        return this.amount;
+    }
+    
+    /**
      * Retrieves the Item held by the ItemObject.
      * 
      * @return Item The Item held by the ItemObject.
@@ -79,23 +89,46 @@ public class ItemObject {
     }
     
     /**
-     * Sets the Item in held by the ItemObject.
+     * Retrieves the CompoundTag held by the ItemObject. This can be null.
      * 
-     * @param item The Item for the ItemObject to hold.
+     * @return CompoundTag The CompoundTag held by the ItemObject.
      */
-    public void setItem (Item item) {
+    public CompoundTag getTag () {
         
-        this.item = item;
+        return this.tag;
     }
     
     /**
-     * Retrieves the amount of items held by the ItemObject.
+     * Checks if the ItemObject has a CompoundTag set to it.
      * 
-     * @return int The amount of items held by the ItemObject.
+     * @return boolean True if the ItemObject has a tag.
      */
-    public int getAmount () {
+    public boolean hasTag () {
         
-        return this.amount;
+        return this.tag != null;
+    }
+    
+    /**
+     * Sets the ItemObject to be destroyed during the next update tick. Be careful when using
+     * this, as it can not easily be undone. This is automatically done when the amount is set
+     * to less than 1.
+     */
+    public void markForDestruction () {
+        
+        this.shouldDestroy = true;
+    }
+    
+    /**
+     * Reads important information for an Item from a CompoundTag.
+     * 
+     * @param tag The CompoundTag to read item data from.
+     */
+    public void readData (CompoundTag tag) {
+        
+        tag.setString("ItemID", this.item.ID.toString());
+        tag.setInt("Amount", this.amount);
+        tag.setBoolean("ShouldDestroy", this.shouldDestroy);
+        tag.setCompoundTag("ItemData", this.tag);
     }
     
     /**
@@ -113,23 +146,13 @@ public class ItemObject {
     }
     
     /**
-     * Checks if the ItemObject has a CompoundTag set to it.
+     * Sets the Item in held by the ItemObject.
      * 
-     * @return boolean True if the ItemObject has a tag.
+     * @param item The Item for the ItemObject to hold.
      */
-    public boolean hasTag () {
+    public void setItem (Item item) {
         
-        return this.tag != null;
-    }
-    
-    /**
-     * Retrieves the CompoundTag held by the ItemObject. This can be null.
-     * 
-     * @return CompoundTag The CompoundTag held by the ItemObject.
-     */
-    public CompoundTag getTag () {
-        
-        return this.tag;
+        this.item = item;
     }
     
     /**
@@ -143,16 +166,6 @@ public class ItemObject {
     }
     
     /**
-     * Sets the ItemObject to be destroyed during the next update tick. Be careful when using
-     * this, as it can not easily be undone. This is automatically done when the amount is set
-     * to less than 1.
-     */
-    public void markForDestruction () {
-        
-        this.shouldDestroy = true;
-    }
-    
-    /**
      * Checks if the ItemObject should be destroyed. This can be true if the shouldDestroy flag
      * is true, or if the amount is less than 1.
      * 
@@ -161,19 +174,6 @@ public class ItemObject {
     public boolean shouldDestroy () {
         
         return this.shouldDestroy || this.amount < 0;
-    }
-    
-    /**
-     * Reads important information for an Item from a CompoundTag.
-     * 
-     * @param tag The CompoundTag to read item data from.
-     */
-    public void readData (CompoundTag tag) {
-        
-        tag.setString("ItemID", this.item.ID.toString());
-        tag.setInt("Amount", this.amount);
-        tag.setBoolean("ShouldDestroy", this.shouldDestroy);
-        tag.setCompoundTag("ItemData", this.tag);
     }
     
     /**

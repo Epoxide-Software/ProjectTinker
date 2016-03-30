@@ -14,10 +14,12 @@ import net.epoxide.tinker.world.dungeon.Dungeon;
 
 public class TileMap {
     
+    private Dungeon dungeon;
+    
     /**
-     * The tile width of the map.
+     * A List of all entities on the TileMap.
      */
-    private int width;
+    private final List<Entity> entityList;
     
     /**
      * The tile height of the map.
@@ -30,21 +32,19 @@ public class TileMap {
     private String name;
     
     /**
-     * A 2D array of the tiles in the map.
-     */
-    private Tile[][] tileMap;
-    
-    /**
      * A 2D array of CompoundTag. This is used to store tile data in a persistent way.
      */
     private CompoundTag[][] tileData;
     
     /**
-     * A List of all entities on the TileMap.
+     * A 2D array of the tiles in the map.
      */
-    private final List<Entity> entityList;
+    private Tile[][] tileMap;
     
-    private Dungeon dungeon;
+    /**
+     * The tile width of the map.
+     */
+    private int width;
     
     /**
      * Constructs a new TileMap using basic data. The Tile array will have the correct size,
@@ -66,13 +66,49 @@ public class TileMap {
     }
     
     /**
-     * Retrieves the width of the map.
+     * Adds an entity to the TileMap without actually spawning it. Calls
+     * {@link Entity#setCurrentMap(TileMap)} which will call
+     * {@link Entity#onJoinWorld(TileMap)}.
      * 
-     * @return int The map width.
+     * @param entity The entity to add to the map.
      */
-    public int getWidth () {
+    public void addEntity (Entity entity) {
         
-        return this.width;
+        this.entityList.add(entity);
+        entity.setCurrentMap(this);
+    }
+    
+    /**
+     * Gets the Dungeon type of this map. This might be null.
+     * 
+     * @return Dungeon The dungeon type for this map.
+     */
+    public Dungeon getDungeon () {
+        
+        return this.dungeon;
+    }
+    
+    /**
+     * Retrieves the list of entities on this map.
+     * 
+     * @return List<Entity> The list of entities on the map.
+     */
+    public List<Entity> getEntityList () {
+        
+        return this.entityList;
+    }
+    
+    /**
+     * Gets a StatModifier for the TileMap to apply to all entities on it. This allows for
+     * modifier effects on a global scale, such as lower max hp or higher speed.
+     * 
+     * @param type The EntityStat to provide a modifier for.
+     * @return StatModifier A StatModifier object which represents the modifier effects of the
+     *         world. null can be returned to have no effect.
+     */
+    public StatModifier getGlobalModifier (EntityStat type) {
+        
+        return null;
     }
     
     /**
@@ -86,6 +122,13 @@ public class TileMap {
     }
     
     /**
+     * Overrides the 2D tag array. This should be used sparingly, as it will completely
+     * override all of the tile data!
+     * 
+     * @param tileData The new 2D tag array.
+     */
+    
+    /**
      * Retrieves the name of the map. This should not be treated as an ID, and will not always
      * be unique.
      * 
@@ -94,46 +137,6 @@ public class TileMap {
     public String getName () {
         
         return this.name;
-    }
-    
-    /**
-     * Sets the name of the map. This should not be treated as an ID, and does not have to be
-     * unique.
-     * 
-     * @param name The name to apply to the map.
-     */
-    public void setName (String name) {
-        
-        this.name = name;
-    }
-    
-    /**
-     * Retrieves the 2D array of tiles stored on the map. Some entries might be null.
-     * 
-     * @return Tile[][] A 2D array of the tiles on the map.
-     */
-    public Tile[][] getTileMap () {
-        
-        return this.tileMap;
-    }
-    
-    /**
-     * Overrides the 2D tag array. This should be used sparingly, as it will completely
-     * override all of the tile data!
-     * 
-     * @param tileData The new 2D tag array.
-     */
-    
-    /**
-     * Overrides the 2D tile array. This should be used sparingly, as it will completely
-     * override all of the tiles. A valid use case would be for procedurally generated tile
-     * maps.
-     * 
-     * @param tileMap The new 2D tile array.
-     */
-    public void setTileMap (Tile[][] tileMap) {
-        
-        this.tileMap = tileMap;
     }
     
     /**
@@ -155,97 +158,6 @@ public class TileMap {
     }
     
     /**
-     * Gets a tile from the TileMap without checking if the location is valid. This is a bit
-     * faster than {@link #getTile(int, int)}.
-     * 
-     * @param posX The X position to get the tile from.
-     * @param posY The Y position to get the tile from.
-     * @return Tile The tile at the specified location. This can be null.
-     */
-    public Tile getTileUnsafely (int posX, int posY) {
-        
-        final Tile tile = this.tileMap[posX][posY];
-        return tile == null ? Tile.VOID : tile;
-    }
-    
-    /**
-     * Sets a tile on the TileMap. This will check that the location specified is valid. This
-     * will call {@link Tile#placeTile(TileMap, int, int)} which will allow the tile to
-     * initialize, and can cancel the placing of the tile. If you know that the location is
-     * valid, and you are setting lots of tiles, {@link #setTileUnsafely(Tile, int, int)} will
-     * be more efficient.
-     * 
-     * @param tile The Tile to set on the map.
-     * @param posX The X position to set the tile at.
-     * @param posY The Y position to set the tile at.
-     */
-    public void setTile (Tile tile, int posX, int posY) {
-        
-        if (this.isValidLocation(posX, posY) && tile.placeTile(this, posX, posY))
-            this.tileMap[posX][posY] = tile;
-    }
-    
-    /**
-     * Sets a tile on the TileMap without checking if the location is valid. This is a bit
-     * faster than {@link #setTile(Tile, int, int)}. This will still call
-     * {@link Tile#placeTile(TileMap, int, int)} which will allow the tile to initialize, or
-     * cancel the placement.
-     * 
-     * @param tile The Tile to set on the map.
-     * @param posX The X position to set the tile at.
-     * @param posY The Y position to set the tile at.
-     */
-    public void setTileUnsafely (Tile tile, int posX, int posY) {
-        
-        if (tile.placeTile(this, posX, posY))
-            this.tileMap[posX][posY] = tile;
-    }
-    
-    /**
-     * Removes a tile from the TileMap. This will check that the location specified is valid.
-     * This will also call {@link Tile#removeTile(TileMap, int, int)} which will allow the tile
-     * to clean up, or do removal effects, it can also prevent removal. If you know that the
-     * location is valid, and you are setting lots of tiles, #setTileUnsafely(Tile, int, int)
-     * will be more efficient.
-     * 
-     * @param posX The X position of the tile to remove.
-     * @param posY The Y position of the tile to remove.
-     */
-    public void removeTile (int posX, int posY) {
-        
-        if (this.isValidLocation(posX, posY)) {
-            
-            final Tile tile = this.tileMap[posX][posY];
-            
-            if (tile != null && tile.removeTile(this, posX, posY)) {
-                
-                this.tileMap[posX][posY] = null;
-                this.removeTileDataUnsafely(posX, posY);
-            }
-        }
-    }
-    
-    /**
-     * Removes a tile from the TileMap without checking if the location is valid. This is a bit
-     * faster than {@link #removeTile(int, int)}. This will still call
-     * {@link Tile#removeTile(TileMap, int, int)} which will allow the tile to clean up, or do
-     * removal effects, it can also prevent removal.
-     * 
-     * @param posX The X position of the tile to remove.
-     * @param posY The Y position of the tile to remove.
-     */
-    public void removeTileUnsafely (int posX, int posY) {
-        
-        final Tile tile = this.tileMap[posX][posY];
-        
-        if (tile != null && tile.removeTile(this, posX, posY)) {
-            
-            this.tileMap[posX][posY] = null;
-            this.removeTileDataUnsafely(posX, posY);
-        }
-    }
-    
-    /**
      * Retrieves the 2D array of tags stored on the map. Some entries may be null.
      * 
      * @return Tag[][] A 2D array of tags on the map.
@@ -253,18 +165,6 @@ public class TileMap {
     public Tag[][] getTileData () {
         
         return this.tileData;
-    }
-    
-    /**
-     * Overrides the 2D tag array. This should be used sparingly, as it will completely
-     * override all of the tile data! A valid use case would be for procedurally generated tile
-     * maps.
-     * 
-     * @param tileData The new 2D tag array.
-     */
-    public void setTileData (CompoundTag[][] tileData) {
-        
-        this.tileData = tileData;
     }
     
     /**
@@ -308,114 +208,37 @@ public class TileMap {
     }
     
     /**
-     * Sets tile data at the specified location. This will check to make sure the location is
-     * valid before setting the data. If you already know the location is valid, you can use
-     * {@link #setTileDataUnsafely(CompoundTag, int, int)} which is a bit faster.
+     * Retrieves the 2D array of tiles stored on the map. Some entries might be null.
      * 
-     * @param tag The data tag to store at the location.
-     * @param posX The X position of the tile to set data for.
-     * @param posY The Y position of the tile to set data for.
+     * @return Tile[][] A 2D array of the tiles on the map.
      */
-    public void setTileData (CompoundTag tag, int posX, int posY) {
+    public Tile[][] getTileMap () {
         
-        if (this.isValidLocation(posX, posY))
-            this.tileData[posX][posY] = tag;
+        return this.tileMap;
     }
     
     /**
-     * Sets tile data without verifying that the location is valid. This is a bit faster than
-     * {@link #setTileData(CompoundTag, int, int)}.
+     * Gets a tile from the TileMap without checking if the location is valid. This is a bit
+     * faster than {@link #getTile(int, int)}.
      * 
-     * @param tag The data tag to store at the location.
-     * @param posX The X position of the tile to set data for.
-     * @param posY The Y position of the tile to set data for.
+     * @param posX The X position to get the tile from.
+     * @param posY The Y position to get the tile from.
+     * @return Tile The tile at the specified location. This can be null.
      */
-    public void setTileDataUnsafely (CompoundTag tag, int posX, int posY) {
+    public Tile getTileUnsafely (int posX, int posY) {
         
-        this.tileData[posX][posY] = tag;
+        final Tile tile = this.tileMap[posX][posY];
+        return tile == null ? Tile.VOID : tile;
     }
     
     /**
-     * Removes tile data at the specified location. This will check to make sure the location
-     * is valid before removing the data. If you already know the location is valid, you can
-     * use {@link #removeTileDataUnsafely(int, int)} which is a bit faster.
+     * Retrieves the width of the map.
      * 
-     * @param posX The X position of the tile to remove data for.
-     * @param posY The Y position of the tile to remove data for.
+     * @return int The map width.
      */
-    public void removeTileData (int posX, int posY) {
+    public int getWidth () {
         
-        if (this.isValidLocation(posX, posY))
-            this.tileData[posX][posY] = null;
-    }
-    
-    /**
-     * Removes tile data without verifying that the location is valid. This is a bit faster
-     * that {@link #removeTileData(int, int)}.
-     * 
-     * @param posX The X position of the tile to remove data for.
-     * @param posY The Y position of the tile to remove data for.
-     */
-    public void removeTileDataUnsafely (int posX, int posY) {
-        
-        this.tileData[posX][posY] = null;
-    }
-    
-    /**
-     * Retrieves the list of entities on this map.
-     * 
-     * @return List<Entity> The list of entities on the map.
-     */
-    public List<Entity> getEntityList () {
-        
-        return this.entityList;
-    }
-    
-    /**
-     * Spawns an entity into the TileMap. This will add the entity to the entity list and call
-     * {@link Entity#onSpawn(TileMap)} and {@link Entity#setCurrentMap(TileMap)} which will
-     * call {@link Entity#onJoinWorld(TileMap)}.
-     * 
-     * @param entity The entity to spawn.
-     */
-    public void spawnEntity (Entity entity) {
-        
-        this.entityList.add(entity);
-        entity.onSpawn(this);
-        entity.setCurrentMap(this);
-    }
-    
-    /**
-     * Adds an entity to the TileMap without actually spawning it. Calls
-     * {@link Entity#setCurrentMap(TileMap)} which will call
-     * {@link Entity#onJoinWorld(TileMap)}.
-     * 
-     * @param entity The entity to add to the map.
-     */
-    public void addEntity (Entity entity) {
-        
-        this.entityList.add(entity);
-        entity.setCurrentMap(this);
-    }
-    
-    /**
-     * Gets the Dungeon type of this map. This might be null.
-     * 
-     * @return Dungeon The dungeon type for this map.
-     */
-    public Dungeon getDungeon () {
-        
-        return this.dungeon;
-    }
-    
-    /**
-     * Sets the Dungeon type for the map.
-     * 
-     * @param dungeon The dungeon type to set for this map.
-     */
-    public void setDungeon (Dungeon dungeon) {
-        
-        this.dungeon = dungeon;
+        return this.width;
     }
     
     /**
@@ -429,50 +252,6 @@ public class TileMap {
     public boolean isValidLocation (int posX, int posY) {
         
         return posX >= 0 && posX < this.width && posY >= 0 && posY < this.height;
-    }
-    
-    /**
-     * Gets a StatModifier for the TileMap to apply to all entities on it. This allows for
-     * modifier effects on a global scale, such as lower max hp or higher speed.
-     * 
-     * @param type The EntityStat to provide a modifier for.
-     * @return StatModifier A StatModifier object which represents the modifier effects of the
-     *         world. null can be returned to have no effect.
-     */
-    public StatModifier getGlobalModifier (EntityStat type) {
-        
-        return null;
-    }
-    
-    /**
-     * Handles saving of the map to a file on the storage drive.
-     * 
-     * @param tag The CompoundTag to write this map data on.
-     */
-    public CompoundTag writeMap (CompoundTag tag) {
-        
-        tag.setString("MapName", this.name);
-        tag.setInt("MapWidth", this.width);
-        tag.setInt("MapHeight", this.height);
-        
-        final List<String> tileIDs = new ArrayList<>();
-        final List<Tag> tileData = new ArrayList<>();
-        
-        for (int x = 0; x < this.width; x++)
-            for (int y = 0; y < this.height; y++) {
-                
-                tileIDs.add(this.getTileUnsafely(x, y).ID.toString());
-                tileData.add(this.getTileDataUnsafely(x, y));
-            }
-            
-        tag.setStringArray("TileIDs", tileIDs.toArray(new String[this.width * this.height]));
-        tag.setTagList("TileData", tileData);
-        
-        final List<Tag> entityData = new ArrayList<>();
-        this.entityList.forEach(entity -> entityData.add(entity.writeData(new CompoundTag("EntityData"))));
-        tag.setTagList("Entities", entityData);
-        
-        return tag;
     }
     
     /**
@@ -511,5 +290,226 @@ public class TileMap {
                 this.addEntity(entity);
             }
         }
+    }
+    
+    /**
+     * Removes a tile from the TileMap. This will check that the location specified is valid.
+     * This will also call {@link Tile#removeTile(TileMap, int, int)} which will allow the tile
+     * to clean up, or do removal effects, it can also prevent removal. If you know that the
+     * location is valid, and you are setting lots of tiles, #setTileUnsafely(Tile, int, int)
+     * will be more efficient.
+     * 
+     * @param posX The X position of the tile to remove.
+     * @param posY The Y position of the tile to remove.
+     */
+    public void removeTile (int posX, int posY) {
+        
+        if (this.isValidLocation(posX, posY)) {
+            
+            final Tile tile = this.tileMap[posX][posY];
+            
+            if (tile != null && tile.removeTile(this, posX, posY)) {
+                
+                this.tileMap[posX][posY] = null;
+                this.removeTileDataUnsafely(posX, posY);
+            }
+        }
+    }
+    
+    /**
+     * Removes tile data at the specified location. This will check to make sure the location
+     * is valid before removing the data. If you already know the location is valid, you can
+     * use {@link #removeTileDataUnsafely(int, int)} which is a bit faster.
+     * 
+     * @param posX The X position of the tile to remove data for.
+     * @param posY The Y position of the tile to remove data for.
+     */
+    public void removeTileData (int posX, int posY) {
+        
+        if (this.isValidLocation(posX, posY))
+            this.tileData[posX][posY] = null;
+    }
+    
+    /**
+     * Removes tile data without verifying that the location is valid. This is a bit faster
+     * that {@link #removeTileData(int, int)}.
+     * 
+     * @param posX The X position of the tile to remove data for.
+     * @param posY The Y position of the tile to remove data for.
+     */
+    public void removeTileDataUnsafely (int posX, int posY) {
+        
+        this.tileData[posX][posY] = null;
+    }
+    
+    /**
+     * Removes a tile from the TileMap without checking if the location is valid. This is a bit
+     * faster than {@link #removeTile(int, int)}. This will still call
+     * {@link Tile#removeTile(TileMap, int, int)} which will allow the tile to clean up, or do
+     * removal effects, it can also prevent removal.
+     * 
+     * @param posX The X position of the tile to remove.
+     * @param posY The Y position of the tile to remove.
+     */
+    public void removeTileUnsafely (int posX, int posY) {
+        
+        final Tile tile = this.tileMap[posX][posY];
+        
+        if (tile != null && tile.removeTile(this, posX, posY)) {
+            
+            this.tileMap[posX][posY] = null;
+            this.removeTileDataUnsafely(posX, posY);
+        }
+    }
+    
+    /**
+     * Sets the Dungeon type for the map.
+     * 
+     * @param dungeon The dungeon type to set for this map.
+     */
+    public void setDungeon (Dungeon dungeon) {
+        
+        this.dungeon = dungeon;
+    }
+    
+    /**
+     * Sets the name of the map. This should not be treated as an ID, and does not have to be
+     * unique.
+     * 
+     * @param name The name to apply to the map.
+     */
+    public void setName (String name) {
+        
+        this.name = name;
+    }
+    
+    /**
+     * Sets a tile on the TileMap. This will check that the location specified is valid. This
+     * will call {@link Tile#placeTile(TileMap, int, int)} which will allow the tile to
+     * initialize, and can cancel the placing of the tile. If you know that the location is
+     * valid, and you are setting lots of tiles, {@link #setTileUnsafely(Tile, int, int)} will
+     * be more efficient.
+     * 
+     * @param tile The Tile to set on the map.
+     * @param posX The X position to set the tile at.
+     * @param posY The Y position to set the tile at.
+     */
+    public void setTile (Tile tile, int posX, int posY) {
+        
+        if (this.isValidLocation(posX, posY) && tile.placeTile(this, posX, posY))
+            this.tileMap[posX][posY] = tile;
+    }
+    
+    /**
+     * Sets tile data at the specified location. This will check to make sure the location is
+     * valid before setting the data. If you already know the location is valid, you can use
+     * {@link #setTileDataUnsafely(CompoundTag, int, int)} which is a bit faster.
+     * 
+     * @param tag The data tag to store at the location.
+     * @param posX The X position of the tile to set data for.
+     * @param posY The Y position of the tile to set data for.
+     */
+    public void setTileData (CompoundTag tag, int posX, int posY) {
+        
+        if (this.isValidLocation(posX, posY))
+            this.tileData[posX][posY] = tag;
+    }
+    
+    /**
+     * Overrides the 2D tag array. This should be used sparingly, as it will completely
+     * override all of the tile data! A valid use case would be for procedurally generated tile
+     * maps.
+     * 
+     * @param tileData The new 2D tag array.
+     */
+    public void setTileData (CompoundTag[][] tileData) {
+        
+        this.tileData = tileData;
+    }
+    
+    /**
+     * Sets tile data without verifying that the location is valid. This is a bit faster than
+     * {@link #setTileData(CompoundTag, int, int)}.
+     * 
+     * @param tag The data tag to store at the location.
+     * @param posX The X position of the tile to set data for.
+     * @param posY The Y position of the tile to set data for.
+     */
+    public void setTileDataUnsafely (CompoundTag tag, int posX, int posY) {
+        
+        this.tileData[posX][posY] = tag;
+    }
+    
+    /**
+     * Overrides the 2D tile array. This should be used sparingly, as it will completely
+     * override all of the tiles. A valid use case would be for procedurally generated tile
+     * maps.
+     * 
+     * @param tileMap The new 2D tile array.
+     */
+    public void setTileMap (Tile[][] tileMap) {
+        
+        this.tileMap = tileMap;
+    }
+    
+    /**
+     * Sets a tile on the TileMap without checking if the location is valid. This is a bit
+     * faster than {@link #setTile(Tile, int, int)}. This will still call
+     * {@link Tile#placeTile(TileMap, int, int)} which will allow the tile to initialize, or
+     * cancel the placement.
+     * 
+     * @param tile The Tile to set on the map.
+     * @param posX The X position to set the tile at.
+     * @param posY The Y position to set the tile at.
+     */
+    public void setTileUnsafely (Tile tile, int posX, int posY) {
+        
+        if (tile.placeTile(this, posX, posY))
+            this.tileMap[posX][posY] = tile;
+    }
+    
+    /**
+     * Spawns an entity into the TileMap. This will add the entity to the entity list and call
+     * {@link Entity#onSpawn(TileMap)} and {@link Entity#setCurrentMap(TileMap)} which will
+     * call {@link Entity#onJoinWorld(TileMap)}.
+     * 
+     * @param entity The entity to spawn.
+     */
+    public void spawnEntity (Entity entity) {
+        
+        this.entityList.add(entity);
+        entity.onSpawn(this);
+        entity.setCurrentMap(this);
+    }
+    
+    /**
+     * Handles saving of the map to a file on the storage drive.
+     * 
+     * @param tag The CompoundTag to write this map data on.
+     */
+    public CompoundTag writeMap (CompoundTag tag) {
+        
+        tag.setString("MapName", this.name);
+        tag.setInt("MapWidth", this.width);
+        tag.setInt("MapHeight", this.height);
+        
+        final List<String> tileIDs = new ArrayList<>();
+        final List<Tag> tileData = new ArrayList<>();
+        
+        for (int x = 0; x < this.width; x++)
+            for (int y = 0; y < this.height; y++) {
+                
+                tileIDs.add(this.getTileUnsafely(x, y).ID.toString());
+                tileData.add(this.getTileDataUnsafely(x, y));
+            }
+            
+        tag.setStringArray("TileIDs", tileIDs.toArray(new String[this.width * this.height]));
+        tag.setTagList("TileData", tileData);
+        
+        final List<Tag> entityData = new ArrayList<>();
+        this.entityList.forEach(entity -> entityData.add(entity.writeData(new CompoundTag("EntityData"))));
+        tag.setTagList("Entities", entityData);
+        
+        return tag;
     }
 }

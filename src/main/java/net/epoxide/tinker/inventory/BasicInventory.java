@@ -24,16 +24,21 @@ public class BasicInventory implements Inventory {
     }
     
     @Override
+    public boolean canAddItem (int pos, ItemObject item) {
+        
+        return true;
+    }
+    
+    @Override
     public ItemObject getItemInPos (int pos) {
         
         return this.isPosValid(pos) ? this.inventory[pos] : null;
     }
     
     @Override
-    public void setItemInPos (int pos, ItemObject item) {
+    public String getNameForInventory () {
         
-        if (this.isPosValid(pos) && this.canAddItem(pos, item))
-            this.inventory[pos] = item;
+        return this.inventoryName;
     }
     
     @Override
@@ -57,6 +62,13 @@ public class BasicInventory implements Inventory {
     }
     
     @Override
+    public void setItemInPos (int pos, ItemObject item) {
+        
+        if (this.isPosValid(pos) && this.canAddItem(pos, item))
+            this.inventory[pos] = item;
+    }
+    
+    @Override
     public CompoundTag writeData (CompoundTag tag) {
         
         tag.setInt("Size", this.inventory.length);
@@ -66,17 +78,5 @@ public class BasicInventory implements Inventory {
                 tag.setCompoundTag("Slot" + index, this.inventory[index].writeData(new CompoundTag("Slot" + index)));
                 
         return tag;
-    }
-    
-    @Override
-    public boolean canAddItem (int pos, ItemObject item) {
-        
-        return true;
-    }
-    
-    @Override
-    public String getNameForInventory () {
-        
-        return this.inventoryName;
     }
 }

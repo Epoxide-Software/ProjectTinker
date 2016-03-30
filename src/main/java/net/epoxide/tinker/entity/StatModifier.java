@@ -7,6 +7,16 @@ import net.darkhax.opennbt.tags.CompoundTag;
 public class StatModifier {
     
     /**
+     * A UUID specific to the instance of StatModifier.
+     */
+    private final UUID id;
+    
+    /**
+     * The modifier type of the stat modifier.
+     */
+    private final byte modType;
+    
+    /**
      * The type of the stat being modified.
      */
     private final EntityStat type;
@@ -15,16 +25,6 @@ public class StatModifier {
      * The value of the stat modifier.
      */
     private final float value;
-    
-    /**
-     * The modifier type of the stat modifier.
-     */
-    private final byte modType;
-    
-    /**
-     * A UUID specific to the instance of StatModifier.
-     */
-    private final UUID id;
     
     /**
      * Constructs a new StatModifier from a CompoundTag. Expects a tag containing data from
@@ -52,14 +52,17 @@ public class StatModifier {
         this.id = UUID.randomUUID();
     }
     
-    /**
-     * Gets the value of the modifier.
-     * 
-     * @return float The value of the modifier.
-     */
-    public float getValue () {
+    @Override
+    public boolean equals (Object obj) {
         
-        return this.value;
+        if (this == obj)
+            return true;
+            
+        else if (obj instanceof StatModifier)
+            return this.id.equals(((StatModifier) obj).id);
+            
+        else
+            return false;
     }
     
     /**
@@ -83,29 +86,13 @@ public class StatModifier {
     }
     
     /**
-     * Writes all important stat data to a CompoundTag. The data can later be turned into a
-     * StatModifier again by using {@link #StatModifier(CompoundTag)}.
+     * Gets the value of the modifier.
      * 
-     * @param tag The CompoundTag to write data to.
+     * @return float The value of the modifier.
      */
-    public void writeStat (CompoundTag tag) {
+    public float getValue () {
         
-        tag.setString("StatType", this.type.getId());
-        tag.setFloat("StatValue", this.value);
-        tag.setByte("StatModifier", this.modType);
-    }
-    
-    @Override
-    public boolean equals (Object obj) {
-        
-        if (this == obj)
-            return true;
-            
-        else if (obj instanceof StatModifier)
-            return this.id.equals(((StatModifier) obj).id);
-            
-        else
-            return false;
+        return this.value;
     }
     
     @Override
@@ -118,5 +105,18 @@ public class StatModifier {
     public String toString () {
         
         return "StatModifier(type=" + this.type + " value=" + this.value + " modType=" + this.modType + " id=" + this.id.toString() + ")";
+    }
+    
+    /**
+     * Writes all important stat data to a CompoundTag. The data can later be turned into a
+     * StatModifier again by using {@link #StatModifier(CompoundTag)}.
+     * 
+     * @param tag The CompoundTag to write data to.
+     */
+    public void writeStat (CompoundTag tag) {
+        
+        tag.setString("StatType", this.type.getId());
+        tag.setFloat("StatValue", this.value);
+        tag.setByte("StatModifier", this.modType);
     }
 }

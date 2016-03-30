@@ -28,18 +28,63 @@ import net.epoxide.tinker.world.dungeon.Dungeon;
 
 public class TinkerGame extends Game {
     
-    public static final Random RANDOM = new Random();
     public static final String DOMAIN = "tinker";
-    
     public static EntityPlayer entityPlayer;
-    private final RenderSystem renderSystem = new RenderSystem();
-    private final TileMap tileMap = new TileMap(512, 512, "world");
     
+    public static final Random RANDOM = new Random();
     /**
      * The current version of the game. Version system follows a fairly standard version system
      * of major.minor.patch.build.
      */
     public static final String version = "0.0.0.0";
+    private final RenderSystem renderSystem = new RenderSystem();
+    
+    private final TileMap tileMap = new TileMap(512, 512, "world");
+    
+    @Override
+    public void init () {
+        
+        Dungeon.DEFAULT.generateMap(this.tileMap);
+        entityPlayer = new EntityPlayer(this.tileMap);
+        Entity.REGISTRY.registerValue(new RegistryName("entityPlayer"), EntityPlayer.class);
+        
+        this.tileMap.spawnEntity(entityPlayer);
+        RenderEntitySystem.REGISTRY.registerValue("entityPlayer", new RenderEntityPlayer());
+        
+        TextureManager.init();
+    }
+    
+    @Override
+    public void preInit () {
+        
+        Logger.info("[OpenNBT] Version " + NBTHelper.VERSION + " detected.");
+        Display.setVSync(false);
+        
+        TextureManager.registerTileTextures("stone");
+        TextureManager.registerTileTextures("slime");
+        TextureManager.registerTileTextures("missing");
+    }
+    
+    @Override
+    public void render (float delta, Batcher batcher) {
+        
+        this.renderSystem.render(delta, batcher, this.tileMap);
+    }
+    
+    @Override
+    public void resize () {
+        
+        this.renderSystem.resize();
+    }
+    
+    @Override
+    public void update (float delta) {
+        
+        if (Game.DEVELOPMENT)
+            Display.setTitle("FPS: " + Game.getFPS() + " | UPS: " + Game.getUPS() + " | RC: " + SilenceEngine.graphics.renderCallsPerFrame);
+            
+        KeyHandler.update(entityPlayer, delta);
+    }
     
     /**
      * The initial call for the application. Handles program arguments after the game is
@@ -79,50 +124,5 @@ public class TinkerGame extends Game {
             else
                 exception.printStackTrace();
         }
-    }
-    
-    @Override
-    public void preInit () {
-        
-        Logger.info("[OpenNBT] Version " + NBTHelper.VERSION + " detected.");
-        Display.setVSync(false);
-        
-        TextureManager.registerTileTextures("stone");
-        TextureManager.registerTileTextures("slime");
-        TextureManager.registerTileTextures("missing");
-    }
-    
-    @Override
-    public void init () {
-        
-        Dungeon.DEFAULT.generateMap(this.tileMap);
-        entityPlayer = new EntityPlayer(this.tileMap);
-        Entity.REGISTRY.registerValue(new RegistryName("entityPlayer"), EntityPlayer.class);
-        
-        this.tileMap.spawnEntity(entityPlayer);
-        RenderEntitySystem.REGISTRY.registerValue("entityPlayer", new RenderEntityPlayer());
-        
-        TextureManager.init();
-    }
-    
-    @Override
-    public void resize () {
-        
-        this.renderSystem.resize();
-    }
-    
-    @Override
-    public void update (float delta) {
-        
-        if (Game.DEVELOPMENT)
-            Display.setTitle("FPS: " + Game.getFPS() + " | UPS: " + Game.getUPS() + " | RC: " + SilenceEngine.graphics.renderCallsPerFrame);
-            
-        KeyHandler.update(entityPlayer, delta);
-    }
-    
-    @Override
-    public void render (float delta, Batcher batcher) {
-        
-        this.renderSystem.render(delta, batcher, this.tileMap);
     }
 }

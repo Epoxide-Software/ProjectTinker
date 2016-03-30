@@ -10,30 +10,8 @@ public class TestGame extends Game {
     
     public static String[] args;
     
-    public long start;
     public long finish;
-    
-    public static void main (String[] programArgs) {
-        
-        args = programArgs;
-        final TestGame game = new TestGame();
-        game.start();
-    }
-    
-    @Override
-    public void init () {
-        
-        for (final String arg : args) {
-            
-            final boolean all = arg.equalsIgnoreCase("all");
-            
-            if (arg.equalsIgnoreCase("testI18n") || all)
-                this.testI18n();
-                
-            if (arg.equalsIgnoreCase("testI18nGerman") || all)
-                this.testI18nGerman();
-        }
-    }
+    public long start;
     
     /**
      * Tests that the internationalization of text actually works by loading a string from the
@@ -65,5 +43,27 @@ public class TestGame extends Game {
         I18n.setCurrentLanguage(LanguageType.ENGLISH);
         
         Logger.info("The I18n test", "Passing: " + translation.equals("Theodor Emil Sigfried Theodor"), "Time: " + (this.finish - this.start), "Translation: " + translation);
+    }
+    
+    @Override
+    public void init () {
+        
+        for (final String arg : args) {
+            
+            final boolean all = arg.equalsIgnoreCase("all");
+            
+            if (arg.equalsIgnoreCase("testI18n") || all)
+                this.testI18n();
+                
+            if (arg.equalsIgnoreCase("testI18nGerman") || all)
+                this.testI18nGerman();
+        }
+    }
+    
+    public static void main (String[] programArgs) {
+        
+        args = programArgs;
+        final TestGame game = new TestGame();
+        game.start();
     }
 }

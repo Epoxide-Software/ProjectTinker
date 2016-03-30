@@ -13,20 +13,7 @@ import com.shc.silenceengine.utils.FileUtils;
 
 public class AtlasTexture implements IResource {
     
-    /**
-     * The path for the texture to load.
-     */
-    private final FilePath path;
-    
-    /**
-     * A buffer of bytes which contain the loaded image.
-     */
-    private ByteBuffer image;
-    
-    /**
-     * The width of the image.
-     */
-    private int width;
+    private int components;
     
     /**
      * The height of the image.
@@ -34,14 +21,19 @@ public class AtlasTexture implements IResource {
     private int height;
     
     /**
-     * The X of the texture.
+     * A buffer of bytes which contain the loaded image.
      */
-    private int x;
+    private ByteBuffer image;
     
     /**
-     * The Y of the texture.
+     * The end U value.
      */
-    private int y;
+    private float maxU;
+    
+    /**
+     * The end V value.
+     */
+    private float maxV;
     
     /**
      * The starting U value.
@@ -54,16 +46,34 @@ public class AtlasTexture implements IResource {
     private float minV;
     
     /**
-     * The end U value.
+     * The path for the texture to load.
      */
-    private float maxU;
+    private final FilePath path;
     
     /**
-     * The end V value.
+     * The width of the image.
      */
-    private float maxV;
+    private int width;
     
-    private int components;
+    /**
+     * The X of the texture.
+     */
+    private int x;
+    
+    /**
+     * The Y of the texture.
+     */
+    private int y;
+    
+    /**
+     * Constructs a new TileTexture from a FilePath.
+     * 
+     * @param path The path to the file.
+     */
+    public AtlasTexture(FilePath path) {
+        
+        this.path = path;
+    }
     
     /**
      * Constructs a new TileTexture from a String that contains a file path.
@@ -75,14 +85,69 @@ public class AtlasTexture implements IResource {
         this(FilePath.getResourceFile(path));
     }
     
-    /**
-     * Constructs a new TileTexture from a FilePath.
-     * 
-     * @param path The path to the file.
-     */
-    public AtlasTexture(FilePath path) {
+    @Override
+    public void dispose () {
+    
+    }
+    
+    public int getComponents () {
         
-        this.path = path;
+        return this.components;
+    }
+    
+    public int getHeight () {
+        
+        return this.height;
+    }
+    
+    /**
+     * Gets the ByteBuffer for the image being loaded.
+     * 
+     * @return ByteBuffer A buffer of bytes containing the image data.
+     */
+    public ByteBuffer getImage () {
+        
+        return this.image;
+    }
+    
+    public float getMaxU () {
+        
+        return this.maxU;
+    }
+    
+    public float getMaxV () {
+        
+        return this.maxV;
+    }
+    
+    public float getMinU () {
+        
+        return this.minU;
+    }
+    
+    public float getMinV () {
+        
+        return this.minV;
+    }
+    
+    public FilePath getPath () {
+        
+        return this.path;
+    }
+    
+    public int getWidth () {
+        
+        return this.width;
+    }
+    
+    public int getX () {
+        
+        return this.x;
+    }
+    
+    public int getY () {
+        
+        return this.y;
     }
     
     /**
@@ -124,78 +189,13 @@ public class AtlasTexture implements IResource {
         this.maxV = maxV;
     }
     
-    /**
-     * Gets the ByteBuffer for the image being loaded.
-     * 
-     * @return ByteBuffer A buffer of bytes containing the image data.
-     */
-    public ByteBuffer getImage () {
-        
-        return this.image;
-    }
-    
-    public int getX () {
-        
-        return this.x;
-    }
-    
     public void setX (int x) {
         
         this.x = x;
     }
     
-    public int getY () {
-        
-        return this.y;
-    }
-    
     public void setY (int y) {
         
         this.y = y;
-    }
-    
-    public int getHeight () {
-        
-        return this.height;
-    }
-    
-    public int getWidth () {
-        
-        return this.width;
-    }
-    
-    public int getComponents () {
-        
-        return this.components;
-    }
-    
-    public FilePath getPath () {
-        
-        return this.path;
-    }
-    
-    public float getMinU () {
-        
-        return this.minU;
-    }
-    
-    public float getMinV () {
-        
-        return this.minV;
-    }
-    
-    public float getMaxU () {
-        
-        return this.maxU;
-    }
-    
-    public float getMaxV () {
-        
-        return this.maxV;
-    }
-    
-    @Override
-    public void dispose () {
-    
     }
 }

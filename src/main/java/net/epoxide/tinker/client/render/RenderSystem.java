@@ -9,34 +9,9 @@ import net.epoxide.tinker.world.TileMap;
 public class RenderSystem {
     
     /**
-     * The Orthographic camera used by the main renderer.
+     * The height of the current display window.
      */
-    private OrthoCam camera;
-    
-    /**
-     * The renderer for the world map.
-     */
-    private final RenderWorldSystem worldRenderer;
-    
-    /**
-     * The renderer for entities.
-     */
-    private final RenderEntitySystem entityRenderer;
-    
-    /**
-     * The length of a tile's size to be rendered on the screen.
-     */
-    public static float tileSize;
-    
-    /**
-     * The amount of tiles to show along the X axis.
-     */
-    public static float renderWidth;
-    
-    /**
-     * The amount of tiles to show along the Y axis.
-     */
-    public static float renderHeight;
+    public static int displayHeight;
     
     /**
      * The width of the current display window.
@@ -44,9 +19,34 @@ public class RenderSystem {
     public static int displayWidth;
     
     /**
-     * The height of the current display window.
+     * The amount of tiles to show along the Y axis.
      */
-    public static int displayHeight;
+    public static float renderHeight;
+    
+    /**
+     * The amount of tiles to show along the X axis.
+     */
+    public static float renderWidth;
+    
+    /**
+     * The length of a tile's size to be rendered on the screen.
+     */
+    public static float tileSize;
+    
+    /**
+     * The Orthographic camera used by the main renderer.
+     */
+    private OrthoCam camera;
+    
+    /**
+     * The renderer for entities.
+     */
+    private final RenderEntitySystem entityRenderer;
+    
+    /**
+     * The renderer for the world map.
+     */
+    private final RenderWorldSystem worldRenderer;
     
     /**
      * Constructs the core render system and initializes some of the main renderers.

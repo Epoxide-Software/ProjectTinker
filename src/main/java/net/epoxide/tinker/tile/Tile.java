@@ -18,9 +18,9 @@ public class Tile {
      */
     public static final NamedRegistry<Tile> REGISTRY = new NamedRegistry<>();
     
-    public static final Tile VOID = registerTile(new Tile("tinker:void"));
-    public static final Tile STONE = registerTile(new Tile("tinker:stone"));
     public static final Tile SLIME = registerTile(new TileSlime("tinker:slime"));
+    public static final Tile STONE = registerTile(new Tile("tinker:stone"));
+    public static final Tile VOID = registerTile(new Tile("tinker:void"));
     
     /**
      * The ID that the tile is registered under.
@@ -38,29 +38,44 @@ public class Tile {
     }
     
     /**
-     * Registers a tile with the {@link #REGISTRY} using the ID stored in the Tile. This should
-     * be used over directly accessing the REGISTRY.
+     * Called when the tile is being activated by an entity. Can be used to handle custom
+     * activation logic.
      *
-     * @param tile The Tile to register.
-     * @return Tile The same Tile being registered. Provided to make life easier.
+     * @param map The TileMap where the Tile was activated.
+     * @param activator An instance of the Entity that is trying to activate the Tile.
+     * @param item The Item used to activate the tile. Might be null.
+     * @param posX The X coordinate of the tile on the tile map.
+     * @param posY The Y coordinate of the tile on the tile map.
+     * @return boolean Whether or not the tile has been activated.
      */
-    public static Tile registerTile (Tile tile) {
+    public boolean activateTile (TileMap map, Entity activator, ItemObject item, int posX, int posY) {
         
-        return REGISTRY.registerValue(tile.ID, tile);
+        return true;
     }
     
     /**
-     * Gets a Tile from the {@link #REGISTRY} which is associated with the name. If no tile
-     * exists, {@link #VOID} will be returned.
+     * Provides a color multiplier to use when rendering the tile. The color multiplier is only
+     * used when {@link Tile#hasColorMultiplier()} returns true. The color multiplier returned
+     * is an RGB integer.
      *
-     * @param name The name of the Tile you are looking for.
-     * @return Tile The Tile associated with the specified name, or {@link #VOID} if no tile is
-     *         found.
+     * @param map The TileMap where the Tile exists.
+     * @param posX The X coordinate of the tile on the tile map.
+     * @param posY The Y coordinate of the tile on the tile map.
+     * @return int An RGB integer which represents the color multiplier to use for the tile.
      */
-    public static Tile getTileByName (String name) {
+    public int getColorMultiplier (TileMap map, int posX, int posY) {
         
-        final Tile tile = REGISTRY.getValue(name);
-        return tile == null ? VOID : tile;
+        return Color.white.getRGB();
+    }
+    
+    public int getRenderPasses () {
+        
+        return 1;
+    }
+    
+    public RegistryName getTexture (int renderPass) {
+        
+        return this.ID;
     }
     
     /**
@@ -71,6 +86,48 @@ public class Tile {
     public String getTranslatedName () {
         
         return I18n.translate("tile." + this.ID.getDomain() + "." + this.ID.getName() + ".name");
+    }
+    
+    /**
+     * Called when an entity is about to collide with the tile. Can be used to handle custom
+     * collision logic, or to prevent collision all together.
+     *
+     * @param map The TileMap where the Tile was collided with.
+     * @param collider The Entity that is about to collide with the tile.
+     * @param posX The X coordinate of the tile on the tile map.
+     * @param posY The z coordinate of the tile on the tile map.
+     * @return boolean Whether or not the entity collided with the tile.
+     */
+    public boolean handleColision (TileMap map, Entity collider, int posX, int posY) {
+        
+        return true;
+    }
+    
+    /**
+     * Called when the tile is being harvested by an entity. Can be used to handle custom
+     * harvest logic, or prevent harvesting.
+     *
+     * @param map The TileMap where the Tile was harvested.
+     * @param harvester An instance of the Entity that is trying to harvest the Tile.
+     * @param item The Item used to harvest the tile. Might be null.
+     * @param posX The X coordinate of the tile on the tile map.
+     * @param posY The Y coordinate of the tile on the tile map.
+     * @return boolean Whether or not the tile should be harvested.
+     */
+    public boolean harvestTile (TileMap map, Entity harvester, ItemObject item, int posX, int posY) {
+        
+        return true;
+    }
+    
+    /**
+     * Checks if the tile has a color multiplier. if it does,
+     * {@link Tile#getColorMultiplier(TileMap, int, int)} will be used when rendering the tile.
+     *
+     * @return boolean Whether or not the tile requires a color multiplier.
+     */
+    public boolean hasColorMultiplier () {
+        
+        return false;
     }
     
     /**
@@ -102,85 +159,28 @@ public class Tile {
     }
     
     /**
-     * Called when the tile is being harvested by an entity. Can be used to handle custom
-     * harvest logic, or prevent harvesting.
+     * Gets a Tile from the {@link #REGISTRY} which is associated with the name. If no tile
+     * exists, {@link #VOID} will be returned.
      *
-     * @param map The TileMap where the Tile was harvested.
-     * @param harvester An instance of the Entity that is trying to harvest the Tile.
-     * @param item The Item used to harvest the tile. Might be null.
-     * @param posX The X coordinate of the tile on the tile map.
-     * @param posY The Y coordinate of the tile on the tile map.
-     * @return boolean Whether or not the tile should be harvested.
+     * @param name The name of the Tile you are looking for.
+     * @return Tile The Tile associated with the specified name, or {@link #VOID} if no tile is
+     *         found.
      */
-    public boolean harvestTile (TileMap map, Entity harvester, ItemObject item, int posX, int posY) {
+    public static Tile getTileByName (String name) {
         
-        return true;
+        final Tile tile = REGISTRY.getValue(name);
+        return tile == null ? VOID : tile;
     }
     
     /**
-     * Called when the tile is being activated by an entity. Can be used to handle custom
-     * activation logic.
+     * Registers a tile with the {@link #REGISTRY} using the ID stored in the Tile. This should
+     * be used over directly accessing the REGISTRY.
      *
-     * @param map The TileMap where the Tile was activated.
-     * @param activator An instance of the Entity that is trying to activate the Tile.
-     * @param item The Item used to activate the tile. Might be null.
-     * @param posX The X coordinate of the tile on the tile map.
-     * @param posY The Y coordinate of the tile on the tile map.
-     * @return boolean Whether or not the tile has been activated.
+     * @param tile The Tile to register.
+     * @return Tile The same Tile being registered. Provided to make life easier.
      */
-    public boolean activateTile (TileMap map, Entity activator, ItemObject item, int posX, int posY) {
+    public static Tile registerTile (Tile tile) {
         
-        return true;
-    }
-    
-    /**
-     * Called when an entity is about to collide with the tile. Can be used to handle custom
-     * collision logic, or to prevent collision all together.
-     *
-     * @param map The TileMap where the Tile was collided with.
-     * @param collider The Entity that is about to collide with the tile.
-     * @param posX The X coordinate of the tile on the tile map.
-     * @param posY The z coordinate of the tile on the tile map.
-     * @return boolean Whether or not the entity collided with the tile.
-     */
-    public boolean handleColision (TileMap map, Entity collider, int posX, int posY) {
-        
-        return true;
-    }
-    
-    /**
-     * Checks if the tile has a color multiplier. if it does,
-     * {@link Tile#getColorMultiplier(TileMap, int, int)} will be used when rendering the tile.
-     *
-     * @return boolean Whether or not the tile requires a color multiplier.
-     */
-    public boolean hasColorMultiplier () {
-        
-        return false;
-    }
-    
-    /**
-     * Provides a color multiplier to use when rendering the tile. The color multiplier is only
-     * used when {@link Tile#hasColorMultiplier()} returns true. The color multiplier returned
-     * is an RGB integer.
-     *
-     * @param map The TileMap where the Tile exists.
-     * @param posX The X coordinate of the tile on the tile map.
-     * @param posY The Y coordinate of the tile on the tile map.
-     * @return int An RGB integer which represents the color multiplier to use for the tile.
-     */
-    public int getColorMultiplier (TileMap map, int posX, int posY) {
-        
-        return Color.white.getRGB();
-    }
-    
-    public int getRenderPasses () {
-        
-        return 1;
-    }
-    
-    public RegistryName getTexture (int renderPass) {
-        
-        return this.ID;
+        return REGISTRY.registerValue(tile.ID, tile);
     }
 }

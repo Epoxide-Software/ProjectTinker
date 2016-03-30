@@ -13,10 +13,99 @@ import net.epoxide.tinker.client.render.textures.AtlasTexture;
 
 public class TexturePacker {
     
+    private static class Node {
+        private final Node[] child = new Node[2];
+        private AtlasTexture image;
+        private final Rectangle rc = new Rectangle();
+        
+        private Node() {
+        
+        }
+        
+        private Node(int width, int height) {
+            
+            this.rc.set(0, 0, width, height);
+        }
+        
+        private Node insert (AtlasTexture texture) {
+            
+            if (!this.isLeaf()) {
+                final Node newNode = this.child[0].insert(texture);
+                if (newNode != null)
+                    return newNode;
+                    
+                return this.child[1].insert(texture);
+            }
+            else {
+                
+                if (this.image != null)
+                    return null;
+                    
+                final int width = texture.getWidth();
+                final int height = texture.getHeight();
+                
+                if (width > this.rc.getWidth() || height > this.rc.getHeight())
+                    return null;
+                    
+                if (width == this.rc.getWidth() && height == this.rc.getHeight()) {
+                    this.image = texture;
+                    this.image.setX((int) this.rc.getX());
+                    this.image.setY((int) this.rc.getY());
+                    return this;
+                }
+                
+                this.child[0] = new Node();
+                this.child[1] = new Node();
+                
+                final float dw = this.rc.getWidth() - width;
+                final float dh = this.rc.getHeight() - height;
+                
+                if (dw > dh) {
+                    this.child[0].rc.set(this.rc.getX(), this.rc.getY(), width, this.rc.getHeight());
+                    this.child[1].rc.set(this.rc.getX() + width, this.rc.getY(), this.rc.getWidth() - width, this.rc.getHeight());
+                }
+                else {
+                    this.child[0].rc.set(this.rc.getX(), this.rc.getY(), this.rc.getWidth(), height);
+                    this.child[1].rc.set(this.rc.getX(), this.rc.getY() + height, this.rc.getWidth(), this.rc.getHeight() - height);
+                }
+                return this.child[0].insert(texture);
+            }
+            
+        }
+        
+        private boolean isLeaf () {
+            
+            return this.child[0] == null && this.child[1] == null;
+        }
+        
+        @Override
+        public String toString () {
+            
+            return this.rc + (this.image == null ? " <no entry>" : " " + this.image.toString());
+        }
+    }
+    
     /**
      * Whether or not the textures have been packed.
      */
     private boolean packed = false;
+    
+    // TODO move to MathUtils
+    private int closestTwoPower (int i) {
+        
+        int power = 1;
+        while (power < i)
+            power <<= 1;
+        return power;
+    }
+    
+    private void nextSize (Dimension size) {
+        
+        if (size.width > size.height)
+            size.height <<= 1;
+        else
+            size.width <<= 1;
+    }
     
     /**
      * Packs all textures into a single texture atlas.
@@ -98,94 +187,5 @@ public class TexturePacker {
         imageBuffer.flip();
         this.packed = true;
         return Texture.fromByteBuffer(imageBuffer, size.width, size.height, 4);
-    }
-    
-    private void nextSize (Dimension size) {
-        
-        if (size.width > size.height)
-            size.height <<= 1;
-        else
-            size.width <<= 1;
-    }
-    
-    // TODO move to MathUtils
-    private int closestTwoPower (int i) {
-        
-        int power = 1;
-        while (power < i)
-            power <<= 1;
-        return power;
-    }
-    
-    private static class Node {
-        private final Node[] child = new Node[2];
-        private final Rectangle rc = new Rectangle();
-        private AtlasTexture image;
-        
-        private Node() {
-        
-        }
-        
-        private Node(int width, int height) {
-            
-            this.rc.set(0, 0, width, height);
-        }
-        
-        private boolean isLeaf () {
-            
-            return this.child[0] == null && this.child[1] == null;
-        }
-        
-        private Node insert (AtlasTexture texture) {
-            
-            if (!this.isLeaf()) {
-                final Node newNode = this.child[0].insert(texture);
-                if (newNode != null)
-                    return newNode;
-                    
-                return this.child[1].insert(texture);
-            }
-            else {
-                
-                if (this.image != null)
-                    return null;
-                    
-                final int width = texture.getWidth();
-                final int height = texture.getHeight();
-                
-                if (width > this.rc.getWidth() || height > this.rc.getHeight())
-                    return null;
-                    
-                if (width == this.rc.getWidth() && height == this.rc.getHeight()) {
-                    this.image = texture;
-                    this.image.setX((int) this.rc.getX());
-                    this.image.setY((int) this.rc.getY());
-                    return this;
-                }
-                
-                this.child[0] = new Node();
-                this.child[1] = new Node();
-                
-                final float dw = this.rc.getWidth() - width;
-                final float dh = this.rc.getHeight() - height;
-                
-                if (dw > dh) {
-                    this.child[0].rc.set(this.rc.getX(), this.rc.getY(), width, this.rc.getHeight());
-                    this.child[1].rc.set(this.rc.getX() + width, this.rc.getY(), this.rc.getWidth() - width, this.rc.getHeight());
-                }
-                else {
-                    this.child[0].rc.set(this.rc.getX(), this.rc.getY(), this.rc.getWidth(), height);
-                    this.child[1].rc.set(this.rc.getX(), this.rc.getY() + height, this.rc.getWidth(), this.rc.getHeight() - height);
-                }
-                return this.child[0].insert(texture);
-            }
-            
-        }
-        
-        @Override
-        public String toString () {
-            
-            return this.rc + (this.image == null ? " <no entry>" : " " + this.image.toString());
-        }
     }
 }

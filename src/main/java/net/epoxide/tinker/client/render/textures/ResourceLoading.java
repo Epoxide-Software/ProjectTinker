@@ -18,9 +18,22 @@ import net.epoxide.tinker.util.NamedRegistry;
 public class ResourceLoading {
     
     /**
-     * The main resource loader.
+     * A map that holds all of the newly loaded textures.
      */
-    public ResourceLoader loader;
+    private static HashMap<FilePath, AtlasTexture> textureMap;
+    
+    /**
+     * The texture for the background being displayed during the loading process.
+     */
+    public static Texture background;
+    
+    // TODO This is kind of lame. I want to remove
+    public static boolean hasSwitched;
+    
+    /**
+     * The texture for the logo being displayed during the loading process.
+     */
+    public static Texture logo;
     
     /**
      * The color of the progression bar during startup.
@@ -33,22 +46,9 @@ public class ResourceLoading {
     public static Paint textColor;
     
     /**
-     * The texture for the logo being displayed during the loading process.
+     * The main resource loader.
      */
-    public static Texture logo;
-    
-    /**
-     * The texture for the background being displayed during the loading process.
-     */
-    public static Texture background;
-    
-    // TODO This is kind of lame. I want to remove
-    public static boolean hasSwitched;
-    
-    /**
-     * A map that holds all of the newly loaded textures.
-     */
-    private static HashMap<FilePath, AtlasTexture> textureMap;
+    public ResourceLoader loader;
     
     /**
      * Loads all of the registered textures.
