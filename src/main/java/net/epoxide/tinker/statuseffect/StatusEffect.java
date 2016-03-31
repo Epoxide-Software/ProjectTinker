@@ -46,15 +46,6 @@ public class StatusEffect implements StatProvider {
         this.isBuff = isBuff;
     }
     
-    /**
-     * Called every time an entity with the effect updates.
-     * 
-     * @param entity The Entity being updated.
-     */
-    public void onUpdate (Entity entity) {
-    
-    }
-    
     @Override
     public StatModifier getStatModifier (Entity entity, EntityStat type) {
         
@@ -69,5 +60,14 @@ public class StatusEffect implements StatProvider {
     public boolean isBuff () {
         
         return this.isBuff;
+    }
+    
+    /**
+     * Called every time an entity with the effect updates.
+     * 
+     * @param entity The Entity being updated.
+     */
+    public void onUpdate (Entity entity) {
+    
     }
 }
