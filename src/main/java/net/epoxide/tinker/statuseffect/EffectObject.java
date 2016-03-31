@@ -1,21 +1,25 @@
 package net.epoxide.tinker.statuseffect;
 
-public class EffectObject {
+import net.darkhax.opennbt.tags.CompoundTag;
+
+import net.epoxide.tinker.util.Persistent;
+
+public class EffectObject implements Persistent {
     
     /**
      * The effect being applied.
      */
-    private final StatusEffect effect;
+    private StatusEffect effect;
     
     /**
      * The tier of the effect.
      */
-    private final int tier;
+    private int tier;
     
     /**
      * The amount of time remaining on the effect.
      */
-    private final int time;
+    private int time;
     
     /**
      * Constructs a new EffectObject, which handles an actual effect instance and not the
@@ -60,5 +64,22 @@ public class EffectObject {
     public int getTime () {
         
         return this.time;
+    }
+    
+    @Override
+    public void readData (CompoundTag tag) {
+        
+        this.time = tag.getInt("Time");
+        this.tier = tag.getInt("Tier");
+        this.effect = StatusEffect.REGISTRY.getValue(tag.getString("EffectID"));
+    }
+    
+    @Override
+    public CompoundTag writeData (CompoundTag tag) {
+        
+        tag.setInt("Time", this.time);
+        tag.setInt("Tier", this.tier);
+        tag.setString("EffectID", this.effect.ID.toString());
+        return tag;
     }
 }
