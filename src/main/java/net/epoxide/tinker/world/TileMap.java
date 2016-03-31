@@ -127,6 +127,12 @@ public class TileMap implements StatProvider {
         return this.name;
     }
     
+    @Override
+    public StatModifier getStatModifier (Entity entity, EntityStat type) {
+        
+        return null;
+    }
+    
     /**
      * Gets a tile from the TileMap. This will check that the location specified is valid. If
      * you know that the location is valid, and you are getting lots of tiles,
@@ -430,11 +436,5 @@ public class TileMap implements StatProvider {
         this.entityList.add(entity);
         entity.onSpawn(this);
         entity.setCurrentMap(this);
-    }
-
-    @Override
-    public StatModifier getStatModifier (Entity entity, EntityStat type) {
-        
-        return null;
     }
 }

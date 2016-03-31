@@ -29,6 +29,12 @@ public class Item implements StatProvider {
         this.ID = new RegistryName(id);
     }
     
+    @Override
+    public StatModifier getStatModifier (Entity entity, EntityStat type) {
+        
+        return null;
+    }
+    
     /**
      * Gets the name for the Item translated with the current language.
      * 
@@ -63,11 +69,5 @@ public class Item implements StatProvider {
     public static Item registerItem (Item item) {
         
         return REGISTRY.registerValue(item.ID, item);
-    }
-
-    @Override
-    public StatModifier getStatModifier (Entity entity, EntityStat type) {
-        
-        return null;
     }
 }
