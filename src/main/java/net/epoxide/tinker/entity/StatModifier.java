@@ -73,7 +73,7 @@ public class StatModifier implements Persistent {
      * 
      * @return byte The identifier for the modification performed by the modifier.
      */
-    public byte getModifierTpe () {
+    public byte getModifierType () {
         
         return this.modType;
     }

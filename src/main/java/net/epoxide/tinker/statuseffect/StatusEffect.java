@@ -73,7 +73,7 @@ public class StatusEffect implements StatProvider, Displayable {
     public void onUpdate (EntityLiving entity) {
     
     }
-
+    
     @Override
     public String getTranslatedName () {
         
