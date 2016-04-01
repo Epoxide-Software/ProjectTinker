@@ -3,6 +3,7 @@ package net.epoxide.tinker.statuseffect;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.EntityStat;
 import net.epoxide.tinker.entity.StatModifier;
+import net.epoxide.tinker.entity.living.EntityLiving;
 import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.util.StatProvider;
@@ -67,7 +68,7 @@ public class StatusEffect implements StatProvider {
      * 
      * @param entity The Entity being updated.
      */
-    public void onUpdate (Entity entity) {
+    public void onUpdate (EntityLiving entity) {
     
     }
 }
