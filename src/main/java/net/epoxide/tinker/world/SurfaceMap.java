@@ -8,12 +8,13 @@ import net.darkhax.opennbt.tags.Tag;
 
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.tile.Tile;
+import net.epoxide.tinker.util.Displayable;
 import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.util.Persistent;
 import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.util.lang.I18n;
 
-public class SurfaceMap extends TileMap implements Persistent {
+public class SurfaceMap extends TileMap implements Persistent, Displayable {
     
     /**
      * A registry for maps. TileMaps do not need to be registered here for them to work,
@@ -33,9 +34,9 @@ public class SurfaceMap extends TileMap implements Persistent {
     }
     
     @Override
-    public String getName () {
+    public String getTranslatedName () {
         
-        return I18n.translate("tile." + this.ID.getDomain() + "." + this.ID.getName() + ".name");
+        return I18n.translate("map." + this.ID.getDomain() + "." + this.ID.getName() + ".name");
     }
     
     @Override

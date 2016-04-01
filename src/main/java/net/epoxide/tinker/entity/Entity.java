@@ -9,13 +9,14 @@ import com.shc.silenceengine.utils.Logger;
 import net.darkhax.opennbt.tags.CompoundTag;
 
 import net.epoxide.tinker.util.Direction;
+import net.epoxide.tinker.util.Displayable;
 import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.util.Persistent;
 import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.util.lang.I18n;
 import net.epoxide.tinker.world.TileMap;
 
-public class Entity implements Persistent {
+public class Entity implements Persistent, Displayable {
     
     /**
      * A registry for registering Entities into the game.
@@ -143,11 +144,7 @@ public class Entity implements Persistent {
         return this.rotation;
     }
     
-    /**
-     * Gets the name for the Entity translated with the current language.
-     * 
-     * @return String the name for the Entity.
-     */
+    @Override
     public String getTranslatedName () {
         
         return I18n.translate("entity." + this.ID.getDomain() + "." + this.ID.getName() + ".name");

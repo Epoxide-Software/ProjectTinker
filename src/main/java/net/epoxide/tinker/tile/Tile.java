@@ -3,13 +3,14 @@ package net.epoxide.tinker.tile;
 import java.awt.Color;
 
 import net.epoxide.tinker.entity.Entity;
+import net.epoxide.tinker.util.Displayable;
 import net.epoxide.tinker.util.ItemObject;
 import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.util.lang.I18n;
 import net.epoxide.tinker.world.TileMap;
 
-public class Tile {
+public class Tile implements Displayable {
     
     /**
      * A named registry which holds all registered tiles. Due to the way Tile IDs are handled,
@@ -78,11 +79,7 @@ public class Tile {
         return this.ID;
     }
     
-    /**
-     * Gets the name for the tile translated with the current language.
-     *
-     * @return String the name for the Tile.
-     */
+    @Override
     public String getTranslatedName () {
         
         return I18n.translate("tile." + this.ID.getDomain() + "." + this.ID.getName() + ".name");

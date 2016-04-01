@@ -3,12 +3,13 @@ package net.epoxide.tinker.item;
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.EntityStat;
 import net.epoxide.tinker.entity.StatModifier;
+import net.epoxide.tinker.util.Displayable;
 import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.util.StatProvider;
 import net.epoxide.tinker.util.lang.I18n;
 
-public class Item implements StatProvider {
+public class Item implements StatProvider, Displayable {
     
     public static final Item ERROR = registerItem(new Item("tinker:error"));
     
@@ -35,11 +36,7 @@ public class Item implements StatProvider {
         return null;
     }
     
-    /**
-     * Gets the name for the Item translated with the current language.
-     * 
-     * @return String the name for the Item.
-     */
+    @Override
     public String getTranslatedName () {
         
         return I18n.translate("item." + this.ID.getDomain() + "." + this.ID.getName() + ".name");
