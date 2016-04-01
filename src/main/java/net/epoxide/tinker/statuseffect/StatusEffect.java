@@ -4,11 +4,13 @@ import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.EntityStat;
 import net.epoxide.tinker.entity.StatModifier;
 import net.epoxide.tinker.entity.living.EntityLiving;
+import net.epoxide.tinker.util.Displayable;
 import net.epoxide.tinker.util.NamedRegistry;
 import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.util.StatProvider;
+import net.epoxide.tinker.util.lang.I18n;
 
-public class StatusEffect implements StatProvider {
+public class StatusEffect implements StatProvider, Displayable {
     
     /**
      * A named registry which holds all registered effects.
@@ -70,5 +72,11 @@ public class StatusEffect implements StatProvider {
      */
     public void onUpdate (EntityLiving entity) {
     
+    }
+
+    @Override
+    public String getTranslatedName () {
+        
+        return I18n.translate("effect." + this.ID.getDomain() + "." + this.ID.getName() + ".name");
     }
 }
