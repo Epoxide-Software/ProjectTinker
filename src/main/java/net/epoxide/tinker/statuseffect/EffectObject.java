@@ -82,4 +82,19 @@ public class EffectObject implements Persistent {
         tag.setString("EffectID", this.effect.ID.toString());
         return tag;
     }
+    
+    @Override
+    public boolean equals (Object obj) {
+        
+        if (obj == this)
+            return true;
+            
+        if (obj instanceof EffectObject) {
+            
+            final EffectObject effect = (EffectObject) obj;
+            return this.effect.equals(effect) && this.tier == effect.tier && this.time == effect.time;
+        }
+        
+        return false;
+    }
 }
