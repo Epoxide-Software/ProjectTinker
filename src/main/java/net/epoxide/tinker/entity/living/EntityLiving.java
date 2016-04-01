@@ -1,11 +1,22 @@
 package net.epoxide.tinker.entity.living;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import net.darkhax.opennbt.tags.CompoundTag;
 
 import net.epoxide.tinker.entity.Entity;
+import net.epoxide.tinker.statuseffect.EffectObject;
+import net.epoxide.tinker.statuseffect.StatusEffect;
 import net.epoxide.tinker.world.TileMap;
 
 public class EntityLiving extends Entity {
+    
+    /**
+     * A list of status effects that the entity currently has.
+     */
+    private List<EffectObject> effects = new ArrayList<EffectObject>();
     
     /**
      * The amount of health that the entity is currently at.
@@ -51,6 +62,28 @@ public class EntityLiving extends Entity {
     public EntityLiving(TileMap map, CompoundTag tag) {
         
         super(map, tag);
+    }
+    
+    /**
+     * Applies an effect to the entity. Only effects that are not null and have a time greater
+     * than 0 can be added.
+     * 
+     * @param effect The effect to apply.
+     */
+    public void applyEffect (EffectObject effect) {
+        
+        if (effect != null && effect.getTime() > 0)
+            this.effects.add(effect);
+    }
+    
+    /**
+     * Cures all effects that are of the specified type.
+     * 
+     * @param effect The type of effect to clear.
+     */
+    public void cureEffect (StatusEffect effect) {
+        
+        this.effects = this.effects.stream().filter(currentEffect -> currentEffect.getEffect().equals(effect)).collect(Collectors.toList());
     }
     
     /**
@@ -123,6 +156,8 @@ public class EntityLiving extends Entity {
         
         if (this.health <= 0)
             this.markForRemoval(true);
+            
+        this.effects = this.effects.stream().filter(effect -> effect.updateState(this)).collect(Collectors.toList());
     }
     
     /**

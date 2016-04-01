@@ -2,6 +2,7 @@ package net.epoxide.tinker.statuseffect;
 
 import net.darkhax.opennbt.tags.CompoundTag;
 
+import net.epoxide.tinker.entity.living.EntityLiving;
 import net.epoxide.tinker.util.Persistent;
 
 public class EffectObject implements Persistent {
@@ -34,6 +35,21 @@ public class EffectObject implements Persistent {
         this.effect = effect;
         this.tier = tier;
         this.time = time;
+    }
+    
+    @Override
+    public boolean equals (Object obj) {
+        
+        if (obj == this)
+            return true;
+            
+        if (obj instanceof EffectObject) {
+            
+            final EffectObject effect = (EffectObject) obj;
+            return this.effect.equals(effect) && this.tier == effect.tier && this.time == effect.time;
+        }
+        
+        return false;
     }
     
     /**
@@ -74,6 +90,24 @@ public class EffectObject implements Persistent {
         this.effect = StatusEffect.REGISTRY.getValue(tag.getString("EffectID"));
     }
     
+    /**
+     * Updates the status of the EffectObject. This will reduce {@link #time} by one and
+     * trigger {@link StatusEffect#onUpdate(EntityLiving)}. Expired effects will return false,
+     * allowing them to be purged using a filter.
+     * 
+     * @param entity The EntityLiving to apply the effect to.
+     * @return boolean Whether or not the effect will stay.
+     */
+    public boolean updateState (EntityLiving entity) {
+        
+        if (this.time == 0)
+            return false;
+            
+        this.time--;
+        this.effect.onUpdate(entity);
+        return true;
+    }
+    
     @Override
     public CompoundTag writeData (CompoundTag tag) {
         
@@ -81,20 +115,5 @@ public class EffectObject implements Persistent {
         tag.setInt("Tier", this.tier);
         tag.setString("EffectID", this.effect.ID.toString());
         return tag;
-    }
-    
-    @Override
-    public boolean equals (Object obj) {
-        
-        if (obj == this)
-            return true;
-            
-        if (obj instanceof EffectObject) {
-            
-            final EffectObject effect = (EffectObject) obj;
-            return this.effect.equals(effect) && this.tier == effect.tier && this.time == effect.time;
-        }
-        
-        return false;
     }
 }
