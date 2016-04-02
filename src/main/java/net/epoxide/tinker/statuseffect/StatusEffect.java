@@ -55,6 +55,12 @@ public class StatusEffect implements StatProvider, Displayable {
         return null;
     }
     
+    @Override
+    public String getTranslatedName () {
+        
+        return I18n.translate("effect." + this.ID.getDomain() + "." + this.ID.getName() + ".name");
+    }
+    
     /**
      * Checks if the effect is a buff or not. If it is not a buff, it is considered a debuff.
      * 
@@ -72,11 +78,5 @@ public class StatusEffect implements StatProvider, Displayable {
      */
     public void onUpdate (EntityLiving entity) {
     
-    }
-    
-    @Override
-    public String getTranslatedName () {
-        
-        return I18n.translate("effect." + this.ID.getDomain() + "." + this.ID.getName() + ".name");
     }
 }

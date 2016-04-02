@@ -89,6 +89,21 @@ public class EntityLiving extends Entity {
     }
     
     /**
+     * Gets the base stat value for a stat type. This is the stat before any modifiers have
+     * been applied to it.
+     * 
+     * @param type The type of stat to get the base stat for.
+     * @return float A base stat for the stat type passed.
+     */
+    public float getBaseStat (EntityStat type) {
+        
+        if (type == EntityStat.MAX_HEALTH)
+            return 5f;
+            
+        return 0;
+    }
+    
+    /**
      * Gets the current health of the entity.
      * 
      * @return int The current health of the entity.
@@ -119,6 +134,50 @@ public class EntityLiving extends Entity {
     public int getMaxHealth () {
         
         return this.maxHealth;
+    }
+    
+    /**
+     * Gets the list of modifiers that are effecting the entity.
+     * 
+     * @param type The type of modifier you want to solve for.
+     * @return List<StatModifier> A list of modifiers currently effecting the entity.
+     */
+    public List<StatModifier> getModifiers (EntityStat type) {
+        
+        final List<StatModifier> stats = new ArrayList<StatModifier>();
+        stats.add(this.getCurrentMap().getStatModifier(this, type));
+        
+        if (!this.effects.isEmpty())
+            this.effects.forEach(effect -> stats.add(effect.getEffect().getStatModifier(this, type)));
+            
+        return stats;
+    }
+    
+    /**
+     * Calculates a stat after it has been effected by all it's other modifiers.
+     * 
+     * @param type The type of stat to calculate.
+     * @return float A flort that represents the stat.
+     */
+    public float getTotalStatValue (EntityStat type) {
+        
+        float base = this.getBaseStat(type);
+        float addition = 0;
+        float percentage = 1f;
+        
+        final List<StatModifier> stats = this.getModifiers(type);
+        
+        for (final StatModifier modifier : stats)
+            if (modifier.getModifierType() == 0)
+                addition += modifier.getValue();
+                
+            else if (modifier.getModifierType() == 1)
+                percentage += modifier.getValue();
+                
+        base *= percentage;
+        base += addition;
+        
+        return base;
     }
     
     /**
@@ -170,64 +229,5 @@ public class EntityLiving extends Entity {
     public void setVulnerability (boolean vulnerability) {
         
         this.isInvulnerable = vulnerability;
-    }
-    
-    /**
-     * Gets the base stat value for a stat type. This is the stat before any modifiers have
-     * been applied to it.
-     * 
-     * @param type The type of stat to get the base stat for.
-     * @return float A base stat for the stat type passed.
-     */
-    public float getBaseStat (EntityStat type) {
-        
-        if (type == EntityStat.MAX_HEALTH)
-            return 5f;
-            
-        return 0;
-    }
-    
-    /**
-     * Gets the list of modifiers that are effecting the entity.
-     * 
-     * @param type The type of modifier you want to solve for.
-     * @return List<StatModifier> A list of modifiers currently effecting the entity.
-     */
-    public List<StatModifier> getModifiers (EntityStat type) {
-        
-        final List<StatModifier> stats = new ArrayList<StatModifier>();
-        stats.add(this.getCurrentMap().getStatModifier(this, type));
-        
-        if (!this.effects.isEmpty())
-            this.effects.forEach(effect -> stats.add(effect.getEffect().getStatModifier(this, type)));
-            
-        return stats;
-    }
-    
-    /**
-     * Calculates a stat after it has been effected by all it's other modifiers.
-     * 
-     * @param type The type of stat to calculate.
-     * @return float A flort that represents the stat.
-     */
-    public float getTotalStatValue (EntityStat type) {
-        
-        float base = this.getBaseStat(type);
-        float addition = 0;
-        float percentage = 1f;
-        
-        final List<StatModifier> stats = this.getModifiers(type);
-        
-        for (final StatModifier modifier : stats)
-            if (modifier.getModifierType() == 0)
-                addition += modifier.getValue();
-                
-            else if (modifier.getModifierType() == 1)
-                percentage += modifier.getValue();
-                
-        base *= percentage;
-        base += addition;
-        
-        return base;
     }
 }

@@ -43,13 +43,13 @@ public class RenderSystem {
      */
     private final RenderEntitySystem entityRenderer;
     
+    private final RenderGuiSystem guiRenderer;
+    
     /**
      * The renderer for the world map.
      */
     private final RenderWorldSystem worldRenderer;
-
-    private final RenderGuiSystem guiRenderer;
-
+    
     /**
      * Constructs the core render system and initializes some of the main renderers.
      */
@@ -57,7 +57,7 @@ public class RenderSystem {
         
         this.worldRenderer = new RenderWorldSystem();
         this.entityRenderer = new RenderEntitySystem();
-        this.guiRenderer= new RenderGuiSystem();
+        this.guiRenderer = new RenderGuiSystem();
         this.resize();
     }
     

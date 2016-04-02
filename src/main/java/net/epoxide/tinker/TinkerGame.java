@@ -45,9 +45,9 @@ public class TinkerGame extends Game {
     
     @Override
     public void init () {
-
+        
         RenderGuiSystem.REGISTRY.registerValue("hud", new GuiHUD());
-
+        
         Dungeon.DEFAULT.generateMap(this.tileMap);
         entityPlayer = new EntityPlayer(this.tileMap);
         Entity.REGISTRY.registerValue(new RegistryName("entityPlayer"), EntityPlayer.class);
@@ -56,7 +56,7 @@ public class TinkerGame extends Game {
         RenderEntitySystem.REGISTRY.registerValue("entityPlayer", new RenderEntityPlayer());
         
         TextureManager.init();
-
+        
         RenderGuiSystem.openGui("hud");
     }
     
