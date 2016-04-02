@@ -14,8 +14,10 @@ import com.shc.silenceengine.utils.Logger;
 
 import net.darkhax.opennbt.NBTHelper;
 
+import net.epoxide.tinker.client.gui.screens.GuiHUD;
 import net.epoxide.tinker.client.input.KeyHandler;
 import net.epoxide.tinker.client.render.RenderEntitySystem;
+import net.epoxide.tinker.client.render.RenderGuiSystem;
 import net.epoxide.tinker.client.render.RenderSystem;
 import net.epoxide.tinker.client.render.entity.RenderEntityPlayer;
 import net.epoxide.tinker.client.render.textures.TextureManager;
@@ -43,7 +45,9 @@ public class TinkerGame extends Game {
     
     @Override
     public void init () {
-        
+
+        RenderGuiSystem.REGISTRY.registerValue("hud", new GuiHUD());
+
         Dungeon.DEFAULT.generateMap(this.tileMap);
         entityPlayer = new EntityPlayer(this.tileMap);
         Entity.REGISTRY.registerValue(new RegistryName("entityPlayer"), EntityPlayer.class);
@@ -52,6 +56,8 @@ public class TinkerGame extends Game {
         RenderEntitySystem.REGISTRY.registerValue("entityPlayer", new RenderEntityPlayer());
         
         TextureManager.init();
+
+        RenderGuiSystem.openGui("hud");
     }
     
     @Override
