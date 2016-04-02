@@ -11,6 +11,8 @@ public class GuiHUD extends GuiContainer {
     
     public class GuiInfo extends Gui {
         
+        private char[] characters = new char[] { 'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd', '!' };
+        
         @Override
         public void drawForeground (Batcher batcher, float mouseX, float mouseY) {
             
@@ -19,6 +21,13 @@ public class GuiHUD extends GuiContainer {
             g2d.setColor(Color.WHITE);
             g2d.drawString(String.format("FPS: %s", Game.getFPS()), 0, 0);
             g2d.drawString(String.format("X:%s Y:%s", mouseX, mouseY), 0, 15);
+            g2d.drawString("Keys: " + new String(this.characters), 0, 30);
+        }
+        
+        @Override
+        public void onKeyTyped (char[] chars, int codePoint, int mods) {
+            
+            this.characters = chars;
         }
     }
     
