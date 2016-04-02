@@ -73,7 +73,7 @@ public class RenderSystem {
         this.camera.apply();
         this.worldRenderer.renderWorld(delta, batcher, tileMap);
         this.entityRenderer.renderEntities(delta, batcher, tileMap);
-        this.guiRenderer.renderGui(delta, batcher);
+        this.guiRenderer.renderGui(batcher);
     }
     
     /**
