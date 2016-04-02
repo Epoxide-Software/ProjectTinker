@@ -25,6 +25,12 @@ public class KeyBind implements Displayable {
     private boolean pressed;
     
     /**
+     * Whether or not the key is repeatable. A repeatable will continuously call
+     * {@link #onKeyPressed(float)} as long as the key is down.
+     */
+    private boolean repeatable = false;
+    
+    /**
      * The ID that the keybind is registered under.
      */
     public final RegistryName ID;
@@ -93,6 +99,18 @@ public class KeyBind implements Displayable {
     }
     
     /**
+     * Checks if the key is repeatable. A repeatable key will continuously call
+     * {@link #onKeyPressed(float)} as long as the key is down. By default keys are not
+     * repeatable.
+     * 
+     * @return boolean Whether or not the key is repeatable.
+     */
+    public boolean isRepeatable () {
+        
+        return this.repeatable;
+    }
+    
+    /**
      * A hook for activating code when the key is pressed. Requires {@link #isEventEnabled()}
      * to return true.
      * 
@@ -120,6 +138,16 @@ public class KeyBind implements Displayable {
     public void setKey (int key) {
         
         this.key = key;
+    }
+    
+    /**
+     * Sets whether or not a key is repeatable. By default, a key is not repeatable.
+     * 
+     * @param repeatable Whether or not the key should be repeatable.
+     */
+    public void setRepeatable (boolean repeatable) {
+        
+        this.repeatable = repeatable;
     }
     
     /**

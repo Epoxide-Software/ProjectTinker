@@ -21,13 +21,13 @@ public class MovementKey extends KeyBind {
         
         super(id, key, true);
         this.TYPE = type;
+        this.setRepeatable(true);
     }
     
     @Override
     public void onKeyPressed (float delta) {
         
         final EntityPlayer player = TinkerGame.entityPlayer;
-        
         switch (this.TYPE) {
             
             case 0:
