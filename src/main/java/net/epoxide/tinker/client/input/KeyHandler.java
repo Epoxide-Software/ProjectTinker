@@ -7,11 +7,11 @@ import net.epoxide.tinker.util.NamedRegistry;
 
 public class KeyHandler {
     
-    public static final KeyBind back = registerKeyBind(new MovementKey("back", Keyboard.KEY_S, 0));
+    public static final NamedRegistry<KeyBind> REGISTRY = new NamedRegistry<KeyBind>();
     
+    public static final KeyBind back = registerKeyBind(new MovementKey("back", Keyboard.KEY_S, 0));
     public static final KeyBind forward = registerKeyBind(new MovementKey("forward", Keyboard.KEY_W, 1));
     public static final KeyBind left = registerKeyBind(new MovementKey("left", Keyboard.KEY_A, 2));
-    public static final NamedRegistry<KeyBind> REGISTRY = new NamedRegistry<KeyBind>();
     public static final KeyBind right = registerKeyBind(new MovementKey("right", Keyboard.KEY_D, 3));
     
     /**
