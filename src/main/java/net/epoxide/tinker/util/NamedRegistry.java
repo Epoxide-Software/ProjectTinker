@@ -11,8 +11,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
 import com.shc.silenceengine.utils.Logger;
-
-import org.apache.commons.lang3.Validate;
+import org.apache.commons.lang.Validate;
 
 public class NamedRegistry<V> implements Iterable<V> {
     
