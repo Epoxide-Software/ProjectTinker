@@ -27,6 +27,20 @@ public class RenderGuiSystem {
     }
     
     /**
+     * Handles typing input for guis.
+     * 
+     * @param chars The characters being typed.
+     * @param codePoint The unicode position. You can read more here:
+     *        https://en.wikipedia.org/wiki/Code_point
+     * @param mods The modifiers applied to the key.
+     */
+    public static void handleInput (char[] chars, int codePoint, int mods) {
+        
+        if (currentContainer != null)
+            currentContainer.onKeyTyped(chars, codePoint, mods);
+    }
+    
+    /**
      * Opens up a new GuiContainer. This will call {@link GuiContainer#onClosed()} on the
      * existing GuiContainer, and then call {@link GuiContainer#onOpened()} on the new gui. It
      * will also set the {@link #currentContainer} to the new container.

@@ -39,6 +39,12 @@ public abstract class GuiContainer extends Gui {
     
     }
     
+    @Override
+    public void onKeyTyped (char[] chars, int codePoint, int mods) {
+        
+        this.guiElements.forEach(element -> element.onKeyTyped(chars, codePoint, mods));
+    }
+    
     /**
      * A hook for when the container is opened.
      */

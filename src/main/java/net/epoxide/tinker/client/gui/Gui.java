@@ -73,6 +73,18 @@ public class Gui {
     }
     
     /**
+     * A hook for when a key is typed. This is used for handling text input.
+     * 
+     * @param chars The characters being typed.
+     * @param codePoint The unicode position. You can read more here:
+     *        https://en.wikipedia.org/wiki/Code_point
+     * @param mods The modifiers applied to the key.
+     */
+    public void onKeyTyped (char[] chars, int codePoint, int mods) {
+    
+    }
+    
+    /**
      * A hook for when the gui is removed from a GuiContainer. Allows for certain things to
      * deinitialized.
      * 
