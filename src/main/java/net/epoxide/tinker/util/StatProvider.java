@@ -15,5 +15,5 @@ public interface StatProvider {
      * @return StatModifier A StatModifier which represents the effects of the provider on the
      *         entities stats.
      */
-    public StatModifier getStatModifier (Entity entity, EntityStat type);
+    StatModifier getStatModifier (Entity entity, EntityStat type);
 }

@@ -8,5 +8,5 @@ public interface Displayable {
      * 
      * @return String The translated name.
      */
-    public String getTranslatedName ();
+    String getTranslatedName ();
 }

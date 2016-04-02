@@ -11,7 +11,7 @@ public interface Persistent {
      * 
      * @param tag A CompoundTag to read all the persistent data from.
      */
-    public void readData (CompoundTag tag);
+    void readData (CompoundTag tag);
     
     /**
      * Writes all important data from an Object to a CompoundTag so it can later be read using
@@ -20,5 +20,5 @@ public interface Persistent {
      * @param tag A CompoundTag to write all the persistent data to.
      * @return CompoundTag The data dag that was written to.
      */
-    public CompoundTag writeData (CompoundTag tag);
+    CompoundTag writeData (CompoundTag tag);
 }
