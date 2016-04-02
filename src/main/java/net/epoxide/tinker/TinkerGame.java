@@ -10,6 +10,7 @@ import com.shc.silenceengine.core.Game;
 import com.shc.silenceengine.core.SilenceEngine;
 import com.shc.silenceengine.core.SilenceException;
 import com.shc.silenceengine.graphics.Batcher;
+import com.shc.silenceengine.input.Keyboard;
 import com.shc.silenceengine.utils.Logger;
 
 import net.darkhax.opennbt.NBTHelper;
@@ -69,6 +70,7 @@ public class TinkerGame extends Game {
         TextureManager.registerTileTextures("stone");
         TextureManager.registerTileTextures("slime");
         TextureManager.registerTileTextures("missing");
+        Keyboard.registerTextListener(TinkerGame::onKeyTyped);
     }
     
     @Override
@@ -130,5 +132,20 @@ public class TinkerGame extends Game {
             else
                 exception.printStackTrace();
         }
+    }
+    
+    /**
+     * Handles key typing for the game. This hook only handles text input, and is meant for
+     * handling typing events. See com.shc.silenceengine.input.Keyboard.ITextListener for more
+     * info.
+     * 
+     * @param chars The characters being typed.
+     * @param codePoint The unicode position. You can read more here:
+     *        https://en.wikipedia.org/wiki/Code_point
+     * @param mods The modifiers applied to the key.
+     */
+    public static void onKeyTyped (char[] chars, int codePoint, int mods) {
+        
+        RenderGuiSystem.handleInput(chars, codePoint, mods);
     }
 }
