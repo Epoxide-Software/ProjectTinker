@@ -89,7 +89,7 @@ public class TinkerGame extends Game {
         if (Game.DEVELOPMENT)
             Display.setTitle("FPS: " + Game.getFPS() + " | UPS: " + Game.getUPS() + " | RC: " + SilenceEngine.graphics.renderCallsPerFrame);
             
-        KeyHandler.update(entityPlayer, delta);
+        KeyHandler.update(delta);
     }
     
     /**
