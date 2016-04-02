@@ -38,7 +38,7 @@ public class GuiButton extends GuiElement {
         float centerX = this.getX() + (this.getWidth() / 2);
         float centerY = this.getY() + (this.getHeight() / 2);
 
-        if (this.text != null) {
+        if (this.text != null && this.isVisible()) {
             float correctX = centerX - (this.font.getWidth(this.text) / 2);
             float correctY = centerY - (this.font.getHeight() / 2);
             g2d.setFont(this.font);
