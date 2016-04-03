@@ -23,33 +23,31 @@ public class GuiImage extends GuiElement {
     @Override
     public void draw (Batcher batcher, float mouseX, float mouseY) {
         
-        if (this.isVisible()) {
-            batcher.begin();
-            batcher.vertex(this.getX(), this.getY() + this.getHeight());
-            batcher.texCoord(this.texture.getMinU(), this.texture.getMaxV());
-            batcher.color(Color.TRANSPARENT);
-            
-            batcher.vertex(this.getX() + this.getWidth(), this.getY() + this.getHeight());
-            batcher.texCoord(this.texture.getMaxU(), this.texture.getMaxV());
-            batcher.color(Color.TRANSPARENT);
-            
-            batcher.vertex(this.getX(), this.getY());
-            batcher.texCoord(this.texture.getMinU(), this.texture.getMinV());
-            batcher.color(Color.TRANSPARENT);
-            
-            batcher.vertex(this.getX() + this.getWidth(), this.getY() + this.getHeight());
-            batcher.texCoord(this.texture.getMaxU(), this.texture.getMaxV());
-            batcher.color(Color.TRANSPARENT);
-            
-            batcher.vertex(this.getX(), this.getY());
-            batcher.texCoord(this.texture.getMinU(), this.texture.getMinV());
-            batcher.color(Color.TRANSPARENT);
-            
-            batcher.vertex(this.getX() + this.getWidth(), this.getY());
-            batcher.texCoord(this.texture.getMaxU(), this.texture.getMinV());
-            batcher.color(Color.TRANSPARENT);
-            batcher.end();
-        }
+        batcher.begin();
+        batcher.vertex(this.getX(), this.getY() + this.getHeight());
+        batcher.texCoord(this.texture.getMinU(), this.texture.getMaxV());
+        batcher.color(Color.TRANSPARENT);
+        
+        batcher.vertex(this.getX() + this.getWidth(), this.getY() + this.getHeight());
+        batcher.texCoord(this.texture.getMaxU(), this.texture.getMaxV());
+        batcher.color(Color.TRANSPARENT);
+        
+        batcher.vertex(this.getX(), this.getY());
+        batcher.texCoord(this.texture.getMinU(), this.texture.getMinV());
+        batcher.color(Color.TRANSPARENT);
+        
+        batcher.vertex(this.getX() + this.getWidth(), this.getY() + this.getHeight());
+        batcher.texCoord(this.texture.getMaxU(), this.texture.getMaxV());
+        batcher.color(Color.TRANSPARENT);
+        
+        batcher.vertex(this.getX(), this.getY());
+        batcher.texCoord(this.texture.getMinU(), this.texture.getMinV());
+        batcher.color(Color.TRANSPARENT);
+        
+        batcher.vertex(this.getX() + this.getWidth(), this.getY());
+        batcher.texCoord(this.texture.getMaxU(), this.texture.getMinV());
+        batcher.color(Color.TRANSPARENT);
+        batcher.end();
     }
     
     public AtlasTexture getTexture () {

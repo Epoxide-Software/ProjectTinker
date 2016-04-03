@@ -29,7 +29,7 @@ public abstract class GuiContainer extends Gui {
     @Override
     public void draw (Batcher batcher, float mouseX, float mouseY) {
         
-        this.guiElements.forEach(element -> element.draw(batcher, mouseX, mouseY));
+        this.guiElements.stream().filter(element -> element.isVisible()).forEach(element -> element.draw(batcher, mouseX, mouseY));
     }
     
     /**

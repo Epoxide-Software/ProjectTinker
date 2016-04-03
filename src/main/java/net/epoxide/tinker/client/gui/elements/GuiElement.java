@@ -55,6 +55,7 @@ public class GuiElement extends Gui {
         return this.enabled && this.visible && mouseX >= this.getX() && mouseY >= this.getY() && mouseX < this.getX() + this.getWidth() && mouseY < this.getY() + this.getHeight();
     }
     
+    @Override
     public boolean isVisible () {
         
         return this.visible;

@@ -43,6 +43,16 @@ public class Gui {
     }
     
     /**
+     * Checks if the gui can be drawn or not. Default behavior is to always be true.
+     * 
+     * @return boolean Whether or not the gui should be drawn.
+     */
+    public boolean isVisible () {
+        
+        return true;
+    }
+    
+    /**
      * A hook for when the mouse moves.
      * 
      * @param dx The X coordinate of the mouse.
