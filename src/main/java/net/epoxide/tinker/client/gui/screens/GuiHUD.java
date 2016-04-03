@@ -12,7 +12,13 @@ public class GuiHUD extends GuiContainer {
     
     public class GuiInfo extends Gui {
         
-        private char[] characters = new char[] { 'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd', '!' };
+        public char[] characters = new char[] { 'H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd', '!' };
+        
+        public GuiInfo() {
+            
+            if (Math.random() < 0.25)
+                this.characters = new char[] { 'T', 'e', 'd', ' ', 'C', 'r', 'u', 'z', ' ', 'i', 's', ' ', 't', 'h', 'e', ' ', 'Z', 'o', 'd', 'i', 'a', 'c', ' ', 'K', 'i', 'l', 'l', 'e', 'r' };
+        }
         
         @Override
         public void drawForeground (Batcher batcher, float mouseX, float mouseY) {

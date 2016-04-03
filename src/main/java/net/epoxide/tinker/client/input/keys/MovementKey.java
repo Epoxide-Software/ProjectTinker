@@ -31,11 +31,11 @@ public class MovementKey extends KeyBind {
         switch (this.TYPE) {
             
             case 0:
-                player.setYPos(player.getYPos() + delta);
+                player.setYPos(player.getYPos() - delta);
                 break;
                 
             case 1:
-                player.setYPos(player.getYPos() - delta);
+                player.setYPos(player.getYPos() + delta);
                 break;
                 
             case 2:
