@@ -14,6 +14,8 @@ public class KeyHandler {
     public static final KeyBind left = registerKeyBind(new MovementKey("left", Keyboard.KEY_A, 2));
     public static final KeyBind right = registerKeyBind(new MovementKey("right", Keyboard.KEY_D, 3));
     
+    public static final KeyBind debug = registerKeyBind(new KeyBind("debug", Keyboard.KEY_F3));
+    
     /**
      * Gets a KeyBind from the {@link #REGISTRY} which is associated with the name. If no key
      * exists, null will be returned.
