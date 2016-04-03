@@ -18,7 +18,7 @@ import net.darkhax.opennbt.NBTHelper;
 import net.epoxide.tinker.client.gui.screens.GuiHUD;
 import net.epoxide.tinker.client.input.KeyHandler;
 import net.epoxide.tinker.client.render.RenderEntitySystem;
-import net.epoxide.tinker.client.render.RenderGuiSystem;
+import net.epoxide.tinker.client.render.GuiManager;
 import net.epoxide.tinker.client.render.RenderSystem;
 import net.epoxide.tinker.client.render.entity.RenderEntityPlayer;
 import net.epoxide.tinker.client.render.textures.TextureManager;
@@ -45,9 +45,21 @@ public class TinkerGame extends Game {
     private final TileMap tileMap = new TileMap(512, 512, "world");
     
     @Override
+    public void preInit () {
+        
+        Logger.info("[OpenNBT] Version " + NBTHelper.VERSION + " detected.");
+        Display.setVSync(false);
+        
+        TextureManager.registerTileTextures("stone");
+        TextureManager.registerTileTextures("slime");
+        TextureManager.registerTileTextures("missing");
+        Keyboard.registerTextListener(TinkerGame::onKeyTyped);
+    }
+    
+    @Override
     public void init () {
         
-        RenderGuiSystem.REGISTRY.registerValue("hud", new GuiHUD());
+        GuiManager.REGISTRY.registerValue("hud", new GuiHUD());
         
         Dungeon.DEFAULT.generateMap(this.tileMap);
         entityPlayer = new EntityPlayer(this.tileMap);
@@ -58,19 +70,7 @@ public class TinkerGame extends Game {
         
         TextureManager.init();
         
-        RenderGuiSystem.openGui("hud");
-    }
-    
-    @Override
-    public void preInit () {
-        
-        Logger.info("[OpenNBT] Version " + NBTHelper.VERSION + " detected.");
-        Display.setVSync(false);
-        
-        TextureManager.registerTileTextures("stone");
-        TextureManager.registerTileTextures("slime");
-        TextureManager.registerTileTextures("missing");
-        Keyboard.registerTextListener(TinkerGame::onKeyTyped);
+        GuiManager.openGui("hud");
     }
     
     @Override
@@ -146,6 +146,6 @@ public class TinkerGame extends Game {
      */
     public static void onKeyTyped (char[] chars, int codePoint, int mods) {
         
-        RenderGuiSystem.handleInput(chars, codePoint, mods);
+        GuiManager.handleInput(chars, codePoint, mods);
     }
 }

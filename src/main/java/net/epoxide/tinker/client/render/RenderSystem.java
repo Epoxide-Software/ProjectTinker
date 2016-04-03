@@ -43,7 +43,7 @@ public class RenderSystem {
      */
     private final RenderEntitySystem entityRenderer;
     
-    private final RenderGuiSystem guiRenderer;
+    private final GuiManager guiRenderer;
     
     /**
      * The renderer for the world map.
@@ -57,7 +57,7 @@ public class RenderSystem {
         
         this.worldRenderer = new RenderWorldSystem();
         this.entityRenderer = new RenderEntitySystem();
-        this.guiRenderer = new RenderGuiSystem();
+        this.guiRenderer = new GuiManager();
         this.resize();
     }
     

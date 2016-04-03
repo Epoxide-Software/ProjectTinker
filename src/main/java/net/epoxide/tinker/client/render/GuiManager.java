@@ -6,7 +6,7 @@ import com.shc.silenceengine.input.Mouse;
 import net.epoxide.tinker.client.gui.screens.GuiContainer;
 import net.epoxide.tinker.util.NamedRegistry;
 
-public class RenderGuiSystem {
+public class GuiManager {
     
     /**
      * The current GuiContainer that has been loaded.
