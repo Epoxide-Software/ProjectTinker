@@ -175,13 +175,13 @@ public enum ColorData {
     }
     
     /**
-     * Gets the amount of red as an integer between 0 and 255.
+     * Gets the amount of alpha as an integer between 0 and 255.
      * 
-     * @return int The red color value as an int.
+     * @return int The alpha color value as an int.
      */
-    public int getRed () {
+    public int getAlpha () {
         
-        return (int) (this.color.getRed() * 255);
+        return (int) ((1f - this.color.getAlpha()) * 255);
     }
     
     /**
@@ -205,13 +205,13 @@ public enum ColorData {
     }
     
     /**
-     * Gets the amount of alpha as an integer between 0 and 255.
+     * Gets the amount of red as an integer between 0 and 255.
      * 
-     * @return int The alpha color value as an int.
+     * @return int The red color value as an int.
      */
-    public int getAlpha () {
+    public int getRed () {
         
-        return (int) ((1f - this.color.getAlpha()) * 255);
+        return (int) (this.color.getRed() * 255);
     }
     
     /**
@@ -226,25 +226,14 @@ public enum ColorData {
     }
     
     /**
-     * Gets the red value from a packed RGBA integer.
+     * Gets the alpha value from a packed RGBA integer.
      * 
      * @param rgba The packed RGBA integer.
-     * @return int The red color value as an int.
+     * @return int The alpha color value as an int.
      */
-    public static int getRed (int rgba) {
+    public static int getAlpha (int rgba) {
         
-        return rgba >> 24 & 0xff;
-    }
-    
-    /**
-     * Gets the green value from a packed RGBA integer.
-     * 
-     * @param rgba The packed RGBA integer.
-     * @return int The green color value as an int.
-     */
-    public static int getGreen (int rgba) {
-        
-        return rgba >> 16 & 0xff;
+        return rgba & 0xff;
     }
     
     /**
@@ -259,13 +248,24 @@ public enum ColorData {
     }
     
     /**
-     * Gets the alpha value from a packed RGBA integer.
+     * Gets the green value from a packed RGBA integer.
      * 
      * @param rgba The packed RGBA integer.
-     * @return int The alpha color value as an int.
+     * @return int The green color value as an int.
      */
-    public static int getAlpha (int rgba) {
+    public static int getGreen (int rgba) {
         
-        return rgba & 0xff;
+        return rgba >> 16 & 0xff;
+    }
+    
+    /**
+     * Gets the red value from a packed RGBA integer.
+     * 
+     * @param rgba The packed RGBA integer.
+     * @return int The red color value as an int.
+     */
+    public static int getRed (int rgba) {
+        
+        return rgba >> 24 & 0xff;
     }
 }
