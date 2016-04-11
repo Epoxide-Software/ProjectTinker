@@ -5,6 +5,7 @@ import com.shc.silenceengine.graphics.Batcher;
 import com.shc.silenceengine.graphics.Color;
 import com.shc.silenceengine.graphics.Graphics2D;
 
+import net.epoxide.tinker.TinkerGame;
 import net.epoxide.tinker.client.gui.Gui;
 import net.epoxide.tinker.client.input.KeyHandler;
 
@@ -27,9 +28,7 @@ public class GuiHUD extends GuiContainer {
                 
                 final Graphics2D g2d = Graphics2D.getInstance();
                 g2d.setColor(Color.WHITE);
-                g2d.drawString(String.format("FPS: %s", Game.getFPS()), 0, 0);
-                g2d.drawString(String.format("X:%s Y:%s", mouseX, mouseY), 0, 15);
-                g2d.drawString("Keys: " + new String(this.characters), 0, 30);
+                g2d.drawString(String.format("FPS: %s\nX:%s Y:%s\nKeys: %s\n Direction: %s", Game.getFPS(), mouseX, mouseY,new String(this.characters),TinkerGame.entityPlayer.getRotation().name()), 0, 0);
             }
         }
         
