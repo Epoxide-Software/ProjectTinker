@@ -28,7 +28,7 @@ public class GuiHUD extends GuiContainer {
                 
                 final Graphics2D g2d = Graphics2D.getInstance();
                 g2d.setColor(Color.WHITE);
-                g2d.drawString(String.format("FPS: %s\nX:%s Y:%s\nKeys: %s\n Direction: %s", Game.getFPS(), mouseX, mouseY,new String(this.characters),TinkerGame.entityPlayer.getRotation().name()), 0, 0);
+                g2d.drawString(String.format("FPS: %s\nX:%s Y:%s\nKeys: %s\nDirection: %s", Game.getFPS(), mouseX, mouseY,new String(this.characters),TinkerGame.entityPlayer.getRotation().name()), 0, 0);
             }
         }
         
