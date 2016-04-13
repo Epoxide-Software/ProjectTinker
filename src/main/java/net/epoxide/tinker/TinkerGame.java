@@ -17,8 +17,8 @@ import net.darkhax.opennbt.NBTHelper;
 
 import net.epoxide.tinker.client.gui.screens.GuiHUD;
 import net.epoxide.tinker.client.input.KeyHandler;
-import net.epoxide.tinker.client.render.RenderEntitySystem;
 import net.epoxide.tinker.client.render.GuiManager;
+import net.epoxide.tinker.client.render.RenderEntitySystem;
 import net.epoxide.tinker.client.render.RenderSystem;
 import net.epoxide.tinker.client.render.entity.RenderEntityPlayer;
 import net.epoxide.tinker.client.render.textures.TextureManager;
@@ -45,18 +45,6 @@ public class TinkerGame extends Game {
     private final TileMap tileMap = new TileMap(512, 512, "world");
     
     @Override
-    public void preInit () {
-        
-        Logger.info("[OpenNBT] Version " + NBTHelper.VERSION + " detected.");
-        Display.setVSync(false);
-        
-        TextureManager.registerTileTextures("stone");
-        TextureManager.registerTileTextures("slime");
-        TextureManager.registerTileTextures("missing");
-        Keyboard.registerTextListener(TinkerGame::onKeyTyped);
-    }
-    
-    @Override
     public void init () {
         
         GuiManager.REGISTRY.registerValue("hud", new GuiHUD());
@@ -71,6 +59,18 @@ public class TinkerGame extends Game {
         TextureManager.init();
         
         GuiManager.openGui("hud");
+    }
+    
+    @Override
+    public void preInit () {
+        
+        Logger.info("[OpenNBT] Version " + NBTHelper.VERSION + " detected.");
+        Display.setVSync(false);
+        
+        TextureManager.registerTileTextures("stone");
+        TextureManager.registerTileTextures("slime");
+        TextureManager.registerTileTextures("missing");
+        Keyboard.registerTextListener(TinkerGame::onKeyTyped);
     }
     
     @Override
