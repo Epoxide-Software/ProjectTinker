@@ -33,7 +33,7 @@ dependencies {
 //    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-windows"
 //    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-linux"
 //    compile "org.lwjgl:lwjgl-platform:${lwjglVersion}:natives-osx"
-    compile "net.darkhax.opennbt:OpenNBT:2.5.22"
+    compile "net.darkhax.ess:ExtremelySimpleStorage:1.0.4"
     compile "com.google.guava:guava:19.0"
     compile "com.shc.silenceengine:SilenceEngine:10"
 }
