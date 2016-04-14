@@ -1,6 +1,6 @@
 package net.epoxide.tinker.inventory;
 
-import net.darkhax.opennbt.tags.CompoundTag;
+import net.darkhax.ess.DataCompound;
 
 import net.epoxide.tinker.util.ItemObject;
 
@@ -48,13 +48,13 @@ public class BasicInventory implements Inventory {
     }
     
     @Override
-    public void readData (CompoundTag tag) {
+    public void readData (DataCompound tag) {
         
         this.inventory = new ItemObject[tag.getInt("Size")];
         
         for (int index = 0; index < this.inventory.length; index++) {
             
-            final CompoundTag slotTag = tag.getCompoundTag("Slot" + index);
+            final DataCompound slotTag = tag.getDataCompound("Slot" + index);
             
             if (slotTag != null)
                 this.inventory[index] = new ItemObject(slotTag);
@@ -69,13 +69,13 @@ public class BasicInventory implements Inventory {
     }
     
     @Override
-    public CompoundTag writeData (CompoundTag tag) {
+    public DataCompound writeData (DataCompound tag) {
         
-        tag.setInt("Size", this.inventory.length);
+        tag.setValue("Size", this.inventory.length);
         
         for (int index = 0; index < this.inventory.length; index++)
             if (this.isPosValid(index))
-                tag.setCompoundTag("Slot" + index, this.inventory[index].writeData(new CompoundTag("Slot" + index)));
+                tag.setValue("Slot" + index, this.inventory[index].writeData(new DataCompound()));
                 
         return tag;
     }

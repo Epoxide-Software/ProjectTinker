@@ -1,10 +1,10 @@
 package net.epoxide.tinker.world;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.darkhax.opennbt.tags.CompoundTag;
-import net.darkhax.opennbt.tags.Tag;
+import net.darkhax.ess.DataCompound;
 
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.tile.Tile;
@@ -40,28 +40,29 @@ public class SurfaceMap extends TileMap implements Persistent, Displayable {
     }
     
     @Override
-    public void readData (CompoundTag tag) {
+    public void readData (DataCompound tag) {
         
         this.name = tag.getString("MapName");
         this.width = tag.getInt("MapWidth");
         this.height = tag.getInt("MapHeight");
         
         final String[] tileIDs = tag.getStringArray("TileIDs");
-        final List<Tag> tileData = tag.getTagList("TileData");
+        @SuppressWarnings("unchecked")
+        final List<DataCompound> tileData = (List<DataCompound>) tag.getList("TileData");
         
         for (int x = 0; x < this.width; x++)
             for (int y = 0; y < this.height; y++) {
                 
                 final int index = y % this.height + x * this.height;
                 this.tileMap[x][y] = Tile.getTileByName(tileIDs[index]);
-                this.tileData[x][y] = (CompoundTag) tileData.get(index);
+                this.tileData[x][y] = (DataCompound) tileData.get(index);
             }
             
-        final List<Tag> entities = tag.getTagList("Entities");
+        final List<DataCompound> entities = (List<DataCompound>) tag.getList("Entities");
         
-        for (final Tag entityTag : entities) {
+        for (final DataCompound entityTag : entities) {
             
-            final CompoundTag entityData = (CompoundTag) entityTag;
+            final DataCompound entityData = (DataCompound) entityTag;
             final Entity entity = Entity.createInstance(Entity.REGISTRY.getValue(entityData.getString("EntityID")));
             
             if (entity != null) {
@@ -79,14 +80,14 @@ public class SurfaceMap extends TileMap implements Persistent, Displayable {
     }
     
     @Override
-    public CompoundTag writeData (CompoundTag tag) {
+    public DataCompound writeData (DataCompound tag) {
         
-        tag.setString("MapName", this.name);
-        tag.setInt("MapWidth", this.width);
-        tag.setInt("MapHeight", this.height);
+        tag.setValue("MapName", this.name);
+        tag.setValue("MapWidth", this.width);
+        tag.setValue("MapHeight", this.height);
         
         final List<String> tileIDs = new ArrayList<>();
-        final List<Tag> tileData = new ArrayList<>();
+        final List<DataCompound> tileData = new ArrayList<>();
         
         for (int x = 0; x < this.width; x++)
             for (int y = 0; y < this.height; y++) {
@@ -95,12 +96,12 @@ public class SurfaceMap extends TileMap implements Persistent, Displayable {
                 tileData.add(this.getTileDataUnsafely(x, y));
             }
             
-        tag.setStringArray("TileIDs", tileIDs.toArray(new String[this.width * this.height]));
-        tag.setTagList("TileData", tileData);
+        tag.setValue("TileIDs", tileIDs.toArray(new String[this.width * this.height]));
+        tag.setValue("TileData", (Serializable) tileData);
         
-        final List<Tag> entityData = new ArrayList<>();
-        this.entityList.forEach(entity -> entityData.add(entity.writeData(new CompoundTag("EntityData"))));
-        tag.setTagList("Entities", entityData);
+        final List<DataCompound> entityData = new ArrayList<>();
+        this.entityList.forEach(entity -> entityData.add(entity.writeData(new DataCompound())));
+        tag.setValue("Entities", (Serializable) entityData);
         
         return tag;
     }

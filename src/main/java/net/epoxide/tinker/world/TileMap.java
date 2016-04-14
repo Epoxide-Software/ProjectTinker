@@ -3,8 +3,7 @@ package net.epoxide.tinker.world;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.darkhax.opennbt.tags.CompoundTag;
-import net.darkhax.opennbt.tags.Tag;
+import net.darkhax.ess.DataCompound;
 
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.EntityStat;
@@ -35,7 +34,7 @@ public class TileMap implements StatProvider {
     /**
      * A 2D array of CompoundTag. This is used to store tile data in a persistent way.
      */
-    protected CompoundTag[][] tileData;
+    protected DataCompound[][] tileData;
     
     /**
      * A 2D array of the tiles in the map.
@@ -62,7 +61,7 @@ public class TileMap implements StatProvider {
         this.height = height;
         this.name = name;
         this.tileMap = new Tile[width][height];
-        this.tileData = new CompoundTag[width][height];
+        this.tileData = new DataCompound[width][height];
         this.entityList = new ArrayList<>();
     }
     
@@ -156,7 +155,7 @@ public class TileMap implements StatProvider {
      * 
      * @return Tag[][] A 2D array of tags on the map.
      */
-    public Tag[][] getTileData () {
+    public DataCompound[][] getTileData () {
         
         return this.tileData;
     }
@@ -171,7 +170,7 @@ public class TileMap implements StatProvider {
      * @return Tag A Tag that was stored at the specified location. This can sometimes be null
      *         if no data was found, or an invalid location was used.
      */
-    public Tag getTileData (int posX, int posY) {
+    public DataCompound getTileData (int posX, int posY) {
         
         if (this.isValidLocation(posX, posY))
             return this.tileData[posX][posY];
@@ -188,13 +187,13 @@ public class TileMap implements StatProvider {
      * @return Tag A Tag that was stored at the specified location. This can be null if no data
      *         was found.
      */
-    public CompoundTag getTileDataUnsafely (int posX, int posY) {
+    public DataCompound getTileDataUnsafely (int posX, int posY) {
         
-        CompoundTag tag = this.tileData[posX][posY];
+        DataCompound tag = this.tileData[posX][posY];
         
         if (tag == null) {
             
-            tag = new CompoundTag("TileData");
+            tag = new DataCompound();
             this.tileData[posX][posY] = tag;
         }
         
@@ -365,7 +364,7 @@ public class TileMap implements StatProvider {
      * @param posX The X position of the tile to set data for.
      * @param posY The Y position of the tile to set data for.
      */
-    public void setTileData (CompoundTag tag, int posX, int posY) {
+    public void setTileData (DataCompound tag, int posX, int posY) {
         
         if (this.isValidLocation(posX, posY))
             this.tileData[posX][posY] = tag;
@@ -378,7 +377,7 @@ public class TileMap implements StatProvider {
      * 
      * @param tileData The new 2D tag array.
      */
-    public void setTileData (CompoundTag[][] tileData) {
+    public void setTileData (DataCompound[][] tileData) {
         
         this.tileData = tileData;
     }
@@ -391,7 +390,7 @@ public class TileMap implements StatProvider {
      * @param posX The X position of the tile to set data for.
      * @param posY The Y position of the tile to set data for.
      */
-    public void setTileDataUnsafely (CompoundTag tag, int posX, int posY) {
+    public void setTileDataUnsafely (DataCompound tag, int posX, int posY) {
         
         this.tileData[posX][posY] = tag;
     }

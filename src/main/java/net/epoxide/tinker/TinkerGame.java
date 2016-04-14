@@ -13,7 +13,7 @@ import com.shc.silenceengine.graphics.Batcher;
 import com.shc.silenceengine.input.Keyboard;
 import com.shc.silenceengine.utils.Logger;
 
-import net.darkhax.opennbt.NBTHelper;
+import net.darkhax.ess.ESSHelper;
 
 import net.epoxide.tinker.client.gui.screens.GuiHUD;
 import net.epoxide.tinker.client.input.KeyHandler;
@@ -64,7 +64,7 @@ public class TinkerGame extends Game {
     @Override
     public void preInit () {
         
-        Logger.info("[OpenNBT] Version " + NBTHelper.VERSION + " detected.");
+        Logger.info("[ESS] Version " + ESSHelper.VERSION + " detected.");
         Display.setVSync(false);
         
         TextureManager.registerTileTextures("stone");

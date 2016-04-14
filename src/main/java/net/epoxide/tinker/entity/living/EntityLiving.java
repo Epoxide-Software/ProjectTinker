@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import net.darkhax.opennbt.tags.CompoundTag;
+import net.darkhax.ess.DataCompound;
 
 import net.epoxide.tinker.entity.Entity;
 import net.epoxide.tinker.entity.EntityStat;
@@ -61,7 +61,7 @@ public class EntityLiving extends Entity {
      * @param map The TileMap to spawn the entity on.
      * @param tag The CompoundTag to load data from.
      */
-    public EntityLiving(TileMap map, CompoundTag tag) {
+    public EntityLiving(TileMap map, DataCompound tag) {
         
         super(map, tag);
     }

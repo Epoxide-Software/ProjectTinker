@@ -1,6 +1,6 @@
 package net.epoxide.tinker.statuseffect;
 
-import net.darkhax.opennbt.tags.CompoundTag;
+import net.darkhax.ess.DataCompound;
 
 import net.epoxide.tinker.entity.living.EntityLiving;
 import net.epoxide.tinker.util.Persistent;
@@ -83,7 +83,7 @@ public class EffectObject implements Persistent {
     }
     
     @Override
-    public void readData (CompoundTag tag) {
+    public void readData (DataCompound tag) {
         
         this.time = tag.getInt("Time");
         this.tier = tag.getInt("Tier");
@@ -109,11 +109,11 @@ public class EffectObject implements Persistent {
     }
     
     @Override
-    public CompoundTag writeData (CompoundTag tag) {
+    public DataCompound writeData (DataCompound tag) {
         
-        tag.setInt("Time", this.time);
-        tag.setInt("Tier", this.tier);
-        tag.setString("EffectID", this.effect.ID.toString());
+        tag.setValue("Time", this.time);
+        tag.setValue("Tier", this.tier);
+        tag.setValue("EffectID", this.effect.ID.toString());
         return tag;
     }
 }

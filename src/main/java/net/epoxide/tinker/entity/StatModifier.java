@@ -2,7 +2,7 @@ package net.epoxide.tinker.entity;
 
 import java.util.UUID;
 
-import net.darkhax.opennbt.tags.CompoundTag;
+import net.darkhax.ess.DataCompound;
 
 import net.epoxide.tinker.util.Persistent;
 
@@ -34,7 +34,7 @@ public class StatModifier implements Persistent {
      * 
      * @param tag The CompoundTag to read the data from.
      */
-    public StatModifier(CompoundTag tag) {
+    public StatModifier(DataCompound tag) {
         
         this.readData(tag);
         this.id = UUID.randomUUID();
@@ -105,7 +105,7 @@ public class StatModifier implements Persistent {
     }
     
     @Override
-    public void readData (CompoundTag tag) {
+    public void readData (DataCompound tag) {
         
         this.type = EntityStat.REGISTRY.getValue(tag.getString("StatType"));
         this.value = tag.getFloat("StatValue");
@@ -119,11 +119,11 @@ public class StatModifier implements Persistent {
     }
     
     @Override
-    public CompoundTag writeData (CompoundTag tag) {
+    public DataCompound writeData (DataCompound tag) {
         
-        tag.setString("StatType", this.type.getId());
-        tag.setFloat("StatValue", this.value);
-        tag.setByte("StatModifier", this.modType);
+        tag.setValue("StatType", this.type.getId());
+        tag.setValue("StatValue", this.value);
+        tag.setValue("StatModifier", this.modType);
         return tag;
     }
 }

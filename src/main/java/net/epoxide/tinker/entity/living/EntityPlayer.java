@@ -1,6 +1,6 @@
 package net.epoxide.tinker.entity.living;
 
-import net.darkhax.opennbt.tags.CompoundTag;
+import net.darkhax.ess.DataCompound;
 
 import net.epoxide.tinker.world.TileMap;
 
@@ -31,7 +31,7 @@ public class EntityPlayer extends EntityLiving {
      * @param map The TileMap to spawn the entity on.
      * @param tag The CompoundTag to load data from.
      */
-    public EntityPlayer(TileMap map, CompoundTag tag) {
+    public EntityPlayer(TileMap map, DataCompound tag) {
         
         super(map, tag);
     }

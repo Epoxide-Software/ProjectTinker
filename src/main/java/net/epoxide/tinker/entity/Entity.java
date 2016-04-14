@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import com.shc.silenceengine.utils.Logger;
 
-import net.darkhax.opennbt.tags.CompoundTag;
+import net.darkhax.ess.DataCompound;
 
 import net.epoxide.tinker.util.Direction;
 import net.epoxide.tinker.util.Displayable;
@@ -29,9 +29,9 @@ public class Entity implements Persistent, Displayable {
     private String displayName;
     
     /**
-     * A CompoundTag which holds all of the data for this entity.
+     * A DataCompound which holds all of the data for this entity.
      */
-    private CompoundTag entityData;
+    private DataCompound entityData;
     
     /**
      * The ID that the entity is registered under.
@@ -84,20 +84,20 @@ public class Entity implements Persistent, Displayable {
     public Entity(TileMap map) {
         
         this.uniqueId = UUID.randomUUID();
-        this.entityData = new CompoundTag("data");
+        this.entityData = new DataCompound();
         this.setPos(0, 0);
         this.setCurrentMap(map);
         this.setRotation(Direction.UP);
     }
     
     /**
-     * Constructs a new entity from a CompoundTag. Intended for loading entities onto a TileMap
-     * from the TileMap data.
+     * Constructs a new entity from a DataCompound. Intended for loading entities onto a
+     * TileMap from the TileMap data.
      * 
      * @param map The TileMap to spawn the entity on.
-     * @param tag The CompoundTag to load data from.
+     * @param tag The DataCompound to load data from.
      */
-    public Entity(TileMap map, CompoundTag tag) {
+    public Entity(TileMap map, DataCompound tag) {
         
         this.readData(tag);
         this.entityData = tag;
@@ -125,11 +125,11 @@ public class Entity implements Persistent, Displayable {
     }
     
     /**
-     * Gets the CompoundTag holding all the persistent data for this entity.
+     * Gets the DataCompound holding all the persistent data for this entity.
      * 
-     * @return CompoundTag A CompoundTag which holds persistent data.
+     * @return DataCompound A DataCompound which holds persistent data.
      */
-    public CompoundTag getEntityData () {
+    public DataCompound getEntityData () {
         
         return this.entityData;
     }
@@ -226,7 +226,7 @@ public class Entity implements Persistent, Displayable {
     }
     
     @Override
-    public void readData (CompoundTag tag) {
+    public void readData (DataCompound tag) {
         
         this.displayName = tag.getString("EntityName");
         this.uniqueId = UUID.fromString(tag.getString("EntityUUID"));
@@ -258,11 +258,11 @@ public class Entity implements Persistent, Displayable {
     
     /**
      * Overrides the data of the entity with a new tag compound. Be careful when using this as
-     * it completely deletes the CompoundTag and if set to null will break stuff.
+     * it completely deletes the DataCompound and if set to null will break stuff.
      * 
-     * @param tag The new CompoundTag. Please don't use null!
+     * @param tag The new DataCompound. Please don't use null!
      */
-    public void setEntityData (CompoundTag tag) {
+    public void setEntityData (DataCompound tag) {
         
         this.entityData = tag;
     }
@@ -316,13 +316,13 @@ public class Entity implements Persistent, Displayable {
     }
     
     @Override
-    public CompoundTag writeData (CompoundTag tag) {
+    public DataCompound writeData (DataCompound tag) {
         
-        tag.setString("EntityID", REGISTRY.getNameForValue(this.getClass()).toString());
-        tag.setString("EntityName", this.displayName);
-        tag.setString("EntityUUID", this.uniqueId.toString());
-        tag.setFloat("XPos", this.xPos);
-        tag.setFloat("YPos", this.yPos);
+        tag.setValue("EntityID", REGISTRY.getNameForValue(this.getClass()).toString());
+        tag.setValue("EntityName", this.displayName);
+        tag.setValue("EntityUUID", this.uniqueId.toString());
+        tag.setValue("XPos", this.xPos);
+        tag.setValue("YPos", this.yPos);
         return tag;
     }
     

@@ -1,6 +1,6 @@
 package net.epoxide.tinker.util;
 
-import net.darkhax.opennbt.tags.CompoundTag;
+import net.darkhax.ess.DataCompound;
 
 public interface Persistent {
     
@@ -11,7 +11,7 @@ public interface Persistent {
      * 
      * @param tag A CompoundTag to read all the persistent data from.
      */
-    void readData (CompoundTag tag);
+    void readData (DataCompound tag);
     
     /**
      * Writes all important data from an Object to a CompoundTag so it can later be read using
@@ -20,5 +20,5 @@ public interface Persistent {
      * @param tag A CompoundTag to write all the persistent data to.
      * @return CompoundTag The data dag that was written to.
      */
-    CompoundTag writeData (CompoundTag tag);
+    DataCompound writeData (DataCompound tag);
 }

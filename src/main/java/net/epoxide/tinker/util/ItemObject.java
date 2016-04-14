@@ -1,6 +1,6 @@
 package net.epoxide.tinker.util;
 
-import net.darkhax.opennbt.tags.CompoundTag;
+import net.darkhax.ess.DataCompound;
 
 import net.epoxide.tinker.item.Item;
 
@@ -24,9 +24,9 @@ public class ItemObject {
     /**
      * A CompoundTag which holds additional Item information.
      */
-    private CompoundTag tag;
+    private DataCompound tag;
     
-    public ItemObject(CompoundTag tag) {
+    public ItemObject(DataCompound tag) {
         
         this.readData(tag);
     }
@@ -61,7 +61,7 @@ public class ItemObject {
      * @param amount The amount of the item to store in the ItemObject.
      * @param tag A CompoundTag which holds additional data about the CompoundTag.
      */
-    public ItemObject(Item item, int amount, CompoundTag tag) {
+    public ItemObject(Item item, int amount, DataCompound tag) {
         
         this.item = item;
         this.amount = amount;
@@ -93,7 +93,7 @@ public class ItemObject {
      * 
      * @return CompoundTag The CompoundTag held by the ItemObject.
      */
-    public CompoundTag getTag () {
+    public DataCompound getTag () {
         
         return this.tag;
     }
@@ -123,12 +123,12 @@ public class ItemObject {
      * 
      * @param tag The CompoundTag to read item data from.
      */
-    public void readData (CompoundTag tag) {
+    public void readData (DataCompound tag) {
         
-        tag.setString("ItemID", this.item.ID.toString());
-        tag.setInt("Amount", this.amount);
-        tag.setBoolean("ShouldDestroy", this.shouldDestroy);
-        tag.setCompoundTag("ItemData", this.tag);
+        tag.setValue("ItemID", this.item.ID.toString());
+        tag.setValue("Amount", this.amount);
+        tag.setValue("ShouldDestroy", this.shouldDestroy);
+        tag.setValue("ItemData", this.tag);
     }
     
     /**
@@ -160,7 +160,7 @@ public class ItemObject {
      * 
      * @param tag The CompoundTag to set to the ItemObject.
      */
-    public void setTag (CompoundTag tag) {
+    public void setTag (DataCompound tag) {
         
         this.tag = tag;
     }
@@ -182,12 +182,12 @@ public class ItemObject {
      * @param tag The CompoundTag to write data to.
      * @return CompoundTag The CompoundTag that was written to.
      */
-    public CompoundTag writeData (CompoundTag tag) {
+    public DataCompound writeData (DataCompound tag) {
         
         this.item = Item.getItemByName(tag.getString("ItemID"));
         this.amount = tag.getInt("Amount");
         this.shouldDestroy = tag.getBoolean("ShouldDestroy");
-        this.tag = tag.getCompoundTag("ItemData");
+        this.tag = tag.getDataCompound("ItemData");
         return tag;
     }
 }
