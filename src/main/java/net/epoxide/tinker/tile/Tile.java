@@ -22,7 +22,7 @@ public class Tile implements Displayable {
     public static final Tile SLIME = registerTile(new TileSlime("tinker:slime"));
     public static final Tile STONE = registerTile(new Tile("tinker:stone"));
     public static final Tile VOID = registerTile(new Tile("tinker:void"));
-    
+
     /**
      * The ID that the tile is registered under.
      */
