@@ -1,15 +1,15 @@
 package net.epoxide.tinker.client.render.textures.packer;
 
+import com.shc.silenceengine.backend.lwjgl3.opengl.Texture;
+import com.shc.silenceengine.math.geom2d.Rectangle;
+
 import java.awt.Dimension;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-import org.lwjgl.BufferUtils;
-
-import com.shc.silenceengine.backend.lwjgl3.opengl.Texture;
-import com.shc.silenceengine.math.geom2d.Rectangle;
-
 import net.epoxide.tinker.client.render.textures.AtlasTexture;
+
+import org.lwjgl.BufferUtils;
 
 public class TexturePacker {
     

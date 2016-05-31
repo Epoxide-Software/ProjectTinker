@@ -1,7 +1,5 @@
 package net.epoxide.tinker.client.render.textures;
 
-import java.util.HashMap;
-
 import com.shc.silenceengine.backend.lwjgl3.opengl.Texture;
 import com.shc.silenceengine.core.Display;
 import com.shc.silenceengine.core.ResourceLoader;
@@ -12,6 +10,8 @@ import com.shc.silenceengine.graphics.Paint;
 import com.shc.silenceengine.graphics.TrueTypeFont;
 import com.shc.silenceengine.io.FilePath;
 import com.shc.silenceengine.utils.MathUtils;
+
+import java.util.HashMap;
 
 import net.epoxide.tinker.util.NamedRegistry;
 

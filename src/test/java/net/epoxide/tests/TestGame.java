@@ -14,9 +14,9 @@ public class TestGame extends Game {
     
     public long finish;
     public long start;
-
-    private DungeonGen dungeonGen = new DungeonGen();
-
+    
+    private final DungeonGen dungeonGen = new DungeonGen();
+    
     /**
      * Test for confirming that color bit shifting is actually working.
      */
@@ -63,13 +63,13 @@ public class TestGame extends Game {
         
         Logger.info("The I18n test", "Passing: " + translation.equals("Theodor Emil Sigfried Theodor"), "Time: " + (this.finish - this.start), "Translation: " + translation);
     }
-
-    private void testWorldgen(){
-
-        dungeonGen.generate();
-        dungeonGen.printToImage();
+    
+    private void testWorldgen () {
+        
+        this.dungeonGen.generate();
+        this.dungeonGen.printToImage();
     }
-
+    
     @Override
     public void init () {
         
@@ -85,7 +85,7 @@ public class TestGame extends Game {
                 
             if (arg.equalsIgnoreCase("testColors") || all)
                 this.testColors();
-
+                
             if (arg.equalsIgnoreCase("testWorldgen") || all)
                 this.testWorldgen();
         }

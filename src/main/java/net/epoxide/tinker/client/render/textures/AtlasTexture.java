@@ -1,15 +1,15 @@
 package net.epoxide.tinker.client.render.textures;
 
+import com.shc.silenceengine.core.IResource;
+import com.shc.silenceengine.io.FilePath;
+import com.shc.silenceengine.utils.BufferUtils;
+import com.shc.silenceengine.utils.FileUtils;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import org.lwjgl.stb.STBImage;
-
-import com.shc.silenceengine.core.IResource;
-import com.shc.silenceengine.io.FilePath;
-import com.shc.silenceengine.utils.BufferUtils;
-import com.shc.silenceengine.utils.FileUtils;
 
 public class AtlasTexture implements IResource {
     

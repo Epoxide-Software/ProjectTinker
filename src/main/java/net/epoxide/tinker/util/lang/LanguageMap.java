@@ -1,5 +1,7 @@
 package net.epoxide.tinker.util.lang;
 
+import com.shc.silenceengine.utils.Logger;
+
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -7,8 +9,6 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
-
-import com.shc.silenceengine.utils.Logger;
 
 public class LanguageMap {
     

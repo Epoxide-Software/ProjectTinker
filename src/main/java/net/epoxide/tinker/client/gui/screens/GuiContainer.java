@@ -1,9 +1,9 @@
 package net.epoxide.tinker.client.gui.screens;
 
+import com.shc.silenceengine.graphics.Batcher;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import com.shc.silenceengine.graphics.Batcher;
 
 import net.epoxide.tinker.client.gui.Gui;
 

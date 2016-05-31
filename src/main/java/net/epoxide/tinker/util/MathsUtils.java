@@ -1,9 +1,9 @@
 package net.epoxide.tinker.util;
 
+import com.shc.silenceengine.math.Vector3;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
-import com.shc.silenceengine.math.Vector3;
 
 import net.epoxide.tinker.TinkerGame;
 

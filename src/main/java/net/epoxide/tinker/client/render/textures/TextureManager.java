@@ -1,8 +1,8 @@
 package net.epoxide.tinker.client.render.textures;
 
-import java.util.List;
-
 import com.shc.silenceengine.backend.lwjgl3.opengl.Texture;
+
+import java.util.List;
 
 import net.epoxide.tinker.client.render.textures.packer.TexturePacker;
 import net.epoxide.tinker.util.NamedRegistry;

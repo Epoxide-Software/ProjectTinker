@@ -1,10 +1,5 @@
 package net.epoxide.tinker;
 
-import java.util.Random;
-
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
-
 import com.shc.silenceengine.core.Display;
 import com.shc.silenceengine.core.Game;
 import com.shc.silenceengine.core.SilenceEngine;
@@ -12,6 +7,11 @@ import com.shc.silenceengine.core.SilenceException;
 import com.shc.silenceengine.graphics.Batcher;
 import com.shc.silenceengine.input.Keyboard;
 import com.shc.silenceengine.utils.Logger;
+
+import java.util.Random;
+
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 import net.darkhax.ess.ESSHelper;
 

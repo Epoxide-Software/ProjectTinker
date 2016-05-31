@@ -1,10 +1,10 @@
 package net.epoxide.tinker.entity;
 
+import com.shc.silenceengine.utils.Logger;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.UUID;
-
-import com.shc.silenceengine.utils.Logger;
 
 import net.darkhax.ess.DataCompound;
 

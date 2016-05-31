@@ -55,14 +55,14 @@ public class SurfaceMap extends TileMap implements Persistent, Displayable {
                 
                 final int index = y % this.height + x * this.height;
                 this.tileMap[x][y] = Tile.getTileByName(tileIDs[index]);
-                this.tileData[x][y] = (DataCompound) tileData.get(index);
+                this.tileData[x][y] = tileData.get(index);
             }
             
         final List<DataCompound> entities = (List<DataCompound>) tag.getList("Entities");
         
         for (final DataCompound entityTag : entities) {
             
-            final DataCompound entityData = (DataCompound) entityTag;
+            final DataCompound entityData = entityTag;
             final Entity entity = Entity.createInstance(Entity.REGISTRY.getValue(entityData.getString("EntityID")));
             
             if (entity != null) {

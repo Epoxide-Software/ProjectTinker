@@ -1,16 +1,16 @@
 package net.epoxide.tinker.util;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+
+import com.shc.silenceengine.utils.Logger;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
-
-import com.shc.silenceengine.utils.Logger;
 
 import org.apache.commons.lang.Validate;
 
