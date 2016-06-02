@@ -10,11 +10,8 @@ import net.epoxide.tinker.entity.EntityStat;
 import net.epoxide.tinker.entity.StatModifier;
 import net.epoxide.tinker.tile.Tile;
 import net.epoxide.tinker.util.StatProvider;
-import net.epoxide.tinker.world.dungeon.Dungeon;
 
 public class TileMap implements StatProvider {
-    
-    private Dungeon dungeon;
     
     /**
      * A List of all entities on the TileMap.
@@ -47,6 +44,22 @@ public class TileMap implements StatProvider {
     protected int width;
     
     /**
+     * Constructs a new TileMap using a 2d array of tiles.
+     * 
+     * @param tiles The 2d tile array to use for the map.
+     * @param name A human readable name for the map. This should not be an ID.
+     */
+    public TileMap(Tile[][] tiles, String name) {
+        
+        this.width = tiles.length;
+        this.height = tiles[0].length;
+        this.name = name;
+        this.tileMap = tiles;
+        this.tileData = new DataCompound[this.width][this.height];
+        this.entityList = new ArrayList<>();
+    }
+    
+    /**
      * Constructs a new TileMap using basic data. The Tile array will have the correct size,
      * however it will be empty, same with the data array. The List of entities will be
      * initialized as empty.
@@ -76,16 +89,6 @@ public class TileMap implements StatProvider {
         
         this.entityList.add(entity);
         entity.setCurrentMap(this);
-    }
-    
-    /**
-     * Gets the Dungeon type of this map. This might be null.
-     * 
-     * @return Dungeon The dungeon type for this map.
-     */
-    public Dungeon getDungeon () {
-        
-        return this.dungeon;
     }
     
     /**
@@ -315,16 +318,6 @@ public class TileMap implements StatProvider {
             this.tileMap[posX][posY] = null;
             this.removeTileDataUnsafely(posX, posY);
         }
-    }
-    
-    /**
-     * Sets the Dungeon type for the map.
-     * 
-     * @param dungeon The dungeon type to set for this map.
-     */
-    public void setDungeon (Dungeon dungeon) {
-        
-        this.dungeon = dungeon;
     }
     
     /**
