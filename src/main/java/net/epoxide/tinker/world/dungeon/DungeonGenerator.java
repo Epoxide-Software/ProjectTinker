@@ -1,5 +1,7 @@
 package net.epoxide.tinker.world.dungeon;
 
+import java.util.Random;
+
 import net.epoxide.tinker.tile.Tile;
 import net.epoxide.tinker.util.WeightedSelector;
 import net.epoxide.tinker.util.WeightedSelector.WeightedEntry;
@@ -7,6 +9,11 @@ import net.epoxide.tinker.world.TileMap;
 import net.epoxide.tinker.world.dungeon.room.RoomGenerator;
 
 public class DungeonGenerator {
+    
+    /**
+     * An instance of Random that should only be used in dungeon gen code.
+     */
+    protected static final Random RANDOM = new Random();
     
     /**
      * A weighted selector used to generate rooms for cells.
