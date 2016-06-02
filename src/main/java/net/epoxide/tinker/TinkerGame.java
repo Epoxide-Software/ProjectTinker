@@ -27,7 +27,6 @@ import net.epoxide.tinker.entity.living.EntityPlayer;
 import net.epoxide.tinker.util.GenericUtilities;
 import net.epoxide.tinker.util.RegistryName;
 import net.epoxide.tinker.world.TileMap;
-import net.epoxide.tinker.world.dungeon.Dungeon;
 
 public class TinkerGame extends Game {
     
@@ -49,7 +48,6 @@ public class TinkerGame extends Game {
         
         GuiManager.REGISTRY.registerValue("hud", new GuiHUD());
         
-        Dungeon.DEFAULT.generateMap(this.tileMap);
         entityPlayer = new EntityPlayer(this.tileMap);
         Entity.REGISTRY.registerValue(new RegistryName("entityPlayer"), EntityPlayer.class);
         
